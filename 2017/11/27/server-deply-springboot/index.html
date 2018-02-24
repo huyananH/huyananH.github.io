@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Spring Boot,Ubuntu," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="1. 前言最近，尝试在阿里云的服务器上部署了一下SpringBoot程序。 接下来，我讲一下……这个坎坷的过程。">
+<meta name="keywords" content="Spring Boot,Ubuntu">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在阿里云的Ubuntu服务器部署Spring Boot程序">
+<meta property="og:url" content="http://huyanan.top/2017/11/27/server-deply-springboot/index.html">
+<meta property="og:site_name" content="_胡er的博客">
+<meta property="og:description" content="1. 前言最近，尝试在阿里云的服务器上部署了一下SpringBoot程序。 接下来，我讲一下……这个坎坷的过程。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://huyanan.top/assets/postLog/serverDeploySpringbootLog.jpeg">
+<meta property="og:image" content="http://huyanan.top/assets/postImg/mysql_password.png">
+<meta property="og:image" content="http://huyanan.top/assets/postImg/linux_mysql_password_set.png">
+<meta property="og:image" content="http://huyanan.top/assets/postImg/linux_mysql_success.jpg">
+<meta property="og:image" content="http://huyanan.top/assets/postImg/linux_mysql_version.jpg">
+<meta property="og:image" content="http://huyanan.top/assets/postImg/linux_jdk_success.jpg">
+<meta property="og:image" content="http://huyanan.top/assets/postImg/linux_jdk_success.png">
+<meta property="og:image" content="http://huyanan.top/assets/postImg/tomcat_download.jpg">
+<meta property="og:image" content="http://huyanan.top/assets/postImg/tomcat_startup.jpg">
+<meta property="og:image" content="http://huyanan.top/assets/postImg/tomcat_startup_success.jpg">
+<meta property="og:updated_time" content="2018-01-31T11:25:32.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="在阿里云的Ubuntu服务器部署Spring Boot程序">
+<meta name="twitter:description" content="1. 前言最近，尝试在阿里云的服务器上部署了一下SpringBoot程序。 接下来，我讲一下……这个坎坷的过程。">
+<meta name="twitter:image" content="http://huyanan.top/assets/postLog/serverDeploySpringbootLog.jpeg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://huyanan.top/2017/11/27/server-deply-springboot/"/>
+
+
+
+
+
+  <title>在阿里云的Ubuntu服务器部署Spring Boot程序 | _胡er的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">_胡er的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://huyanan.top/2017/11/27/server-deply-springboot/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="_胡er">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="_胡er的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">在阿里云的Ubuntu服务器部署Spring Boot程序</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-27T15:08:31+08:00">
+                2017-11-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="/assets/postLog/serverDeploySpringbootLog.jpeg" width="350px" height="350px"></p>
+<h3 id="1-前言"><a href="#1-前言" class="headerlink" title="1. 前言"></a>1. 前言</h3><p>最近，尝试在阿里云的服务器上部署了一下SpringBoot程序。</p>
+<p>接下来，我讲一下……这个坎坷的过程。<br><a id="more"></a></p>
+<h3 id="2-通过ssh命令进入服务器文件系统"><a href="#2-通过ssh命令进入服务器文件系统" class="headerlink" title="2. 通过ssh命令进入服务器文件系统"></a>2. 通过ssh命令进入服务器文件系统</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh root@11.11.11.11 -p22</span><br></pre></td></tr></table></figure>
+<ul>
+<li>ssh是一种网络协议，用于计算机之间的加密登录。如果一个用户从本地计算机，使用SSH协议登录另一台远程计算机，我们就可以认为，这种登录是安全的，即使被中途截获，密码也不会泄露。</li>
+<li>ssh对应的端口是22端口。</li>
+<li>11.11.11.11 服务器的IP</li>
+<li>-p22        进入22端口，如果是22端口，这个参数可以不写。如果修改，端口跟在-p后边就可以了。</li>
+</ul>
+<h3 id="3-安装mysql"><a href="#3-安装mysql" class="headerlink" title="3. 安装mysql"></a>3. 安装mysql</h3><ul>
+<li><p>更新apt-get</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>下载mysql</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install mysql-server</span><br><span class="line">sudo apt-get install mysql-client</span><br><span class="line">sudo apt-get install libmysqlclient-dev</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>询问是否继续时，输入：Y<br>在安装过程中，会弹出一个界面要求设置mysql的root密码，这里一定要设置，省的安完之后设置。<br>&lt;<img src="/assets/postImg/mysql_password.png" alt="mysql需要设置root密码"><br>再次输入密码：<br>&lt;<img src="/assets/postImg/linux_mysql_password_set.png" alt="再次输入"></p>
+<ul>
+<li>检验是否安装成功<br>执行<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -tap|grep mysql</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>如果出现以下情况，就是安装成功<br><img src="/assets/postImg/linux_mysql_success.jpg" alt="mysql安装成功"></p>
+<ul>
+<li>查看mysql版本<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -V</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>结果为：<br><img src="/assets/postImg/linux_mysql_version.jpg" alt="查看mysql版本"></p>
+<h3 id="4-把sql文件导入"><a href="#4-把sql文件导入" class="headerlink" title="4. 把sql文件导入"></a>4. 把sql文件导入</h3><ul>
+<li>使用FileZilla把sql文件放入服务器文件中，假设放到 /usr/data/video.sql目录下。</li>
+<li><p>在shell中进入mysql</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -uroot -p</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>导入sql文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source /usr/data/video.sql</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="5-安装maven"><a href="#5-安装maven" class="headerlink" title="5. 安装maven"></a>5. 安装maven</h3><p>因为我要部署的项目是maven项目，所以需要安装maven<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt install maven</span><br></pre></td></tr></table></figure></p>
+<h3 id="5-卸载Ubuntu自带的OpenJdk"><a href="#5-卸载Ubuntu自带的OpenJdk" class="headerlink" title="5. 卸载Ubuntu自带的OpenJdk"></a>5. 卸载Ubuntu自带的OpenJdk</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get remove openjdk*</span><br></pre></td></tr></table></figure>
+<h3 id="6-安装JDK"><a href="#6-安装JDK" class="headerlink" title="6. 安装JDK"></a>6. 安装JDK</h3><ul>
+<li>检测服务器是否有JDK<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -version</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>如果出现以下结果，则说明JDK已经存在：<br>&lt;<img src="/assets/postImg/linux_jdk_success.jpg" alt="JDK存在"></p>
+<p>如果不存在，接下来安装JDK</p>
+<ul>
+<li><p>在官网下载JDK，放入/home/software</p>
+</li>
+<li><p>创建/usr/lib/jvm，以便放入解压后的文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/lib</span><br><span class="line">mkdir jvm</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>解压并把解压后的文件放入/usr/lib/jvm目录中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd /home/software</span><br><span class="line">tar -xzvf jdk-8u152-linux-x64.tar.gz</span><br><span class="line">mv jdk1.8.0_152 /usr/lib/jvm/</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>进入/usr/lib/jvm，重命名java1.8</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/lib/jvm</span><br><span class="line">mv jdk1.8.0_152 java1.8</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>添加路径</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/profile</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>按i<br>添加路径<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">export JAVA_HOME=/usr/lib/jvm/java1.8</span><br><span class="line">export JRE_HOME=$&#123;JAVA_HOME&#125;/jre</span><br><span class="line">export CLASSPATH=.:$&#123;JAVA_HOME&#125;/lib:$&#123;JRE_HOME&#125;/lib</span><br><span class="line">export PATH=$&#123;JAVA_HOME&#125;/bin:$PATH</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><p>执行命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source /etc/profile</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>测试JDK是否安装成功</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -version</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>结果是以下结果，则安装成功。<br>&lt;<img src="/assets/postImg/linux_jdk_success.png" alt="jdk安装成功"></p>
+<h3 id="7-直接用springboot内置Tomcat部署"><a href="#7-直接用springboot内置Tomcat部署" class="headerlink" title="7. 直接用springboot内置Tomcat部署"></a>7. 直接用springboot内置Tomcat部署</h3><p>在项目根目录下，执行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn spring-boot:run -Pdev</span><br></pre></td></tr></table></figure></p>
+<p>参数： -P 选择运行环境</p>
+<h3 id="8-在外部的Tomcat上部署项目"><a href="#8-在外部的Tomcat上部署项目" class="headerlink" title="8. 在外部的Tomcat上部署项目"></a>8. 在外部的Tomcat上部署项目</h3><h4 id="1-Ubuntu-安装-Tomcat"><a href="#1-Ubuntu-安装-Tomcat" class="headerlink" title="1. Ubuntu 安装 Tomcat"></a>1. Ubuntu 安装 Tomcat</h4><ul>
+<li><em>– <a href="https://tomcat.apache.org/download-80.cgi" target="_blank" rel="noopener">下载Tomcat8.5</a></em><br><img src="/assets/postImg/tomcat_download.jpg" alt="Tomcat下载"></li>
+<li><p>将 下载的tar.gz放到 Ubuntu 上，我放到了/usr</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf apache-tomcat-8.5.24.tar.gz</span><br><span class="line"># 为文件夹重命名</span><br><span class="line">mv apache-tomcat-8.5.24 tomcat</span><br><span class="line"># 修改tomcat文件夹的使用权限</span><br><span class="line">chmod 755 -R tomcat</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>进入目录/usr/tomcat/bin，编辑文件startup.sh，在最后一行之前加入如下信息：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># set java environment</span><br><span class="line">export JAVA_HOME=/usr/lib/jvm/java1.8</span><br><span class="line">export JRE_HOME=$&#123;JAVA_HOME&#125;/jre</span><br><span class="line">export CLASSPATH=.:$&#123;JAVA_HOME&#125;/lib:$&#123;JRE_HOME&#125;/lib</span><br><span class="line">export PATH=$&#123;JAVA_HOME&#125;/bin:$PATH</span><br><span class="line"></span><br><span class="line"># tomcat</span><br><span class="line">export CATALINA_HOME=/usr/tomcat</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>启动tomcat</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./startup.sh</span><br></pre></td></tr></table></figure>
+<p><img src="/assets/postImg/tomcat_startup.jpg" alt="启动Tomcat"></p>
+</li>
+<li><p>浏览器访问<br><img src="/assets/postImg/tomcat_startup_success.jpg" alt="访问"></p>
+<p>至此Tomcat就安装成功了</p>
+</li>
+</ul>
+<h4 id="2-把打包好的war包放到webapp，重启tomcat"><a href="#2-把打包好的war包放到webapp，重启tomcat" class="headerlink" title="2. 把打包好的war包放到webapp，重启tomcat"></a>2. 把打包好的war包放到webapp，重启tomcat</h4>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Spring-Boot/" rel="tag"># Spring Boot</a>
+          
+            <a href="/tags/Ubuntu/" rel="tag"># Ubuntu</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/27/docker-ubuntu-content/" rel="next" title="Ubuntu目录结构">
+                <i class="fa fa-chevron-left"></i> Ubuntu目录结构
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/27/server-deploy-springboot-error/" rel="prev" title="服务器部署Spring Boot项目遇到的问题">
+                服务器部署Spring Boot项目遇到的问题 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">_胡er</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-前言"><span class="nav-number">1.</span> <span class="nav-text">1. 前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-通过ssh命令进入服务器文件系统"><span class="nav-number">2.</span> <span class="nav-text">2. 通过ssh命令进入服务器文件系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-安装mysql"><span class="nav-number">3.</span> <span class="nav-text">3. 安装mysql</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-把sql文件导入"><span class="nav-number">4.</span> <span class="nav-text">4. 把sql文件导入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-安装maven"><span class="nav-number">5.</span> <span class="nav-text">5. 安装maven</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-卸载Ubuntu自带的OpenJdk"><span class="nav-number">6.</span> <span class="nav-text">5. 卸载Ubuntu自带的OpenJdk</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-安装JDK"><span class="nav-number">7.</span> <span class="nav-text">6. 安装JDK</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-直接用springboot内置Tomcat部署"><span class="nav-number">8.</span> <span class="nav-text">7. 直接用springboot内置Tomcat部署</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-在外部的Tomcat上部署项目"><span class="nav-number">9.</span> <span class="nav-text">8. 在外部的Tomcat上部署项目</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-Ubuntu-安装-Tomcat"><span class="nav-number">9.1.</span> <span class="nav-text">1. Ubuntu 安装 Tomcat</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-把打包好的war包放到webapp，重启tomcat"><span class="nav-number">9.2.</span> <span class="nav-text">2. 把打包好的war包放到webapp，重启tomcat</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">_胡er</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

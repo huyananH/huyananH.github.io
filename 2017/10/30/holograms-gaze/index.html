@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Holograms," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="1. 前言凝视是输入的第一种形式，它揭示了用户的意图和意识。Holograms 210（又名Project Explorer）深入研究了与凝视相关的Windows全息图的概念。我们将为我们的游标和全息图添加上下文感知，充分利用你的应用去了解用户的凝视。">
+<meta name="keywords" content="Holograms">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Holograms 210：Gaze（凝视）">
+<meta property="og:url" content="http://huyanan.top/2017/10/30/holograms-gaze/index.html">
+<meta property="og:site_name" content="_胡er的博客">
+<meta property="og:description" content="1. 前言凝视是输入的第一种形式，它揭示了用户的意图和意识。Holograms 210（又名Project Explorer）深入研究了与凝视相关的Windows全息图的概念。我们将为我们的游标和全息图添加上下文感知，充分利用你的应用去了解用户的凝视。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://huyanan.top/assets/holoLens/Holograms210.jpg">
+<meta property="og:updated_time" content="2018-01-31T11:25:32.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Holograms 210：Gaze（凝视）">
+<meta name="twitter:description" content="1. 前言凝视是输入的第一种形式，它揭示了用户的意图和意识。Holograms 210（又名Project Explorer）深入研究了与凝视相关的Windows全息图的概念。我们将为我们的游标和全息图添加上下文感知，充分利用你的应用去了解用户的凝视。">
+<meta name="twitter:image" content="http://huyanan.top/assets/holoLens/Holograms210.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://huyanan.top/2017/10/30/holograms-gaze/"/>
+
+
+
+
+
+  <title>Holograms 210：Gaze（凝视） | _胡er的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">_胡er的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://huyanan.top/2017/10/30/holograms-gaze/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="_胡er">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="_胡er的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Holograms 210：Gaze（凝视）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-30T16:24:37+08:00">
+                2017-10-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="/assets/holoLens/Holograms210.jpg"></p>
+<h3 id="1-前言"><a href="#1-前言" class="headerlink" title="1. 前言"></a>1. 前言</h3><p>凝视是输入的第一种形式，它揭示了用户的意图和意识。Holograms 210（又名Project Explorer）深入研究了与凝视相关的Windows全息图的概念。我们将为我们的游标和全息图添加上下文感知，充分利用你的应用去了解用户的凝视。</p>
+<a id="more"></a>
+<p>我们有一个友好的宇航员去帮助我们学习凝视的概念。在Holograms 101，我们有在你的凝视下的一个简单的光标。今天我们要做一个超简单的光标。</p>
+<ul>
+<li>我们做光标和全息图凝视：两者都将根据用户正在看或者用户不在看的位置进行修改，这使他们具有上下文感知能力。</li>
+<li>我们将向你展示定位技术来帮助用户点击更小的目标。</li>
+<li>我们将向你展示如何使用方向指示器将用户的注意力吸引到你的全息图上。</li>
+<li>我们将教你如何在用户的世界各地移动时，将用户的全息图带给你。</li>
+</ul>
+<h3 id="2-准备"><a href="#2-准备" class="headerlink" title="2. 准备"></a>2. 准备</h3><ul>
+<li><em>– <a href="https://developer.microsoft.com/en-us/windows/mixed-reality/install_the_tools" target="_blank" rel="noopener">安装了正确工具</a></em> 的Windows 10电脑。</li>
+<li>一些基础的C#编程能力。</li>
+<li>你应该完成 <em>– <a href="https://developer.microsoft.com/en-us/windows/mixed-reality/holograms_101" target="_blank" rel="noopener">Holograms 101</a></em> 。</li>
+<li>配置 <em>– <a href="https://developer.microsoft.com/en-us/windows/mixed-reality/Using_Visual_Studio.html#enabling_developer_mode" target="_blank" rel="noopener">用于开发</a></em> 的HoloLens设备。</li>
+</ul>
+<h3 id="3-项目文件"><a href="#3-项目文件" class="headerlink" title="3. 项目文件"></a>3. 项目文件</h3><ul>
+<li><em>– 下载项目所需的<a href="https://github.com/Microsoft/HolographicAcademy/archive/Holograms-210-Gaze.zip" target="_blank" rel="noopener">文件</a></em> 需要Unity2017.02或以上的版本。<ul>
+<li>如果你还需要Unity5.6的支持， <em>– 请使用<a href="https://github.com/Microsoft/HolographicAcademy/archive/v1.5.6-210.zip" target="_blank" rel="noopener">这个版本</a></em></li>
+<li>如果你还需要Unity5.5的支持， <em>– 请使用<a href="https://github.com/Microsoft/HolographicAcademy/archive/v1.5.5-210.zip" target="_blank" rel="noopener">这个版本</a></em></li>
+<li>如果你还需要Unity5.4的支持， <em>– 请使用<a href="https://github.com/Microsoft/HolographicAcademy/archive/v1.5.4-210.zip" target="_blank" rel="noopener">这个版本</a></em></li>
+</ul>
+</li>
+<li>解压文件放到你的桌面或者其他容易找到的路径。</li>
+</ul>
+<h3 id="4-排错和提示"><a href="#4-排错和提示" class="headerlink" title="4. 排错和提示"></a>4. 排错和提示</h3><ul>
+<li>需要在Tools（工具）-&gt; Options（选项） -&gt;Debugging（调试）下禁用（取消选中）“Just My Code”（仅我的代码），以便在代码中触发断点</li>
+</ul>
+<h3 id="5-内容"><a href="#5-内容" class="headerlink" title="5. 内容"></a>5. 内容</h3><h4 id="第一章-Unity设置"><a href="#第一章-Unity设置" class="headerlink" title="第一章-Unity设置"></a>第一章-Unity设置</h4><h5 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h5><ul>
+<li>为HoloLens开发优化Unity。</li>
+<li>导入资源文件并设置场景。</li>
+<li>在HoloLens中看宇航员。</li>
+</ul>
+<h4 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h4><ul>
+<li>启动Unity。</li>
+<li>选择New Project（创建项目）。</li>
+<li>该项目命名为ModelExplorer。</li>
+<li>输入该项目路径为先前解压文件的路径。</li>
+<li>确认项目为3D。</li>
+<li>点击Create Project(创建项目)。</li>
+</ul>
+<h4 id="对于HoloLens-Unity的设置"><a href="#对于HoloLens-Unity的设置" class="headerlink" title="对于HoloLens,Unity的设置"></a>对于HoloLens,Unity的设置</h4><p>我们需要让Unity知道我们试图导出应用程序应该创建一个全息图，而不是2D视图。我们用添加HoloLens为虚拟现实设备来实现这一点。</p>
+<ul>
+<li>选择Edit-&gt;Project Settings-&gt;Player(查看播放器设置)</li>
+<li>在Player的Inspector面板中选择Windows Store的图标。</li>
+<li>展开Other Settings（其他设置）。</li>
+<li>在Rendering（渲染）部分，选中“Virtual Reality Supported”复选框添加Virtual Reality SDKs列表。（我在实际操作中，是点击Virtual Reality moved to XR Settings，然后再选中“Virtual Reality Supported”）。</li>
+<li>验证列表是否出现Windows Holographic，如果没有，则选择+按钮，然后选择 Windows Holographic。（我在实际操作中，出现的是Windows Mixed Reality）。</li>
+<li>选择Edit -&gt;Project Settings-&gt;Quality。</li>
+<li>点击Windows Store图标下边Default中的向下箭头。</li>
+<li>对于Windows Store APP选择Fastest。</li>
+</ul>
+<h4 id="导入图形资源文件"><a href="#导入图形资源文件" class="headerlink" title="导入图形资源文件"></a>导入图形资源文件</h4><ul>
+<li>右击Project面板的Assets（资源文件）。</li>
+<li>点击Import Package(导包)-&gt;Custom Package(自定义包)。</li>
+<li>进入你先前解压的文件目录下，进入Starting目录下，点击ModelExplorer.unitypackage。</li>
+<li>点击Open（打开）。</li>
+<li>包加载完之后，点击Import（导入）按钮。</li>
+</ul>
+<h4 id="设置场景"><a href="#设置场景" class="headerlink" title="设置场景"></a>设置场景</h4><ul>
+<li>在Hierarchy面板，删除Main Camera。</li>
+<li>在Project面板中的HoloToolkitwenjian，打开Utilities文件，然后打开Prefabs文件。</li>
+<li>把Prefabs文件夹下的Main Camera拖到Hierarchy面板中。</li>
+<li>右击Hierarchy面板中的Directional Light并选择删除。</li>
+<li>在Project面板中的Holograms文件中，将一下资源文件拖到Hierarchy面板中。<ul>
+<li>AstroMan（宇航员）</li>
+<li>Lights (方向光)</li>
+<li>SpaceAudioSource（空间音频资源）。</li>
+<li>SpaceBackground(空间背景)。</li>
+</ul>
+</li>
+<li>点击Play（运行）去看宇航员。</li>
+<li>再次点击Play（运行）去停止。</li>
+<li>在Project面板中，找到Fitbox资源文件拖到Hierarchy面板的根目录下。</li>
+<li>在Hierarchy面板中选择Fitbox。</li>
+<li>把AstroMan集合拖到Inspector面板中的Hologram Collection属性中。</li>
+</ul>
+<h4 id="构建项目"><a href="#构建项目" class="headerlink" title="构建项目"></a>构建项目</h4><ul>
+<li>保存新的场景：File-&gt;Save Scenes As。</li>
+<li>点击New Folder（新建文件夹）并把文件夹的名字改为Scenes。</li>
+<li>把项目名字设为“ModelExplorer”并保存到Scenes文件中。</li>
+<li>在Unity中选择File-&gt;Build Settings。</li>
+<li>点击Add Open Scenes去添加场景。</li>
+<li>在Platform（平台）列表中，选择Windows Store并点击Switch Platform（更换平台）。</li>
+<li>把SDK设为Universal 10 ，并把Build Type设为D3D。</li>
+<li>选中Unity C# Projects。</li>
+<li>点击Build。</li>
+<li>创建一个名为App的文件夹。</li>
+<li>单击App文件夹。</li>
+<li>点击选中文件夹。</li>
+<li>到Unity执行完之后，会出现一个文件资源管理器窗口。</li>
+<li>打开App文件夹。</li>
+<li>打开ModelExplorer visual Studio解决方案。（就是双击App文件夹下的ModelExplorer.sln文件）</li>
+<li>在Visual Studio中，右击解决方案资源管理器中的Pack.appxmanifest，并选择View Code（查看代码）。</li>
+<li>找到指定TargetDeviceFamily行，并修改Name=Windows.Universal为Name=Windows.Holographic。</li>
+<li>保存Pack.appxmanifest文件。</li>
+<li>在Visual Studio的顶部工具栏中，把Debug改为Release，把ARM改为x86。</li>
+<li>点击Device旁边的向下箭头，选择Remote Machine。</li>
+<li>输入你设备的IP地址，并设置Authentication Mode（认证模式）为Universal（Unencrypted Protocol）未加密协议。点击选择。如果你不知道你设备的IP地址，在Settings-&gt;Network &amp; Internet-&gt; Advanced Options中查看。</li>
+<li>在顶部菜单中，点击Debug（调试）-&gt;Start Without debugging（开始执行（不调试）） 或者按Ctrl+F5，如果这是第一次在你的设备上部署，你将需要与Visual Studio中匹配。</li>
+</ul>
+<h4 id="第二章-光标和目标的反馈"><a href="#第二章-光标和目标的反馈" class="headerlink" title="第二章-光标和目标的反馈"></a>第二章-光标和目标的反馈</h4><h5 id="目标-1"><a href="#目标-1" class="headerlink" title="目标"></a>目标</h5><ul>
+<li>光标的视觉设计和行为。</li>
+<li>基于凝视的光标反馈。</li>
+<li>基于凝视的全息图反馈。</li>
+</ul>
+<p>我们将以一些光标设计原则为基础，换句话说：</p>
+<blockquote>
+</blockquote>
+<ol>
+<li>光标总是存在的。</li>
+<li>不要让光标太小或太大。</li>
+<li>避免遮挡内容。</li>
+</ol>
+<h5 id="说明-1"><a href="#说明-1" class="headerlink" title="说明"></a>说明</h5><ul>
+<li>点击Hierarchy面板中的Create菜单。</li>
+<li>选中Create Empty。</li>
+<li>右击新创建的GameObject，并重命名为“Managers”。</li>
+<li>在Inspector面板中，点击Add Component按钮。</li>
+<li>在菜单中，在搜索框中查询Gaze Manager。选中搜索的结果。</li>
+<li>在Inspector面板中，选中RaycastLayerMask下拉，并取消选中TransparentFX。</li>
+<li>在Project面板中的HoloToolkit/Input/Prefabs文件，找到Cursor资源文件。</li>
+<li>把Cursor拖到Hierarchy面板中。</li>
+<li>在Hierarchy面板中，选中Cursor。</li>
+<li>在Inspector面板中，点击Add Component按钮。</li>
+<li>在菜单搜索框中，输入Cursor Manager。选中搜索结果。</li>
+<li>展开Hierarchy面板中的Cursor。</li>
+<li>把CursorOnHolograms拖到Inspector面板中的Cursor On Holograms。</li>
+<li>把CursorOffHolograms拖到Inspector面板中的Cursor Off Holograms。</li>
+</ul>
+<p>此时，我们需要编辑GazeManager.cs文件，并编辑它完成以下任务：</p>
+<ul>
+<li>完成一个物理射线。</li>
+<li>存储射线交叉点的位置和法线。</li>
+<li>如果这条射线没有击中任何东西，把位置和法线设为默认。<br>你可以在GazeManager.cs注解中定位“Coding Exercise”去写你自己的代码-每一行注解对应一行代码。你可以通过这种方式去完成这个文件：</li>
+</ul>
+<h5 id="GazeManager-cs"><a href="#GazeManager-cs" class="headerlink" title="GazeManager.cs"></a>GazeManager.cs</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br></pre></td><td class="code"><pre><span class="line">using UnityEngine;</span><br><span class="line"></span><br><span class="line">namespace Academy.HoloToolkit.Unity</span><br><span class="line">&#123;</span><br><span class="line">    /// &lt;summary&gt;</span><br><span class="line">    /// GazeManager determines the location of the user&apos;s gaze, hit position and normals.</span><br><span class="line">    /// &lt;/summary&gt;</span><br><span class="line">    public class GazeManager : Singleton&lt;GazeManager&gt;</span><br><span class="line">    &#123;</span><br><span class="line">        [Tooltip(&quot;Maximum gaze distance for calculating a hit.&quot;)]</span><br><span class="line">        public float MaxGazeDistance = 5.0f;</span><br><span class="line"></span><br><span class="line">        [Tooltip(&quot;Select the layers raycast should target.&quot;)]</span><br><span class="line">        public LayerMask RaycastLayerMask = Physics.DefaultRaycastLayers;</span><br><span class="line"></span><br><span class="line">        /// &lt;summary&gt;</span><br><span class="line">        /// Physics.Raycast result is true if it hits a Hologram.</span><br><span class="line">        /// &lt;/summary&gt;</span><br><span class="line">        public bool Hit &#123; get; private set; &#125;</span><br><span class="line"></span><br><span class="line">        /// &lt;summary&gt;</span><br><span class="line">        /// HitInfo property gives access</span><br><span class="line">        /// to RaycastHit public members.</span><br><span class="line">        /// &lt;/summary&gt;</span><br><span class="line">        public RaycastHit HitInfo &#123; get; private set; &#125;</span><br><span class="line"></span><br><span class="line">        /// &lt;summary&gt;</span><br><span class="line">        /// Position of the user&apos;s gaze.</span><br><span class="line">        /// &lt;/summary&gt;</span><br><span class="line">        public Vector3 Position &#123; get; private set; &#125;</span><br><span class="line"></span><br><span class="line">        /// &lt;summary&gt;</span><br><span class="line">        /// RaycastHit Normal direction.</span><br><span class="line">        /// &lt;/summary&gt;</span><br><span class="line">        public Vector3 Normal &#123; get; private set; &#125;</span><br><span class="line"></span><br><span class="line">        private GazeStabilizer gazeStabilizer;</span><br><span class="line">        private Vector3 gazeOrigin;</span><br><span class="line">        private Vector3 gazeDirection;</span><br><span class="line"></span><br><span class="line">        void Awake()</span><br><span class="line">        &#123;</span><br><span class="line">            /* TODO: DEVELOPER CODING EXERCISE 3.a */</span><br><span class="line"></span><br><span class="line">            // 3.a: GetComponent GazeStabilizer and assign it to gazeStabilizer.</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        private void Update()</span><br><span class="line">        &#123;</span><br><span class="line">            // 2.a: Assign Camera&apos;s main transform position to gazeOrigin.</span><br><span class="line">            gazeOrigin = Camera.main.transform.position;</span><br><span class="line"></span><br><span class="line">            // 2.a: Assign Camera&apos;s main transform forward to gazeDirection.</span><br><span class="line">            gazeDirection = Camera.main.transform.forward;</span><br><span class="line"></span><br><span class="line">            // 3.a: Using gazeStabilizer, call function UpdateHeadStability.</span><br><span class="line">            // Pass in gazeOrigin and Camera&apos;s main transform rotation.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">            // 3.a: Using gazeStabilizer, get the StableHeadPosition and</span><br><span class="line">            // assign it to gazeOrigin.</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">            UpdateRaycast();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        /// &lt;summary&gt;</span><br><span class="line">        /// Calculates the Raycast hit position and normal.</span><br><span class="line">        /// &lt;/summary&gt;</span><br><span class="line">        private void UpdateRaycast()</span><br><span class="line">        &#123;</span><br><span class="line">            /* TODO: DEVELOPER CODING EXERCISE 2.a */</span><br><span class="line"></span><br><span class="line">            // 2.a: Create a variable hitInfo of type RaycastHit.</span><br><span class="line">            RaycastHit hitInfo;</span><br><span class="line"></span><br><span class="line">            // 2.a: Perform a Unity Physics Raycast.</span><br><span class="line">            // Collect return value in public property Hit.</span><br><span class="line">            // Pass in origin as gazeOrigin and direction as gazeDirection.</span><br><span class="line">            // Collect the information in hitInfo.</span><br><span class="line">            // Pass in MaxGazeDistance and RaycastLayerMask.</span><br><span class="line">            Hit = Physics.Raycast(gazeOrigin,</span><br><span class="line">                           gazeDirection,</span><br><span class="line">                           out hitInfo,</span><br><span class="line">                           MaxGazeDistance,</span><br><span class="line">                           RaycastLayerMask);</span><br><span class="line"></span><br><span class="line">            // 2.a: Assign hitInfo variable to the HitInfo public property</span><br><span class="line">            // so other classes can access it.</span><br><span class="line">            HitInfo = hitInfo;</span><br><span class="line"></span><br><span class="line">            if (Hit)</span><br><span class="line">            &#123;</span><br><span class="line">                // If raycast hit a hologram...</span><br><span class="line"></span><br><span class="line">                // 2.a: Assign property Position to be the hitInfo point.</span><br><span class="line">                Position = hitInfo.point;</span><br><span class="line">                // 2.a: Assign property Normal to be the hitInfo normal.</span><br><span class="line">                Normal = hitInfo.normal;</span><br><span class="line">            &#125;</span><br><span class="line">            else</span><br><span class="line">            &#123;</span><br><span class="line">                // If raycast did not hit a hologram...</span><br><span class="line">                // Save defaults ...</span><br><span class="line"></span><br><span class="line">                // 2.a: Assign Position to be gazeOrigin plus MaxGazeDistance times gazeDirection.</span><br><span class="line">                Position = gazeOrigin + (gazeDirection * MaxGazeDistance);</span><br><span class="line">                // 2.a: Assign Normal to be the user&apos;s gazeDirection.</span><br><span class="line">                Normal = gazeDirection;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>接下来，你需要编辑CursorManager.cs，为了实现以下几点：</p>
+<blockquote>
+</blockquote>
+<ol>
+<li>决定哪个光标被激活。</li>
+<li>根据它是否在全息图上去修改光标。</li>
+<li>把光标定位到用户凝视的位置。</li>
+</ol>
+<p>此外，欢迎你通过定位注解中的“Coding Exercise”去写你自己的代码，或者使用以下代码：</p>
+<h5 id="CursorManager-cs"><a href="#CursorManager-cs" class="headerlink" title="CursorManager.cs"></a>CursorManager.cs</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line">using UnityEngine;</span><br><span class="line"></span><br><span class="line">namespace Academy.HoloToolkit.Unity</span><br><span class="line">&#123;</span><br><span class="line">    /// &lt;summary&gt;</span><br><span class="line">    /// CursorManager class takes Cursor GameObjects.</span><br><span class="line">    /// One that is on Holograms and another off Holograms.</span><br><span class="line">    /// Shows the appropriate Cursor when a Hologram is hit.</span><br><span class="line">    /// Places the appropriate Cursor at the hit position.</span><br><span class="line">    /// Matches the Cursor normal to the hit surface.</span><br><span class="line">    /// &lt;/summary&gt;</span><br><span class="line">    public class CursorManager : Singleton&lt;CursorManager&gt;</span><br><span class="line">    &#123;</span><br><span class="line">        [Tooltip(&quot;Drag the Cursor object to show when it hits a hologram.&quot;)]</span><br><span class="line">        public GameObject CursorOnHolograms;</span><br><span class="line"></span><br><span class="line">        [Tooltip(&quot;Drag the Cursor object to show when it does not hit a hologram.&quot;)]</span><br><span class="line">        public GameObject CursorOffHolograms;</span><br><span class="line"></span><br><span class="line">        void Awake()</span><br><span class="line">        &#123;</span><br><span class="line">            if (CursorOnHolograms == null || CursorOffHolograms == null)</span><br><span class="line">            &#123;</span><br><span class="line">                return;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            // Hide the Cursors to begin with.</span><br><span class="line">            CursorOnHolograms.SetActive(false);</span><br><span class="line">            CursorOffHolograms.SetActive(false);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        void Update()</span><br><span class="line">        &#123;</span><br><span class="line">            /* TODO: DEVELOPER CODING EXERCISE 2.b */</span><br><span class="line"></span><br><span class="line">            if (GazeManager.Instance == null || CursorOnHolograms == null || CursorOffHolograms == null)</span><br><span class="line">            &#123;</span><br><span class="line">                return;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            if (GazeManager.Instance.Hit)</span><br><span class="line">            &#123;</span><br><span class="line">                // 2.b: SetActive true the CursorOnHolograms to show cursor.</span><br><span class="line">                CursorOnHolograms.SetActive(true);</span><br><span class="line">                // 2.b: SetActive false the CursorOffHolograms hide cursor.</span><br><span class="line">                CursorOffHolograms.SetActive(false);</span><br><span class="line">            &#125;</span><br><span class="line">            else</span><br><span class="line">            &#123;</span><br><span class="line">                // 2.b: SetActive true CursorOffHolograms to show cursor.</span><br><span class="line">                CursorOffHolograms.SetActive(true);</span><br><span class="line">                // 2.b: SetActive false CursorOnHolograms to hide cursor.</span><br><span class="line">                CursorOnHolograms.SetActive(false);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            // 2.b: Assign gameObject&apos;s transform position equals GazeManager&apos;s instance Position.</span><br><span class="line">            gameObject.transform.position = GazeManager.Instance.Position;</span><br><span class="line"></span><br><span class="line">            // 2.b: Assign gameObject&apos;s transform up vector equals GazeManager&apos;s instance Normal.</span><br><span class="line">            gameObject.transform.up = GazeManager.Instance.Normal;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>通过File-&gt;Build Settings去重新构建应用。</li>
+<li>打开App文件夹。</li>
+<li>用visual Studio打开ModelExplorer解决方案。</li>
+<li>点击Debug-&gt;Start Without Debugging 或者按Ctrl+F5。</li>
+<li>观察光标是怎么画的，并且如果触碰到全息图，它是如何改变它的外观的。</li>
+<li>在Hierarchy面板选择Managers。</li>
+<li>在Inspector面板，点击Add Component按钮。</li>
+<li>在菜单，搜索框输入Interactible Manager，选中搜索结果。</li>
+<li>在Hierarchy面板，选中AstroMan对象。</li>
+<li>在Inspector面板，点击Add Component按钮。</li>
+<li>在菜单，搜索框输入Interactible，选中搜索关系。</li>
+</ul>
+<p>你需要编辑InteractibleManager.cs和Interactible.cs来实现以下几点：</p>
+<blockquote>
+</blockquote>
+<ol>
+<li>在InteractibleManager.cs中，获得凝视射线投射点并保存相关的GameObject。</li>
+<li>如果凝视一个可以和你交互的物体，发送GazeEntered消息。</li>
+<li>如果实现离开那个和你交互的物体，则发送GazeExited消息。</li>
+<li>在Interactible.cs中处理GazeEntered和GazeExited的回调函数。</li>
+</ol>
+<p>试着自己在InteractibleManager.cs和Interactible.cs中做代码练习，或者使用一下解决方案：</p>
+<h5 id="InteractibleManager-cs"><a href="#InteractibleManager-cs" class="headerlink" title="InteractibleManager.cs"></a>InteractibleManager.cs</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line">using Academy.HoloToolkit.Unity;</span><br><span class="line">using UnityEngine;</span><br><span class="line"></span><br><span class="line">/// &lt;summary&gt;</span><br><span class="line">/// InteractibleManager keeps tracks of which GameObject</span><br><span class="line">/// is currently in focus.</span><br><span class="line">/// &lt;/summary&gt;</span><br><span class="line">public class InteractibleManager : Singleton&lt;InteractibleManager&gt;</span><br><span class="line">&#123;</span><br><span class="line">    public GameObject FocusedGameObject &#123; get; private set; &#125;</span><br><span class="line"></span><br><span class="line">    private GameObject oldFocusedGameObject = null;</span><br><span class="line"></span><br><span class="line">    void Start()</span><br><span class="line">    &#123;</span><br><span class="line">        FocusedGameObject = null;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    void Update()</span><br><span class="line">    &#123;</span><br><span class="line">        /* TODO: DEVELOPER CODING EXERCISE 2.c */</span><br><span class="line"></span><br><span class="line">        oldFocusedGameObject = FocusedGameObject;</span><br><span class="line"></span><br><span class="line">        if (GazeManager.Instance.Hit)</span><br><span class="line">        &#123;</span><br><span class="line">            RaycastHit hitInfo = GazeManager.Instance.HitInfo;</span><br><span class="line">            if (hitInfo.collider != null)</span><br><span class="line">            &#123;</span><br><span class="line">                // 2.c: Assign the hitInfo&apos;s collider gameObject to the FocusedGameObject.</span><br><span class="line">                FocusedGameObject = hitInfo.collider.gameObject;</span><br><span class="line">            &#125;</span><br><span class="line">            else</span><br><span class="line">            &#123;</span><br><span class="line">                FocusedGameObject = null;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        else</span><br><span class="line">        &#123;</span><br><span class="line">            FocusedGameObject = null;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        if (FocusedGameObject != oldFocusedGameObject)</span><br><span class="line">        &#123;</span><br><span class="line">            ResetFocusedInteractible();</span><br><span class="line"></span><br><span class="line">            if (FocusedGameObject != null)</span><br><span class="line">            &#123;</span><br><span class="line">                if (FocusedGameObject.GetComponent&lt;Interactible&gt;() != null)</span><br><span class="line">                &#123;</span><br><span class="line">                    // 2.c: Send a GazeEntered message to the FocusedGameObject.</span><br><span class="line">                    FocusedGameObject.SendMessage(&quot;GazeEntered&quot;);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private void ResetFocusedInteractible()</span><br><span class="line">    &#123;</span><br><span class="line">        if (oldFocusedGameObject != null)</span><br><span class="line">        &#123;</span><br><span class="line">            if (oldFocusedGameObject.GetComponent&lt;Interactible&gt;() != null)</span><br><span class="line">            &#123;</span><br><span class="line">                // 2.c: Send a GazeExited message to the oldFocusedGameObject.</span><br><span class="line">                oldFocusedGameObject.SendMessage(&quot;GazeExited&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="Interactible-cs"><a href="#Interactible-cs" class="headerlink" title="Interactible.cs"></a>Interactible.cs</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line">using UnityEngine;</span><br><span class="line"></span><br><span class="line">/// &lt;summary&gt;</span><br><span class="line">/// The Interactible class flags a Game Object as being &quot;Interactible&quot;.</span><br><span class="line">/// Determines what happens when an Interactible is being gazed at.</span><br><span class="line">/// &lt;/summary&gt;</span><br><span class="line">public class Interactible : MonoBehaviour</span><br><span class="line">&#123;</span><br><span class="line">    [Tooltip(&quot;Audio clip to play when interacting with this hologram.&quot;)]</span><br><span class="line">    public AudioClip TargetFeedbackSound;</span><br><span class="line">    private AudioSource audioSource;</span><br><span class="line"></span><br><span class="line">    private Material[] defaultMaterials;</span><br><span class="line"></span><br><span class="line">    void Start()</span><br><span class="line">    &#123;</span><br><span class="line">        defaultMaterials = GetComponent&lt;Renderer&gt;().materials;</span><br><span class="line"></span><br><span class="line">        // Add a BoxCollider if the interactible does not contain one.</span><br><span class="line">        Collider collider = GetComponentInChildren&lt;Collider&gt;();</span><br><span class="line">        if (collider == null)</span><br><span class="line">        &#123;</span><br><span class="line">            gameObject.AddComponent&lt;BoxCollider&gt;();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        EnableAudioHapticFeedback();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private void EnableAudioHapticFeedback()</span><br><span class="line">    &#123;</span><br><span class="line">        // If this hologram has an audio clip, add an AudioSource with this clip.</span><br><span class="line">        if (TargetFeedbackSound != null)</span><br><span class="line">        &#123;</span><br><span class="line">            audioSource = GetComponent&lt;AudioSource&gt;();</span><br><span class="line">            if (audioSource == null)</span><br><span class="line">            &#123;</span><br><span class="line">                audioSource = gameObject.AddComponent&lt;AudioSource&gt;();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            audioSource.clip = TargetFeedbackSound;</span><br><span class="line">            audioSource.playOnAwake = false;</span><br><span class="line">            audioSource.spatialBlend = 1;</span><br><span class="line">            audioSource.dopplerLevel = 0;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /* TODO: DEVELOPER CODING EXERCISE 2.d */</span><br><span class="line"></span><br><span class="line">    void GazeEntered()</span><br><span class="line">    &#123;</span><br><span class="line">        for (int i = 0; i &lt; defaultMaterials.Length; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            // 2.d: Uncomment the below line to highlight the material when gaze enters.</span><br><span class="line">            defaultMaterials[i].SetFloat(&quot;_Highlight&quot;, .25f);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    void GazeExited()</span><br><span class="line">    &#123;</span><br><span class="line">        for (int i = 0; i &lt; defaultMaterials.Length; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            // 2.d: Uncomment the below line to remove highlight on material when gaze exits.</span><br><span class="line">            defaultMaterials[i].SetFloat(&quot;_Highlight&quot;, 0f);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    void OnSelect()</span><br><span class="line">    &#123;</span><br><span class="line">        for (int i = 0; i &lt; defaultMaterials.Length; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            defaultMaterials[i].SetFloat(&quot;_Highlight&quot;, .5f);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        // Play the audioSource feedback when we gaze and select a hologram.</span><br><span class="line">        if (audioSource != null &amp;&amp; !audioSource.isPlaying)</span><br><span class="line">        &#123;</span><br><span class="line">            audioSource.Play();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        /* TODO: DEVELOPER CODING EXERCISE 6.a */</span><br><span class="line">        // 6.a: Handle the OnSelect by sending a PerformTagAlong message.</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>和以前一样，构建项目并部署到HoloLens上。</li>
+<li>观察当凝视一个物体时会发生什么，当不凝视的时候，会发生什么。</li>
+</ul>
+<h4 id="第三章-Targeting-Techniques-目标技术"><a href="#第三章-Targeting-Techniques-目标技术" class="headerlink" title="第三章-Targeting Techniques(目标技术)"></a>第三章-Targeting Techniques(目标技术)</h4><h5 id="目标-2"><a href="#目标-2" class="headerlink" title="目标"></a>目标</h5><ul>
+<li>使目标全息图更容易。</li>
+<li>稳定自然头部运动。</li>
+</ul>
+<h5 id="说明-2"><a href="#说明-2" class="headerlink" title="说明"></a>说明</h5><ol>
+<li>在Hierarchy面板中，选中Managers。</li>
+<li>在Inspector面板中，点击Add Component按钮。</li>
+<li>在菜单，搜索框中输入Gaze Stabilizer。并选中搜索结果。</li>
+</ol>
+<p>现在，我们将使用GazeStabilizer修改我们的GazeManager.</p>
+<ol>
+<li>用Visual Studio打开GazeManager。</li>
+<li>复制一下的代码到GazeManager.cs，或者你自己完成代码练习3.a。</li>
+</ol>
+<h5 id="GazeManager-cs-1"><a href="#GazeManager-cs-1" class="headerlink" title="GazeManager.cs"></a>GazeManager.cs</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br></pre></td><td class="code"><pre><span class="line">using UnityEngine;</span><br><span class="line"></span><br><span class="line">namespace Academy.HoloToolkit.Unity</span><br><span class="line">&#123;</span><br><span class="line">    /// &lt;summary&gt;</span><br><span class="line">    /// GazeManager determines the location of the user&apos;s gaze, hit position and normals.</span><br><span class="line">    /// &lt;/summary&gt;</span><br><span class="line">    public class GazeManager : Singleton&lt;GazeManager&gt;</span><br><span class="line">    &#123;</span><br><span class="line">        [Tooltip(&quot;Maximum gaze distance for calculating a hit.&quot;)]</span><br><span class="line">        public float MaxGazeDistance = 5.0f;</span><br><span class="line"></span><br><span class="line">        [Tooltip(&quot;Select the layers raycast should target.&quot;)]</span><br><span class="line">        public LayerMask RaycastLayerMask = Physics.DefaultRaycastLayers;</span><br><span class="line"></span><br><span class="line">        /// &lt;summary&gt;</span><br><span class="line">        /// Physics.Raycast result is true if it hits a Hologram.</span><br><span class="line">        /// &lt;/summary&gt;</span><br><span class="line">        public bool Hit &#123; get; private set; &#125;</span><br><span class="line"></span><br><span class="line">        /// &lt;summary&gt;</span><br><span class="line">        /// HitInfo property gives access</span><br><span class="line">        /// to RaycastHit public members.</span><br><span class="line">        /// &lt;/summary&gt;</span><br><span class="line">        public RaycastHit HitInfo &#123; get; private set; &#125;</span><br><span class="line"></span><br><span class="line">        /// &lt;summary&gt;</span><br><span class="line">        /// Position of the user&apos;s gaze.</span><br><span class="line">        /// &lt;/summary&gt;</span><br><span class="line">        public Vector3 Position &#123; get; private set; &#125;</span><br><span class="line"></span><br><span class="line">        /// &lt;summary&gt;</span><br><span class="line">        /// RaycastHit Normal direction.</span><br><span class="line">        /// &lt;/summary&gt;</span><br><span class="line">        public Vector3 Normal &#123; get; private set; &#125;</span><br><span class="line"></span><br><span class="line">        private GazeStabilizer gazeStabilizer;</span><br><span class="line">        private Vector3 gazeOrigin;</span><br><span class="line">        private Vector3 gazeDirection;</span><br><span class="line"></span><br><span class="line">        void Awake()</span><br><span class="line">        &#123;</span><br><span class="line">            /* TODO: DEVELOPER CODING EXERCISE 3.a */</span><br><span class="line"></span><br><span class="line">            // 3.a: GetComponent GazeStabilizer and assign it to gazeStabilizer.</span><br><span class="line">            gazeStabilizer = GetComponent&lt;GazeStabilizer&gt;();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        private void Update()</span><br><span class="line">        &#123;</span><br><span class="line">            // 2.a: Assign Camera&apos;s main transform position to gazeOrigin.</span><br><span class="line">            gazeOrigin = Camera.main.transform.position;</span><br><span class="line"></span><br><span class="line">            // 2.a: Assign Camera&apos;s main transform forward to gazeDirection.</span><br><span class="line">            gazeDirection = Camera.main.transform.forward;</span><br><span class="line"></span><br><span class="line">            // 3.a: Using gazeStabilizer, call function UpdateHeadStability.</span><br><span class="line">            // Pass in gazeOrigin and Camera&apos;s main transform rotation.</span><br><span class="line">            gazeStabilizer.UpdateHeadStability(gazeOrigin, Camera.main.transform.rotation);</span><br><span class="line"></span><br><span class="line">            // 3.a: Using gazeStabilizer, get the StableHeadPosition and</span><br><span class="line">            // assign it to gazeOrigin.</span><br><span class="line">            gazeOrigin = gazeStabilizer.StableHeadPosition;</span><br><span class="line"></span><br><span class="line">            UpdateRaycast();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        /// &lt;summary&gt;</span><br><span class="line">        /// Calculates the Raycast hit position and normal.</span><br><span class="line">        /// &lt;/summary&gt;</span><br><span class="line">        private void UpdateRaycast()</span><br><span class="line">        &#123;</span><br><span class="line">            /* TODO: DEVELOPER CODING EXERCISE 2.a */</span><br><span class="line"></span><br><span class="line">            // 2.a: Create a variable hitInfo of type RaycastHit.</span><br><span class="line">            RaycastHit hitInfo;</span><br><span class="line"></span><br><span class="line">            // 2.a: Perform a Unity Physics Raycast.</span><br><span class="line">            // Collect return value in public property Hit.</span><br><span class="line">            // Pass in origin as gazeOrigin and direction as gazeDirection.</span><br><span class="line">            // Collect the information in hitInfo.</span><br><span class="line">            // Pass in MaxGazeDistance and RaycastLayerMask.</span><br><span class="line">            Hit = Physics.Raycast(gazeOrigin,</span><br><span class="line">                           gazeDirection,</span><br><span class="line">                           out hitInfo,</span><br><span class="line">                           MaxGazeDistance,</span><br><span class="line">                           RaycastLayerMask);</span><br><span class="line"></span><br><span class="line">            // 2.a: Assign hitInfo variable to the HitInfo public property</span><br><span class="line">            // so other classes can access it.</span><br><span class="line">            HitInfo = hitInfo;</span><br><span class="line"></span><br><span class="line">            if (Hit)</span><br><span class="line">            &#123;</span><br><span class="line">                // If raycast hit a hologram...</span><br><span class="line"></span><br><span class="line">                // 2.a: Assign property Position to be the hitInfo point.</span><br><span class="line">                Position = hitInfo.point;</span><br><span class="line">                // 2.a: Assign property Normal to be the hitInfo normal.</span><br><span class="line">                Normal = hitInfo.normal;</span><br><span class="line">            &#125;</span><br><span class="line">            else</span><br><span class="line">            &#123;</span><br><span class="line">                // If raycast did not hit a hologram...</span><br><span class="line">                // Save defaults ...</span><br><span class="line"></span><br><span class="line">                // 2.a: Assign Position to be gazeOrigin plus MaxGazeDistance times gazeDirection.</span><br><span class="line">                Position = gazeOrigin + (gazeDirection * MaxGazeDistance);</span><br><span class="line">                // 2.a: Assign Normal to be the user&apos;s gazeDirection.</span><br><span class="line">                Normal = gazeDirection;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="第四章-Directional-indicator（方向指示器）"><a href="#第四章-Directional-indicator（方向指示器）" class="headerlink" title="第四章-Directional indicator（方向指示器）"></a>第四章-Directional indicator（方向指示器）</h4><h5 id="目标-3"><a href="#目标-3" class="headerlink" title="目标"></a>目标</h5><ul>
+<li>在光标上添加一个方向指示器去帮助找到全息图。</li>
+</ul>
+<h5 id="说明-3"><a href="#说明-3" class="headerlink" title="说明"></a>说明</h5><p>我们将使用DirectionalIndicator.cs文件，它将：</p>
+<ol>
+<li>如果用户没有凝视全息图，展示方向指示器。</li>
+<li>如果用户凝视全息图，隐藏方向指示器。</li>
+<li>更改方向指示器去指向全息图。</li>
+</ol>
+<p>让我们开始吧。</p>
+<ul>
+<li>单击Hierarchy面板中的AstroMan的箭头，展开它。</li>
+<li>在Hierarchy面板中，选中AstroMan下边的DirectionalIndicator。</li>
+<li>在Inspector面板中，点击Add Component按钮。</li>
+<li>在菜单，搜索框中输入Direction Indicator。选中搜索结果。</li>
+<li>在Hierarchy面板中，把Cursor到Inspector面板中的Cursor属性中。</li>
+<li>在Project面板中，在Holograms文件夹，把DirectionalIndicator资源文件拖到Inspector面板的Directional Indicator属性中。</li>
+<li>构建部署应用到HoloLens。</li>
+<li>看观察方向指示器怎么帮助你找到宇航员。</li>
+</ul>
+<h4 id="第五章-公告板技术"><a href="#第五章-公告板技术" class="headerlink" title="第五章-公告板技术"></a>第五章-公告板技术</h4><h5 id="目标-4"><a href="#目标-4" class="headerlink" title="目标"></a>目标</h5><ul>
+<li>使用公告板技术使全息图总是面对你。</li>
+</ul>
+<p>我们将使用BillBoard.cs文件，保持GameObject的朝向，比如它总是面向用户。</p>
+<ul>
+<li>在Hierarchy面板，选中AstroMan对象。</li>
+<li>在Inspector面板中，点击Add Component按钮。</li>
+<li>在菜单，搜索框中输入Billboard。选中搜索结果。</li>
+<li>在Inspector面板中，把Pivot Axis设置为Y。</li>
+<li>试一下，像以前一样构建并部署应用到HoloLens。</li>
+<li>无论你如何改变你的视角，Billboard物体总是面向你的。</li>
+<li>现在从AstroMan中删除脚本。</li>
+</ul>
+<h4 id="第六章-Tag-Along"><a href="#第六章-Tag-Along" class="headerlink" title="第六章-Tag-Along"></a>第六章-Tag-Along</h4><h5 id="说明-4"><a href="#说明-4" class="headerlink" title="说明"></a>说明</h5><ul>
+<li>使用Tag-Along使我们的全息图跟着我们在房间周围。</li>
+</ul>
+<p>在这个问题上，我们将遵循以下设计约束：</p>
+<ul>
+<li>内容应该一目了然。</li>
+<li>内容不应妨碍。</li>
+<li>Head-Looking内容不舒服。</li>
+</ul>
+<p>这里使用的解决方案是“Tag-Along”方法。</p>
+<p>Tag-Along对象永远不会完全离开用户的视线。你可以将一个Tag-Along看成是橡皮筋贴在用户头上的物体。随着用户的移动，内容将通过向视图边缘滑动而不会完全离开你的视线，当你凝视Tag-Along，它会更加完整的呈现。</p>
+<ul>
+<li>在Hierarchy面板中，选中Managers。</li>
+<li>在Inspector面板中，点击Add Component按钮。</li>
+<li>在菜单，搜索框中输入Gesture Manager，选中搜索结果。<br>我们将使用SimpleTagalong.cs文件，它将：<ol>
+<li>确定Tag-Along对象是否在相机范围内。</li>
+<li>如果不在视图中，则将Tag-Along放入视图中。</li>
+<li>否则，将Tag-Along定位到距离用户的默认位置。</li>
+</ol>
+</li>
+</ul>
+<p>为了做到这一点：</p>
+<ul>
+<li>在Holograms文件夹点击Tagalong资源文件。</li>
+<li>在Inspector面板中，点击Tag下拉框，并点击Add Tag…</li>
+<li>点击+号，并把Tag0命名为TagAlong。</li>
+<li>在Holograms文件点击Tagalong资源文件，并点击Tag下拉框。</li>
+<li>选择TagAlong标签。</li>
+<li>我们首先修改Interactible.cs脚本为InteractibleAction发送一个消息。</li>
+<li>通过完成代码练习Interactible.cs编辑或者是使用以下代码：</li>
+</ul>
+<h5 id="Interactible-cs-1"><a href="#Interactible-cs-1" class="headerlink" title="Interactible.cs"></a>Interactible.cs</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line">using UnityEngine;</span><br><span class="line"></span><br><span class="line">/// &lt;summary&gt;</span><br><span class="line">/// The Interactible class flags a Game Object as being &quot;Interactible&quot;.</span><br><span class="line">/// Determines what happens when an Interactible is being gazed at.</span><br><span class="line">/// &lt;/summary&gt;</span><br><span class="line">public class Interactible : MonoBehaviour</span><br><span class="line">&#123;</span><br><span class="line">    [Tooltip(&quot;Audio clip to play when interacting with this hologram.&quot;)]</span><br><span class="line">    public AudioClip TargetFeedbackSound;</span><br><span class="line">    private AudioSource audioSource;</span><br><span class="line"></span><br><span class="line">    private Material[] defaultMaterials;</span><br><span class="line"></span><br><span class="line">    void Start()</span><br><span class="line">    &#123;</span><br><span class="line">        defaultMaterials = GetComponent&lt;Renderer&gt;().materials;</span><br><span class="line"></span><br><span class="line">        // Add a BoxCollider if the interactible does not contain one.</span><br><span class="line">        Collider collider = GetComponentInChildren&lt;Collider&gt;();</span><br><span class="line">        if (collider == null)</span><br><span class="line">        &#123;</span><br><span class="line">            gameObject.AddComponent&lt;BoxCollider&gt;();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        EnableAudioHapticFeedback();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private void EnableAudioHapticFeedback()</span><br><span class="line">    &#123;</span><br><span class="line">        // If this hologram has an audio clip, add an AudioSource with this clip.</span><br><span class="line">        if (TargetFeedbackSound != null)</span><br><span class="line">        &#123;</span><br><span class="line">            audioSource = GetComponent&lt;AudioSource&gt;();</span><br><span class="line">            if (audioSource == null)</span><br><span class="line">            &#123;</span><br><span class="line">                audioSource = gameObject.AddComponent&lt;AudioSource&gt;();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            audioSource.clip = TargetFeedbackSound;</span><br><span class="line">            audioSource.playOnAwake = false;</span><br><span class="line">            audioSource.spatialBlend = 1;</span><br><span class="line">            audioSource.dopplerLevel = 0;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /* TODO: DEVELOPER CODING EXERCISE 2.d */</span><br><span class="line"></span><br><span class="line">    void GazeEntered()</span><br><span class="line">    &#123;</span><br><span class="line">        for (int i = 0; i &lt; defaultMaterials.Length; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            // 2.d: Uncomment the below line to highlight the material when gaze enters.</span><br><span class="line">            defaultMaterials[i].SetFloat(&quot;_Highlight&quot;, .25f);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    void GazeExited()</span><br><span class="line">    &#123;</span><br><span class="line">        for (int i = 0; i &lt; defaultMaterials.Length; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            // 2.d: Uncomment the below line to remove highlight on material when gaze exits.</span><br><span class="line">            defaultMaterials[i].SetFloat(&quot;_Highlight&quot;, 0f);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    void OnSelect()</span><br><span class="line">    &#123;</span><br><span class="line">        for (int i = 0; i &lt; defaultMaterials.Length; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            defaultMaterials[i].SetFloat(&quot;_Highlight&quot;, .5f);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        // Play the audioSource feedback when we gaze and select a hologram.</span><br><span class="line">        if (audioSource != null &amp;&amp; !audioSource.isPlaying)</span><br><span class="line">        &#123;</span><br><span class="line">            audioSource.Play();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        /* TODO: DEVELOPER CODING EXERCISE 6.a */</span><br><span class="line">        // 6.a: Handle the OnSelect by sending a PerformTagAlong message.</span><br><span class="line">        SendMessage(&quot;PerformTagAlong&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当你凝视全息图时，在Interactible.cs脚本中完成自定义动作。让我们更新他，以便于使用Tag-Along。</p>
+<ul>
+<li>在Script文件中，点击Interactible.cs资源文件，用Visual Studio打开。</li>
+<li>完成代码练习或者改变这些：<ul>
+<li>在Hierarchy面板的顶部，搜索框中输入ChestButton_Center并选择结果。</li>
+<li>在Inspector面板中，点击Add Component按钮。</li>
+<li>在菜单，搜索框中输入Interactible Action。选中搜索结果。</li>
+<li>在Holograms文件找到Tagalong资源文件。</li>
+<li>在Hierarchy面板选择ChestButton_Center。从Project面板中拖TagAlong到Inspector面板中的Object to TagAlong属性中。</li>
+<li>栓剂InteractibleAction脚本，用Visual Studio打开。</li>
+</ul>
+</li>
+</ul>
+<p>我们需要添加一下内容：</p>
+<ul>
+<li>在InteractibleAction脚本中的PerformTagAlong函数添加功能。</li>
+<li>添加BillBoarding到gazed-upon物体，并设置pivot axis为Free。</li>
+<li>然后添加简单的Tag-Along到Object中。</li>
+</ul>
+<p>这是我们的解决方案：</p>
+<h5 id="InteractibleAction-cs"><a href="#InteractibleAction-cs" class="headerlink" title="InteractibleAction.cs"></a>InteractibleAction.cs</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">using Academy.HoloToolkit.Unity;</span><br><span class="line">using UnityEngine;</span><br><span class="line"></span><br><span class="line">/// &lt;summary&gt;</span><br><span class="line">/// InteractibleAction performs custom actions when you gaze at the holograms.</span><br><span class="line">/// &lt;/summary&gt;</span><br><span class="line">public class InteractibleAction : MonoBehaviour</span><br><span class="line">&#123;</span><br><span class="line">    [Tooltip(&quot;Drag the Tagalong prefab asset you want to display.&quot;)]</span><br><span class="line">    public GameObject ObjectToTagAlong;</span><br><span class="line"></span><br><span class="line">    void PerformTagAlong()</span><br><span class="line">    &#123;</span><br><span class="line">        if (ObjectToTagAlong == null)</span><br><span class="line">        &#123;</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        // Recommend having only one tagalong.</span><br><span class="line">        GameObject existingTagAlong = GameObject.FindGameObjectWithTag(&quot;TagAlong&quot;);</span><br><span class="line">        if (existingTagAlong != null)</span><br><span class="line">        &#123;</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        GameObject instantiatedObjectToTagAlong = GameObject.Instantiate(ObjectToTagAlong);</span><br><span class="line"></span><br><span class="line">        instantiatedObjectToTagAlong.SetActive(true);</span><br><span class="line"></span><br><span class="line">        /* TODO: DEVELOPER CODING EXERCISE 6.b */</span><br><span class="line"></span><br><span class="line">        // 6.b: AddComponent Billboard to instantiatedObjectToTagAlong.</span><br><span class="line">        // So it&apos;s always facing the user as they move.</span><br><span class="line">        instantiatedObjectToTagAlong.AddComponent&lt;Billboard&gt;();</span><br><span class="line"></span><br><span class="line">        // 6.b: AddComponent SimpleTagalong to instantiatedObjectToTagAlong.</span><br><span class="line">        // So it&apos;s always following the user as they move.</span><br><span class="line">        instantiatedObjectToTagAlong.AddComponent&lt;SimpleTagalong&gt;();</span><br><span class="line"></span><br><span class="line">        // 6.b: Set any public properties you wish to experiment with.</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>试一下，构建并部署应用到HoloLens。</li>
+<li>观察内容如何跟随凝视点的重心，但不要连续，也不要阻挡他。</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Holograms/" rel="tag"># Holograms</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/27/introduction-with-device/" rel="next" title="Holograms 101:introduction With Device 介绍设备">
+                <i class="fa fa-chevron-left"></i> Holograms 101:introduction With Device 介绍设备
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/01/holograms-gesture/" rel="prev" title="holograms 211：gesture">
+                holograms 211：gesture <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">_胡er</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-前言"><span class="nav-number">1.</span> <span class="nav-text">1. 前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-准备"><span class="nav-number">2.</span> <span class="nav-text">2. 准备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-项目文件"><span class="nav-number">3.</span> <span class="nav-text">3. 项目文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-排错和提示"><span class="nav-number">4.</span> <span class="nav-text">4. 排错和提示</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-内容"><span class="nav-number">5.</span> <span class="nav-text">5. 内容</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#第一章-Unity设置"><span class="nav-number">5.1.</span> <span class="nav-text">第一章-Unity设置</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#目标"><span class="nav-number">5.1.1.</span> <span class="nav-text">目标</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#说明"><span class="nav-number">5.2.</span> <span class="nav-text">说明</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#对于HoloLens-Unity的设置"><span class="nav-number">5.3.</span> <span class="nav-text">对于HoloLens,Unity的设置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#导入图形资源文件"><span class="nav-number">5.4.</span> <span class="nav-text">导入图形资源文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#设置场景"><span class="nav-number">5.5.</span> <span class="nav-text">设置场景</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#构建项目"><span class="nav-number">5.6.</span> <span class="nav-text">构建项目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第二章-光标和目标的反馈"><span class="nav-number">5.7.</span> <span class="nav-text">第二章-光标和目标的反馈</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#目标-1"><span class="nav-number">5.7.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#说明-1"><span class="nav-number">5.7.2.</span> <span class="nav-text">说明</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#GazeManager-cs"><span class="nav-number">5.7.3.</span> <span class="nav-text">GazeManager.cs</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#CursorManager-cs"><span class="nav-number">5.7.4.</span> <span class="nav-text">CursorManager.cs</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#InteractibleManager-cs"><span class="nav-number">5.7.5.</span> <span class="nav-text">InteractibleManager.cs</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Interactible-cs"><span class="nav-number">5.7.6.</span> <span class="nav-text">Interactible.cs</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第三章-Targeting-Techniques-目标技术"><span class="nav-number">5.8.</span> <span class="nav-text">第三章-Targeting Techniques(目标技术)</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#目标-2"><span class="nav-number">5.8.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#说明-2"><span class="nav-number">5.8.2.</span> <span class="nav-text">说明</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#GazeManager-cs-1"><span class="nav-number">5.8.3.</span> <span class="nav-text">GazeManager.cs</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第四章-Directional-indicator（方向指示器）"><span class="nav-number">5.9.</span> <span class="nav-text">第四章-Directional indicator（方向指示器）</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#目标-3"><span class="nav-number">5.9.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#说明-3"><span class="nav-number">5.9.2.</span> <span class="nav-text">说明</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第五章-公告板技术"><span class="nav-number">5.10.</span> <span class="nav-text">第五章-公告板技术</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#目标-4"><span class="nav-number">5.10.1.</span> <span class="nav-text">目标</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第六章-Tag-Along"><span class="nav-number">5.11.</span> <span class="nav-text">第六章-Tag-Along</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#说明-4"><span class="nav-number">5.11.1.</span> <span class="nav-text">说明</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Interactible-cs-1"><span class="nav-number">5.11.2.</span> <span class="nav-text">Interactible.cs</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#InteractibleAction-cs"><span class="nav-number">5.11.3.</span> <span class="nav-text">InteractibleAction.cs</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">_胡er</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

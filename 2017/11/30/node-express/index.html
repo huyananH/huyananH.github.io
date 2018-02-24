@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Node.js," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前言Grunt JavaScript构建工具">
+<meta name="keywords" content="Node.js">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一个菜鸟对Grunt的告白">
+<meta property="og:url" content="http://huyanan.top/2017/11/30/node-express/index.html">
+<meta property="og:site_name" content="_胡er的博客">
+<meta property="og:description" content="前言Grunt JavaScript构建工具">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://huyanan.top/assets/postLog/nodeExpressLog.jpeg">
+<meta property="og:updated_time" content="2018-01-31T11:25:32.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="一个菜鸟对Grunt的告白">
+<meta name="twitter:description" content="前言Grunt JavaScript构建工具">
+<meta name="twitter:image" content="http://huyanan.top/assets/postLog/nodeExpressLog.jpeg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://huyanan.top/2017/11/30/node-express/"/>
+
+
+
+
+
+  <title>一个菜鸟对Grunt的告白 | _胡er的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">_胡er的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://huyanan.top/2017/11/30/node-express/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="_胡er">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="_胡er的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">一个菜鸟对Grunt的告白</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-30T10:37:55+08:00">
+                2017-11-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="/assets/postLog/nodeExpressLog.jpeg" width="350px" height="350px"></p>
+<h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>Grunt JavaScript构建工具</p>
+<a id="more"></a>
+<h3 id="1-npm"><a href="#1-npm" class="headerlink" title="1. npm"></a>1. npm</h3><p>npm是node的包管理器，我觉得它就类似于Maven。</p>
+<p>npm init 自动生成package.json</p>
+<h3 id="2-bower"><a href="#2-bower" class="headerlink" title="2. bower"></a>2. bower</h3><p>bower前台包管理器</p>
+<p>bower init 自动生成bower.json</p>
+<h3 id="3-grunt-中Gruntfile-js详解"><a href="#3-grunt-中Gruntfile-js详解" class="headerlink" title="3. grunt 中Gruntfile.js详解"></a>3. grunt 中Gruntfile.js详解</h3><p>这个Gruntfile.js用到了5个插件：</p>
+<ul>
+<li>grunt-contrib-uglify  –用来压缩文件</li>
+<li>grunt-contrib-qunit   </li>
+<li>grunt-contrib-concat  –用来合并文件</li>
+<li>grunt-contrib-jshint  </li>
+<li>grunt-contrib-watch   –用来监听文件，如果有文件改变，就会触发回调方法进行相应的处理</li>
+</ul>
+<ol>
+<li><p>“wapper”函数，它包含整个Grunt配置信息。<br>module.exports = function(grunt) {}</p>
+</li>
+<li><p>初始化configuration，并读入package.json<br>在这个函数中，我们可以初始化configuration对象：<br>grunt.initConfig({});</p>
+</li>
+</ol>
+<p>接下来，从package.json文件读入项目配置信息，并存入pkg属性内。这样，我们就可以访问到package.json文件中列出的属性，如下：<br>pkg:grunt.file.readJSON(‘package.json’);</p>
+<hr>
+
+<p>到目前为止，我们看到的配置文件是：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">module.exports = function(grunt) &#123;</span><br><span class="line">  grunt.initConfig(&#123;</span><br><span class="line">    pkg:grunt.file.readJSON(&apos;package.json&apos;);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<ol>
+<li>为任务定义相应的配置</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">contact: &#123;</span><br><span class="line">  options: &#123;</span><br><span class="line">    //定义用于插入合并输出文件之间的字符</span><br><span class="line">    separator: &apos;;&apos;</span><br><span class="line">  &#125;</span><br><span class="line">  dist: &#123;</span><br><span class="line">    //将要合并的文件</span><br><span class="line">    src: [&apos;src/**/*.js&apos;],</span><br><span class="line">    //合并后的Js文件的存放为止</span><br><span class="line">    dist: &apos;dist/&lt;%= pkg.name %&gt;.js&apos;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里使用了pkg.name来访问我们刚才引入并存储在pkg属性中的package.json文件信息，它会被解析为一个JavaScript对象。Grunt自带的有一个简单的模板引擎用于输出配置对象(这里是指package.json中的配置对象)，这里我让concat任务将所有存在于src/目录下以.js结尾的文件合并起来，然后存储在dist目录中，并以项目名来命名。</p>
+<p>简单写<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">concat: &#123;</span><br><span class="line">            js: &#123;</span><br><span class="line">                src: [&apos;src/js/*.js&apos;],</span><br><span class="line">                dest: &apos;build/js/global.js&apos;</span><br><span class="line">            &#125;,</span><br><span class="line">            css: &#123;</span><br><span class="line">                src: [&apos;src/css/*.css&apos;],</span><br><span class="line">                dest: &apos;build/css/style.css&apos;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br></pre></td></tr></table></figure></p>
+<ol>
+<li>配置uglify插件，它的作用是压缩文件：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">uglify: &#123;</span><br><span class="line">　　options: &#123;</span><br><span class="line">　　　　// 此处定义的banner注释将插入到输出文件的顶部</span><br><span class="line">　　　　banner: &apos;/*! &lt;%= pkg.name %&gt; &lt;%= grunt.template.today(&quot;dd-mm-yyyy&quot;) %&gt; */\n&apos;</span><br><span class="line">　　&#125;,</span><br><span class="line">　　dist: &#123;</span><br><span class="line">　　　　files: &#123;</span><br><span class="line">　　　　　　&apos;dist/&lt;%= pkg.name %&gt;.min.js&apos;: [&apos;&lt;%= concat.dist.dest %&gt;&apos;]</span><br><span class="line">　　　　&#125;</span><br><span class="line">　　&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>这里我们让uglify在dist/目录中创建了一个包含压缩结果的JavaScript文件。注意这里我使用了&lt;%= concat.dist.dest&gt;，因此uglify会自动压缩concat任务中生成的文件。</p>
+<p>简单写<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">uglify: &#123;</span><br><span class="line">            js: &#123;</span><br><span class="line">                src: &apos;build/js/global.js&apos;,</span><br><span class="line">                dest: &apos;build/js/global.min.js&apos;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br></pre></td></tr></table></figure></p>
+<p>QUnit插件的设置非常简单，你只需要给它提供用于测试运行的文件的位置，注意这里的QUnit是运行在HTML文件上的。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">qunit: &#123;</span><br><span class="line">　　files: [&apos;test/**/*.html&apos;]</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure></p>
+<ol>
+<li>JSHint JavaScript语法、风格检查工具</li>
+</ol>
+<p>JSHint是一个javaScript语法和风格的检查工具，但检查不出逻辑问题。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">jshint: &#123;</span><br><span class="line">  // define the files to lint</span><br><span class="line">  files: [&apos;gruntfile.js&apos;, &apos;src/**/*.js&apos;, &apos;test/**/*.js&apos;],</span><br><span class="line">  // configure JSHint (documented at http://www.jshint.com/docs/)</span><br><span class="line">  options: &#123;</span><br><span class="line">      // more options here if you want to override JSHint defaults</span><br><span class="line">    globals: &#123;</span><br><span class="line">      jQuery: true,</span><br><span class="line">      console: true,</span><br><span class="line">      module: true</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>JSHint只需要一个文件数组(也就是你需要检测的文件数组)， 然后是一个options对象(这个对象用于重写JSHint提供的默认检测规则)。你可以到JSHint官方文档站点中查看完整的文档。如果你乐于使用JSHint提供的默认配置，那么在Gruntfile中就不需要重新定义它们了。</p>
+<p>简单写<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">jshint: &#123;</span><br><span class="line">            all: [&apos;./build/js/global.js&apos;]</span><br><span class="line">        &#125;,</span><br></pre></td></tr></table></figure></p>
+<ol>
+<li>watch 监听</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">watch: &#123;</span><br><span class="line">  files: [&apos;&lt;%= jshint.files %&gt;&apos;],</span><br><span class="line">  tasks: [&apos;jshint&apos;, &apos;qunit&apos;]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>你可以在命令行使用grunt watch来运行这个任务。当它检测到任何你所指定的文件(在这里我使用了JSHint任务中需要检测的文件)发生变化时，它就会按照你所指定的顺序执行指定的任务(在这里我指定了jshint和qunit任务)。</p>
+<p>接下来, 我们还要加载所需要的Grunt插件。 它们应该已经全部通过npm安装好了。</p>
+<p>例子：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">watch: &#123;</span><br><span class="line">            scripts: &#123;</span><br><span class="line">                files: [&apos;src/js/*.js&apos;, &apos;src/css/*.css&apos;],</span><br><span class="line">                tasks: [&apos;concat&apos;, &apos;jshint&apos;, &apos;cssmin&apos;, &apos;uglify:js&apos;]</span><br><span class="line">            &#125;,</span><br><span class="line">            livereload: &#123;</span><br><span class="line">                options: &#123;</span><br><span class="line">                    livereload: &apos;&lt;%= connect.options.livereload %&gt;&apos;</span><br><span class="line">                &#125;,</span><br><span class="line">                files: [</span><br><span class="line">                    &apos;index.html&apos;,</span><br><span class="line">                    &apos;build/css/style.min.css&apos;,</span><br><span class="line">                    &apos;build/js/global.min.js&apos;</span><br><span class="line">                ]</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br></pre></td></tr></table></figure></p>
+<ol>
+<li>加载任务插件</li>
+</ol>
+<p>//加载任务插件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">grunt.loadNpmTasks(&apos;grunt-contrib-concat&apos;);</span><br><span class="line">grunt.loadNpmTasks(&apos;grunt-contrib-jshint&apos;);</span><br><span class="line">grunt.loadNpmTasks(&apos;grunt-contrib-uglify&apos;);</span><br><span class="line">grunt.loadNpmTasks(&apos;grunt-contrib-watch&apos;);</span><br><span class="line">grunt.loadNpmTasks(&apos;grunt-contrib-connect&apos;);</span><br><span class="line">grunt.loadNpmTasks(&apos;grunt-css&apos;);</span><br></pre></td></tr></table></figure></p>
+<ol>
+<li>注册任务</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//注册任务，执行grunt js 会concat  jshint uglify</span><br><span class="line">grunt.registerTask(&apos;js&apos;, [&apos;concat:js&apos;, &apos;jshint&apos;, &apos;uglify:js&apos;]);</span><br><span class="line">//注册任务，执行grunt css 会concat cssmin</span><br><span class="line">grunt.registerTask(&apos;css&apos;, [&apos;concat:css&apos;, &apos;cssmin:css&apos;]);</span><br><span class="line">//注册任务，执行grunt  会 css js connect watch</span><br><span class="line">grunt.registerTask(&apos;default&apos;, [&apos;css&apos;, &apos;js&apos;, &apos;connect&apos;, &apos;watch&apos;]);</span><br></pre></td></tr></table></figure>
+<h3 id="4-例子"><a href="#4-例子" class="headerlink" title="4. 例子"></a>4. 例子</h3><p><em>– <a href="https://github.com/huyananH/grunt_demo" target="_blank" rel="noopener">这里是grunt的例子</a></em></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Node-js/" rel="tag"># Node.js</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/28/node-first/" rel="next" title="开始学习Node.js">
+                <i class="fa fa-chevron-left"></i> 开始学习Node.js
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/12/01/linux-commands/" rel="prev" title="Linux 命令总结">
+                Linux 命令总结 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">_胡er</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-npm"><span class="nav-number">2.</span> <span class="nav-text">1. npm</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-bower"><span class="nav-number">3.</span> <span class="nav-text">2. bower</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-grunt-中Gruntfile-js详解"><span class="nav-number">4.</span> <span class="nav-text">3. grunt 中Gruntfile.js详解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-例子"><span class="nav-number">5.</span> <span class="nav-text">4. 例子</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">_胡er</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

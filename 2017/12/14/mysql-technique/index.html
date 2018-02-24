@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Mysql," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="一、 前言今天看了一个笑话，和一个天津人谈恋爱就像在说相声   我：新的一年，希望你更喜欢我男朋友：那不废话么！我：希望以后还能一起做很多事男朋友：好嘞您 哈哈哈……笑死了">
+<meta name="keywords" content="Mysql">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mysql 开发技巧">
+<meta property="og:url" content="http://huyanan.top/2017/12/14/mysql-technique/index.html">
+<meta property="og:site_name" content="_胡er的博客">
+<meta property="og:description" content="一、 前言今天看了一个笑话，和一个天津人谈恋爱就像在说相声   我：新的一年，希望你更喜欢我男朋友：那不废话么！我：希望以后还能一起做很多事男朋友：好嘞您 哈哈哈……笑死了">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://huyanan.top/assets/postImg/mysqlTechniqueLogo.jpeg">
+<meta property="og:image" content="http://huyanan.top/assets/postImg/rowchangecol.jpg">
+<meta property="og:image" content="http://huyanan.top/assets/postImg/rowchangecol1.jpg">
+<meta property="og:image" content="http://huyanan.top/assets/postImg/killNumList.jpg">
+<meta property="og:image" content="http://huyanan.top/assets/postImg/propertySplit.jpg">
+<meta property="og:image" content="http://huyanan.top/assets/postImg/ETLDispose.jpg">
+<meta property="og:updated_time" content="2018-01-31T11:25:32.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Mysql 开发技巧">
+<meta name="twitter:description" content="一、 前言今天看了一个笑话，和一个天津人谈恋爱就像在说相声   我：新的一年，希望你更喜欢我男朋友：那不废话么！我：希望以后还能一起做很多事男朋友：好嘞您 哈哈哈……笑死了">
+<meta name="twitter:image" content="http://huyanan.top/assets/postImg/mysqlTechniqueLogo.jpeg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://huyanan.top/2017/12/14/mysql-technique/"/>
+
+
+
+
+
+  <title>Mysql 开发技巧 | _胡er的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">_胡er的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://huyanan.top/2017/12/14/mysql-technique/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="_胡er">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="_胡er的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Mysql 开发技巧</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-14T09:20:51+08:00">
+                2017-12-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="/assets/postImg/mysqlTechniqueLogo.jpeg" width="350px" height="350px"></p>
+<h3 id="一、-前言"><a href="#一、-前言" class="headerlink" title="一、 前言"></a>一、 前言</h3><p>今天看了一个笑话，和一个天津人谈恋爱就像在说相声</p>
+<blockquote>
+</blockquote>
+<p>我：新的一年，希望你更喜欢我<br>男朋友：那不废话么！<br>我：希望以后还能一起做很多事<br>男朋友：好嘞您</p>
+<p>哈哈哈……笑死了</p>
+<a id="more"></a>
+<h3 id="二-Join从句"><a href="#二-Join从句" class="headerlink" title="二 Join从句"></a>二 Join从句</h3><ul>
+<li>内连接（INNER）</li>
+<li>全外连接（FULL OUTER）</li>
+<li>左外连接（LEFT OUTER）</li>
+<li>右外连接（RIGHT OUTER）</li>
+<li>交叉连接（CROSS）</li>
+</ul>
+<h4 id="1-内连接（INNER-JOIN）"><a href="#1-内连接（INNER-JOIN）" class="headerlink" title="1. 内连接（INNER JOIN）"></a>1. 内连接（INNER JOIN）</h4><p>介绍：基于连接谓词将两张表（如：A和B）的列组合在一起，得出新的结果集。<br>简单的来说：就是找到两张表的公共部分。<br>语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select &lt;select_list&gt; from TableA A inner join TableB B on A.Key=B.Key;</span><br></pre></td></tr></table></figure></p>
+<h4 id="2-左外连接（LEFT-OUTER）-—左连接"><a href="#2-左外连接（LEFT-OUTER）-—左连接" class="headerlink" title="2. 左外连接（LEFT OUTER） —左连接"></a>2. 左外连接（LEFT OUTER） —左连接</h4><p>返回包括左表中的所有记录和右表中联结字段相等的记录<br>语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select &lt;select_list&gt; from TableA A left join TableB B on A.Key=B.Key;</span><br></pre></td></tr></table></figure></p>
+<h4 id="3-右外连接（RIGHT-OUTER）—右连接"><a href="#3-右外连接（RIGHT-OUTER）—右连接" class="headerlink" title="3. 右外连接（RIGHT OUTER）—右连接"></a>3. 右外连接（RIGHT OUTER）—右连接</h4><p>返回包括左表中的所有记录和右表中联结字段相等的记录<br>语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select &lt;select_list&gt; from TableA A right join Table B on A.Key=B.Key;</span><br></pre></td></tr></table></figure></p>
+<h4 id="4-全外连接（FULL-OUTER）"><a href="#4-全外连接（FULL-OUTER）" class="headerlink" title="4. 全外连接（FULL OUTER）"></a>4. 全外连接（FULL OUTER）</h4><p>注意：Mysql不支持全外连接</p>
+<p>可以查到两表中的全部数据，或者说是两表的公共部分。</p>
+<p>语法：<br>错误❎<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select &lt;select_list&gt; from TableA A full join Table B on A.Key=B.Key;</span><br></pre></td></tr></table></figure></p>
+<p>正确：✅<br>把左连接和右连接用UNION ALL连接<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">select &lt;select_list&gt; from TableA A left join TableB B on A.Key=B.Key</span><br><span class="line">UNION ALL</span><br><span class="line">select &lt;select_list&gt; from TableA A right join Table B on A.Key=B.Key;</span><br></pre></td></tr></table></figure></p>
+<h4 id="5-交叉连接（CROSS-JOIN）"><a href="#5-交叉连接（CROSS-JOIN）" class="headerlink" title="5. 交叉连接（CROSS JOIN）"></a>5. 交叉连接（CROSS JOIN）</h4><p>返回A表和B表的乘积</p>
+<p>注意：没有ON</p>
+<p>语法：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select &lt;select_list&gt; from TableA A cross join TableB。</span><br></pre></td></tr></table></figure></p>
+<h3 id="三、-如何进行行列的转换"><a href="#三、-如何进行行列的转换" class="headerlink" title="三、 如何进行行列的转换"></a>三、 如何进行行列的转换</h3><h4 id="1-行转为列"><a href="#1-行转为列" class="headerlink" title="1. 行转为列"></a>1. 行转为列</h4><ul>
+<li><p>场景</p>
+<ul>
+<li><p>报表统计<br><img src="/assets/postImg/rowchangecol.jpg" alt="行转列的场景"><br>Sql语句实现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select a.user_name,kills from user1 a join user_kills b on a.id = b.user_id;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>汇总显示<br><img src="/assets/postImg/rowchangecol1.jpg" alt="行转列的场景"><br>Sql语句实现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select a.user_name,sum(kills) from user1 a join user_kills b on a.id = b.user_id group by a.user_name;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>处理方式<br><img src="/assets/postImg/killNumList.jpg" alt="打怪数"></p>
+<ul>
+<li><p>使用Cross join实现（自连接）<br>Sql实现(复杂的，效率低，)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">select * from</span><br><span class="line">(</span><br><span class="line">select sum(kills) as &apos;猪八戒&apos; from user1 a join user_kills b on a.id = b.user_id and a.user_name = &apos;猪八戒&apos;</span><br><span class="line">) a cross join(</span><br><span class="line">select sum(kills) as &apos;孙悟空&apos; from user1 a join user_kills b on a.id = b.user_id and a.user_name = &apos;孙悟空&apos;</span><br><span class="line">) b cross join(</span><br><span class="line">select sum(kills) as &apos;猪八戒&apos; from user1 a join user_kills b on a.id = b.user_id and a.user_name = &apos;孙悟空&apos;</span><br><span class="line">) c</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用Case语句实现<br>Sql语句实现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">select sum(case when a.user_name=&apos;孙悟空&apos; then kills end) as &apos;孙悟空&apos;,</span><br><span class="line">sum(case when a.user_name=&apos;猪八戒&apos; then kills end) as &apos;猪八戒&apos;,</span><br><span class="line">sum(case when a.user_name=&apos;沙僧&apos; then kills end) as &apos;沙僧&apos;</span><br><span class="line">from user1 a join user_kills b on a.id = b.user_id;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-列转行"><a href="#2-列转行" class="headerlink" title="2. 列转行"></a>2. 列转行</h4><ul>
+<li><p>场景</p>
+<ul>
+<li>属性拆分<br><img src="/assets/postImg/propertySplit.jpg" alt="属性拆分"></li>
+<li>ETL数据处理<br><img src="/assets/postImg/ETLDispose.jpg" alt="ETL数据处理"></li>
+</ul>
+</li>
+<li><p>使用序列表处理</p>
+<ul>
+<li><p>需要生成一张序列表</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">create table tb_sequence(id int auto_increment not null, primary key(id));</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>添加数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">insert into tb_sequence values(),(),(),(),(),();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查询序列表</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from tb_sequence;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Mysql/" rel="tag"># Mysql</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/08/springboot-hot-deployment/" rel="next" title="Spring Boot项目热部署">
+                <i class="fa fa-chevron-left"></i> Spring Boot项目热部署
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/12/26/docker-nginx/" rel="prev" title="Nginx 静态服务器">
+                Nginx 静态服务器 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">_胡er</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、-前言"><span class="nav-number">1.</span> <span class="nav-text">一、 前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二-Join从句"><span class="nav-number">2.</span> <span class="nav-text">二 Join从句</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-内连接（INNER-JOIN）"><span class="nav-number">2.1.</span> <span class="nav-text">1. 内连接（INNER JOIN）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-左外连接（LEFT-OUTER）-—左连接"><span class="nav-number">2.2.</span> <span class="nav-text">2. 左外连接（LEFT OUTER） —左连接</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-右外连接（RIGHT-OUTER）—右连接"><span class="nav-number">2.3.</span> <span class="nav-text">3. 右外连接（RIGHT OUTER）—右连接</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-全外连接（FULL-OUTER）"><span class="nav-number">2.4.</span> <span class="nav-text">4. 全外连接（FULL OUTER）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-交叉连接（CROSS-JOIN）"><span class="nav-number">2.5.</span> <span class="nav-text">5. 交叉连接（CROSS JOIN）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三、-如何进行行列的转换"><span class="nav-number">3.</span> <span class="nav-text">三、 如何进行行列的转换</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-行转为列"><span class="nav-number">3.1.</span> <span class="nav-text">1. 行转为列</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-列转行"><span class="nav-number">3.2.</span> <span class="nav-text">2. 列转行</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">_胡er</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

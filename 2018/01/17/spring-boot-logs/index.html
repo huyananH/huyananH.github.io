@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Spring Boot," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="一、 前言今天朋友给推荐了一首歌，然后，不在一个频道的对话就开始了……  DW：听了好几天DW：一百万个可能DW：very 好听DW：特别能形容你现在的心情，隔着屏幕都能感觉到悲伤  然后……  我：这歌，歌词很少，还没翻译……听不懂啊DW：你听对了吗我：此处我发了一张截图，此处是一首叫 very 的歌DW：……  哈哈哈哈哈，隔着屏幕有没有感觉到我的大笑……">
+<meta name="keywords" content="Spring Boot">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring Boot基础日志配置">
+<meta property="og:url" content="http://huyanan.top/2018/01/17/spring-boot-logs/index.html">
+<meta property="og:site_name" content="_胡er的博客">
+<meta property="og:description" content="一、 前言今天朋友给推荐了一首歌，然后，不在一个频道的对话就开始了……  DW：听了好几天DW：一百万个可能DW：very 好听DW：特别能形容你现在的心情，隔着屏幕都能感觉到悲伤  然后……  我：这歌，歌词很少，还没翻译……听不懂啊DW：你听对了吗我：此处我发了一张截图，此处是一首叫 very 的歌DW：……  哈哈哈哈哈，隔着屏幕有没有感觉到我的大笑……">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://huyanan.top/assets/postImg/springbootlogsLogo.jpeg">
+<meta property="og:image" content="http://huyanan.top/assets/postImg/springdefaultlogs.jpg">
+<meta property="og:updated_time" content="2018-01-31T11:25:32.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring Boot基础日志配置">
+<meta name="twitter:description" content="一、 前言今天朋友给推荐了一首歌，然后，不在一个频道的对话就开始了……  DW：听了好几天DW：一百万个可能DW：very 好听DW：特别能形容你现在的心情，隔着屏幕都能感觉到悲伤  然后……  我：这歌，歌词很少，还没翻译……听不懂啊DW：你听对了吗我：此处我发了一张截图，此处是一首叫 very 的歌DW：……  哈哈哈哈哈，隔着屏幕有没有感觉到我的大笑……">
+<meta name="twitter:image" content="http://huyanan.top/assets/postImg/springbootlogsLogo.jpeg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://huyanan.top/2018/01/17/spring-boot-logs/"/>
+
+
+
+
+
+  <title>Spring Boot基础日志配置 | _胡er的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">_胡er的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://huyanan.top/2018/01/17/spring-boot-logs/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="_胡er">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="_胡er的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Spring Boot基础日志配置</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-17T16:41:04+08:00">
+                2018-01-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="/assets/postImg/springbootlogsLogo.jpeg" width="350px" height="350px"></p>
+<h3 id="一、-前言"><a href="#一、-前言" class="headerlink" title="一、 前言"></a>一、 前言</h3><p>今天朋友给推荐了一首歌，然后，不在一个频道的对话就开始了……</p>
+<blockquote>
+<p>DW：听了好几天<br>DW：一百万个可能<br>DW：very 好听<br>DW：特别能形容你现在的心情，隔着屏幕都能感觉到悲伤</p>
+</blockquote>
+<p>然后……</p>
+<blockquote>
+<p>我：这歌，歌词很少，还没翻译……听不懂啊<br>DW：你听对了吗<br>我：此处我发了一张截图，此处是一首叫 very 的歌<br>DW：……</p>
+</blockquote>
+<p>哈哈哈哈哈，隔着屏幕有没有感觉到我的大笑……</p>
+<a id="more"></a>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src="//music.163.com/outchain/player?type=2&id=498139314&auto=1&height=66"></iframe>
+
+<p>这个歌挺好听，但是版权原因只能放这个了……<br>可以自己去搜听……</p>
+<p>Spring Boot在所有内部日志中使用Commons Logging，但是默认配置也提供了对常用日志的支持，如：Java Util Logging，Log4J, Log4J2和Logback。每种Logger都可以通过配置使用控制台或者文件输出日志内容。</p>
+<h3 id="二、-Spring-Boot-默认日志"><a href="#二、-Spring-Boot-默认日志" class="headerlink" title="二、 Spring Boot 默认日志"></a>二、 Spring Boot 默认日志</h3><p>SLF4J——Simple Logging Facade For Java，它是一个针对于各类Java日志框架的统一Facade抽象。Java日志框架众多——常用的有java.util.logging, log4j, logback，commons-logging, Spring框架使用的是Jakarta Commons Logging API (JCL)。而SLF4J定义了统一的日志抽象接口，而真正的日志实现则是在运行时决定的——它提供了各类日志框架的binding。</p>
+<p>Logback是log4j框架的作者开发的新一代日志框架，它效率更高、能够适应诸多的运行环境，同时天然支持SLF4J。</p>
+<p>默认情况下，Spring Boot会用Logback来记录日志，并用INFO级别输出到控制台。在运行应用程序和其他例子时，你应该已经看到很多INFO级别的日志了。<br><img src="/assets/postImg/springdefaultlogs.jpg" alt="日志图片"></p>
+<p>从上图可以看到，日志输出内容元素具体如下：</p>
+<ul>
+<li>时间日期：精确到毫秒</li>
+<li>日志级别：ERROR, WARN, INFO, DEBUG or TRACE</li>
+<li>进程ID</li>
+<li>分隔符：— 标识实际日志的开始</li>
+<li>线程名：方括号括起来（可能会截断控制台输出）</li>
+<li>Logger名：通常使用源代码的类名</li>
+<li>日志内容</li>
+</ul>
+<p>实际开发中我们不需要直接添加该依赖，你会发现spring-boot-starter其中包含了 spring-boot-starter-logging，该依赖内容就是 Spring Boot 默认的日志框架 logback。</p>
+<h3 id="三、-文件输出"><a href="#三、-文件输出" class="headerlink" title="三、 文件输出"></a>三、 文件输出</h3><p>默认情况下，Spring Boot将日志输出到控制台，不会写到日志文件。如果要编写除控制台输出之外的日志文件，则需在application.properties中设置logging.file或logging.path属性。</p>
+<p>logging.file，设置文件，可以是绝对路径，也可以是相对路径。如：logging.file=my.log</p>
+<p>logging.path，设置目录，会在该目录下创建spring.log文件，并写入日志内容，如：logging.path=/var/log</p>
+<p>如果只配置 logging.file，会在项目的当前路径下生成一个 xxx.log 日志文件。</p>
+<p>如果只配置 logging.path，在 /var/log文件夹生成一个日志文件为 spring.log</p>
+<p>注：二者不能同时使用，如若同时使用，则只有logging.file生效<br>默认情况下，日志文件大小达到10MB时会切分一次，产生新的日志文件，默认级别问ERROR、WARN、INFO</p>
+<h3 id="四、-级别控制"><a href="#四、-级别控制" class="headerlink" title="四、 级别控制"></a>四、 级别控制</h3><p>所有支持的日志记录系统都可以在Spring环境中设置记录级别（例如在application.properties中）</p>
+<p>格式为：’logging.level.* = LEVEL’</p>
+<p>logging.level：日志级别控制前缀，# 为包名或Logger名</p>
+<p>LEVEL：选项TRACE, DEBUG, INFO, WARN, ERROR, FATAL, OFF</p>
+<p>举例：</p>
+<p>logging.level.com.dudu=DEBUG：com.dudu包下所有class以DEBUG级别输出</p>
+<p>logging.level.root=WARN：root日志以WARN级别输出</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Spring-Boot/" rel="tag"># Spring Boot</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/13/blog-domain-name/" rel="next" title="github 博客绑定自己的域名">
+                <i class="fa fa-chevron-left"></i> github 博客绑定自己的域名
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/01/22/tdd-introduction/" rel="prev" title="TDD 测试驱动开发">
+                TDD 测试驱动开发 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">_胡er</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、-前言"><span class="nav-number">1.</span> <span class="nav-text">一、 前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、-Spring-Boot-默认日志"><span class="nav-number">2.</span> <span class="nav-text">二、 Spring Boot 默认日志</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三、-文件输出"><span class="nav-number">3.</span> <span class="nav-text">三、 文件输出</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#四、-级别控制"><span class="nav-number">4.</span> <span class="nav-text">四、 级别控制</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">_胡er</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

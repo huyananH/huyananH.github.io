@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Holograms," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="1. 前言本教程将引导您创建基于Unity的基本混合现实应用程序。">
+<meta name="keywords" content="Holograms">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Holograms 100 -创建基于Unity的混合现实应用程序">
+<meta property="og:url" content="http://huyanan.top/2017/10/26/Hologram_100_getting_started_with_unity/index.html">
+<meta property="og:site_name" content="_胡er的博客">
+<meta property="og:description" content="1. 前言本教程将引导您创建基于Unity的基本混合现实应用程序。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://huyanan.top/assets/holoLens/Holograms100.jpg">
+<meta property="og:image" content="http://huyanan.top/assets/UnityQualitySettings.png">
+<meta property="og:updated_time" content="2018-01-31T11:25:32.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Holograms 100 -创建基于Unity的混合现实应用程序">
+<meta name="twitter:description" content="1. 前言本教程将引导您创建基于Unity的基本混合现实应用程序。">
+<meta name="twitter:image" content="http://huyanan.top/assets/holoLens/Holograms100.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://huyanan.top/2017/10/26/Hologram_100_getting_started_with_unity/"/>
+
+
+
+
+
+  <title>Holograms 100 -创建基于Unity的混合现实应用程序 | _胡er的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">_胡er的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://huyanan.top/2017/10/26/Hologram_100_getting_started_with_unity/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="_胡er">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="_胡er的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Holograms 100 -创建基于Unity的混合现实应用程序</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-26T09:20:49+08:00">
+                2017-10-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="/assets/holoLens/Holograms100.jpg"></p>
+<h3 id="1-前言"><a href="#1-前言" class="headerlink" title="1. 前言"></a>1. 前言</h3><p>本教程将引导您创建基于Unity的基本混合现实应用程序。</p>
+<a id="more"></a>
+<h3 id="2-准备"><a href="#2-准备" class="headerlink" title="2. 准备"></a>2. 准备</h3><p>安装了正确工具的Windows 10 的电脑。</p>
+<h3 id="3-内容"><a href="#3-内容" class="headerlink" title="3. 内容"></a>3. 内容</h3><h4 id="第一章-创建一个新项目"><a href="#第一章-创建一个新项目" class="headerlink" title="第一章-创建一个新项目"></a>第一章-创建一个新项目</h4><p>使用Unity构建一个应用程序，首先你需要创建一个项目。该项目由一些文件组成，其中最重要的是Assets文件。它保存了从三维计算机图形软件（比如：Maya、Max Cinema 4D 或者Photoshop）导入的所有资源文件，你使用Visual Studio或者你喜欢的代码编辑器，以及在编辑器中Unity创建Scenes的一些内容文件，动画，和其他的Unity资源类型。</p>
+<p>去构建和部署UWP应用程序，Unity可以导出项目作为一个包含必要资源和代码文件的Visual Studio项目。</p>
+<ol>
+<li>启动Unity</li>
+<li>选择New</li>
+<li>输入项目名称（比如：“MixedRealityIntroduction”）</li>
+<li>输入保存项目的本地路径</li>
+<li>选择Create project</li>
+</ol>
+<p>恭喜，现在你可以开始使用混合现实自定义。</p>
+<h4 id="第二章-设置相机"><a href="#第二章-设置相机" class="headerlink" title="第二章-设置相机"></a>第二章-设置相机</h4><p>Unity主相机可以处理头跟踪和立体渲染。对主要相机进行一些更改将其与混合现实配合使用。</p>
+<ol>
+<li>选择File -&gt; 选择 New Scene</li>
+</ol>
+<p>首先，如果你将用户的初始位置设为（x:0,y:0,z:0），则更容易布局应用程序。由于主相机是根据用户的头移动，所以用户的起始位置可以根据主摄像机的起始位置来设置。</p>
+<ol>
+<li>在Hierarchy面板中选择Main Camera</li>
+<li>在Inspector面板中，找Transform，将Position从（x:0,y:1,z:-10）更改为（x:0,y:0,z:0）</li>
+</ol>
+<p>第二，默认的Camera背景需要一些想法。<br>对于HoloLens应用，真实世界应该出现在相机渲染所有内容的后边，而不是一个Skybox结构。</p>
+<ol>
+<li>仍然在Hierarchy面板中选择Main Camera，在Inspector面板中找到Camera，并且把Clear Flags的Skybox改成Solid Color。</li>
+<li>选择Background颜色选择器，更改RGBA值为（0，0，0，0）<br>对于沉浸式耳机的混合现实应用，我们可以使用Unity默认的Skybox结构。</li>
+<li>仍然在Hierarchy面板中选择Main Camera，在Inspector面板中找到Camera，保持Clear Flags下拉框的值为Skybox。</li>
+</ol>
+<p>第三，让我们考虑Unity中的近剪切平面，当用户靠近过对象或者是对象靠近用户时，防止对象被渲染的太靠近用户的眼睛。<br>对于HoloLens应用，近剪切平面可以设置为HoloLens推荐的0.85米</p>
+<ol>
+<li>仍然在Hierarchy面板中选择Main Camera，在Inspector面板中找到Camera，并且把Near Clip Plan从默认的0.3更改为HoloLens推荐的0.85。</li>
+</ol>
+<p>最后，让我们保存到目前为止的配置。要保存scene的更改，选择File-&gt;Save Scene As, 命名为Main，选择Save保存。</p>
+<h4 id="第三章-设置项目设置"><a href="#第三章-设置项目设置" class="headerlink" title="第三章-设置项目设置"></a>第三章-设置项目设置</h4><p>在这章，我们将设置一些Unity项目设置，以便于帮助我们找到Windows Holographic SDK进行开发。对于应用，我们将设置一些质量设置。最后，我们将确保我们的构建目标是设置为Windows Store。</p>
+<h5 id="Unity性能和质量设置"><a href="#Unity性能和质量设置" class="headerlink" title="Unity性能和质量设置"></a>Unity性能和质量设置</h5><p>由于在HoloLens上保持高帧率很重要，我们希望把质量设置调整到最快的性能，有关更多的性能信息，请参考Unity性能推荐。</p>
+<ol>
+<li>选择Edit-&gt;Project Settings-&gt; Quality</li>
+<li>选择Windows Store图标下边的下拉按钮，选择Fastest。当Windows Store列和Fastest行是绿色的，那么，你设置正确。<br><img src="/assets/UnityQualitySettings.png" alt="质量"><br>对于遮挡显示的混合现实应用，你可以将质量设置保留为默认值。</li>
+</ol>
+<p>Target Windows10 SDK<br>我们需要让Unity知道我们试图导出的应用程序应该创建一个全息视图，而不是2D视图。我们通过在面向Windows 10 SDK的Unity启用VirtualReality 来达到此目的。</p>
+<ol>
+<li>选择Edit-&gt; Project Settings-&gt; Player</li>
+<li>在Inspector面板点击Windows Store</li>
+<li>展开Other Settings</li>
+<li>在Rendering部分，点击Virtual Reality Supported 添加新的Virtual Reality SDKs列表，并确认Windows Mixed Reality被列为支持的SDK。</li>
+</ol>
+<p>很好的完成了项目的所有设置。接下来，让我们添加一个全息图。</p>
+<h4 id="第四章-创建一个立方体"><a href="#第四章-创建一个立方体" class="headerlink" title="第四章-创建一个立方体"></a>第四章-创建一个立方体</h4><p>创建一个立方体，就好像创建Unity的其他对象一样，在用户前面放置一个立方体是容易的，因为Unity的坐标系就是映射在现实世界-Unity中的一米相当于真实世界的一米。</p>
+<ol>
+<li>在Hierarchy面板的左上角，选择Create下拉菜单，选择3D Object-&gt;Cube</li>
+<li>在Hierarchy面板选择创建一个新的Cube</li>
+<li>在Inspector找到Transform部分，并且更改Position为（x:0,y:0,z:2）。这个立方体位于用户前方两米的地方。</li>
+<li>在Transform部分，更改Rotation为（x:45,y:45,z:45），以及更改Scale为（x:0.25,y:0.25,z:0.25）。这个立方体将缩放到0.25米。</li>
+<li>保存scene修改，选择File-&gt;Save Scene</li>
+</ol>
+<h4 id="第五章-用Unity编辑器验证设备"><a href="#第五章-用Unity编辑器验证设备" class="headerlink" title="第五章-用Unity编辑器验证设备"></a>第五章-用Unity编辑器验证设备</h4><p>现在我们已经创建了立方体，现在是快速检验设备的时候了，你可以直接用Unity编辑器进行此操作。</p>
+<h5 id="对于HoloLens使用Unity-Remoting"><a href="#对于HoloLens使用Unity-Remoting" class="headerlink" title="对于HoloLens使用Unity Remoting"></a>对于HoloLens使用Unity Remoting</h5><ol>
+<li>在你的HoloLens，安装并运行Holographic Remoting Player，可从Windows Store获得。在设备上启动应用，当进入等待状态并显示设备的IP地址时，记下IP。</li>
+<li>在你开发的电脑上，在Unity，打开Window-&gt; Holographic Emulation。</li>
+<li>把 Emulation mode 从 None 改为 Remote to Device。</li>
+<li>在 Remote Machine，输入刚才提到的HoloLens的IP地址。</li>
+<li>点击Connect。</li>
+<li>确保Connection Status 改变为绿色的Connected。</li>
+<li>现在，你可以在Unity点击Play。</li>
+</ol>
+<p>你现在将可以在设备和编辑器中查看立方体。你可以像在编辑器中运行应用程序一样暂停，查看对象，调试，但是，是通过主机和设备之间德尔网络来回传输视频，音频和设备输入。</p>
+<h5 id="对于其他混合现实支持的耳机"><a href="#对于其他混合现实支持的耳机" class="headerlink" title="对于其他混合现实支持的耳机"></a>对于其他混合现实支持的耳机</h5><ol>
+<li>在你开发的电脑上，使用USB和HDMI或者显示器端口电缆连接。</li>
+<li>启动混合现实门户，确保你已经完成了第一次运行的体验。</li>
+<li>从Unity，你现在可以点击播放按钮了。<br>现在，你可以在混合现实耳机和编辑器中查看立方体渲染了。</li>
+</ol>
+<h4 id="第六章-从Visual-Studio-构建和部署到设备上"><a href="#第六章-从Visual-Studio-构建和部署到设备上" class="headerlink" title="第六章-从Visual Studio 构建和部署到设备上"></a>第六章-从Visual Studio 构建和部署到设备上</h4><p>我们现在准备编译项目到Visual Studio ，并且部署到我们的设备上。</p>
+<h5 id="导出到Visual-Studio"><a href="#导出到Visual-Studio" class="headerlink" title="导出到Visual Studio"></a>导出到Visual Studio</h5><ol>
+<li>打开File-&gt; Build Settings窗口。</li>
+<li>点击Add OpenScenes 去添加场景。</li>
+<li>把Platform改为 Windows Store，并且点击Switch Platform。</li>
+<li>在 Windows Store设置中，确保SDK是Universal 10。</li>
+<li>对于目标设备，离开任何设备，以遮挡显示或者切换到HoloLens。</li>
+<li>UWP Build Type 应该是D3D。</li>
+<li>UWP SDK可以在Latest installed。</li>
+<li>检查正在调试的Unity C#项目。</li>
+<li>点击Build。</li>
+<li>在资源文件管理中，点击New Folder并命名为”“App”。</li>
+<li>选中App文件夹之后，点击Select Folder按钮。</li>
+<li>Unity构建完成之后，讲出现一个Windows浏览窗口。</li>
+<li>在文件浏览器中打开App文件。</li>
+<li>打开生成的Visual Studio解决方案（本例中为：MixedRealityIntroduction.sln）</li>
+</ol>
+<h5 id="编译Visual-Studio解决方案"><a href="#编译Visual-Studio解决方案" class="headerlink" title="编译Visual Studio解决方案"></a>编译Visual Studio解决方案</h5><p>最后，我们将编译导出的Visual Studio解决方案，并将其部署在设备上。<br>使用Visual Studio中的顶部工具栏，将目标从Debug更改为Release，从ARM更改为X86。<br>对于部署到设备与仿真器的说明不同。按照与您的设置相匹配的说明。</p>
+<h5 id="通过Wi-Fi部署到混合现实设备"><a href="#通过Wi-Fi部署到混合现实设备" class="headerlink" title="通过Wi-Fi部署到混合现实设备"></a>通过Wi-Fi部署到混合现实设备</h5><p>单击Local Machine按钮旁边的箭头，并将部署目标更改为Remote Machine。<br>输入混合现实设备的IP地址，并将其他设备的HoloLens和Windows的Authentication Mode更改为Universal（未加密协议）。<br>单击Debug-&gt;Start without debugging。<br>对于HoloLens，如果这是首次部署到您的设备，则需要使用Visual Studio配对。</p>
+<h5 id="通过USB部署到混合现实设备"><a href="#通过USB部署到混合现实设备" class="headerlink" title="通过USB部署到混合现实设备"></a>通过USB部署到混合现实设备</h5><p>确保通过USB电缆插入设备。<br>对于HoloLens，单击Local Machine按钮旁边的箭头，并将部署目标更改为Device。<br>要定位连接到PC的遮挡设备，请将设置保留到本地机器。确保您有Mixed Reality Portal运行。<br>单击Debug-&gt;Start without debugging。</p>
+<h5 id="部署到仿真器"><a href="#部署到仿真器" class="headerlink" title="部署到仿真器"></a>部署到仿真器</h5><p>单击Device按钮旁边的箭头，从下拉列表中选择HoloLens Emulator。<br>单击Debug-&gt;Start without debugging。</p>
+<h5 id="尝试你的应用程序"><a href="#尝试你的应用程序" class="headerlink" title="尝试你的应用程序"></a>尝试你的应用程序</h5><p>现在您的应用程序已部署，请尝试移动多维数据集周围，并观察它在您面前的世界。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Holograms/" rel="tag"># Holograms</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/26/version/" rel="next" title="关于Alpha、Beta、RC、GA、SNAPSHOT、Release、PRE等版本号的意义">
+                <i class="fa fa-chevron-left"></i> 关于Alpha、Beta、RC、GA、SNAPSHOT、Release、PRE等版本号的意义
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/10/26/introduction-with-emulator/" rel="prev" title="Holograms 101E：介绍Emulator（模拟器）">
+                Holograms 101E：介绍Emulator（模拟器） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">_胡er</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-前言"><span class="nav-number">1.</span> <span class="nav-text">1. 前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-准备"><span class="nav-number">2.</span> <span class="nav-text">2. 准备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-内容"><span class="nav-number">3.</span> <span class="nav-text">3. 内容</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#第一章-创建一个新项目"><span class="nav-number">3.1.</span> <span class="nav-text">第一章-创建一个新项目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第二章-设置相机"><span class="nav-number">3.2.</span> <span class="nav-text">第二章-设置相机</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第三章-设置项目设置"><span class="nav-number">3.3.</span> <span class="nav-text">第三章-设置项目设置</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Unity性能和质量设置"><span class="nav-number">3.3.1.</span> <span class="nav-text">Unity性能和质量设置</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第四章-创建一个立方体"><span class="nav-number">3.4.</span> <span class="nav-text">第四章-创建一个立方体</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第五章-用Unity编辑器验证设备"><span class="nav-number">3.5.</span> <span class="nav-text">第五章-用Unity编辑器验证设备</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#对于HoloLens使用Unity-Remoting"><span class="nav-number">3.5.1.</span> <span class="nav-text">对于HoloLens使用Unity Remoting</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#对于其他混合现实支持的耳机"><span class="nav-number">3.5.2.</span> <span class="nav-text">对于其他混合现实支持的耳机</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第六章-从Visual-Studio-构建和部署到设备上"><span class="nav-number">3.6.</span> <span class="nav-text">第六章-从Visual Studio 构建和部署到设备上</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#导出到Visual-Studio"><span class="nav-number">3.6.1.</span> <span class="nav-text">导出到Visual Studio</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#编译Visual-Studio解决方案"><span class="nav-number">3.6.2.</span> <span class="nav-text">编译Visual Studio解决方案</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#通过Wi-Fi部署到混合现实设备"><span class="nav-number">3.6.3.</span> <span class="nav-text">通过Wi-Fi部署到混合现实设备</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#通过USB部署到混合现实设备"><span class="nav-number">3.6.4.</span> <span class="nav-text">通过USB部署到混合现实设备</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#部署到仿真器"><span class="nav-number">3.6.5.</span> <span class="nav-text">部署到仿真器</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#尝试你的应用程序"><span class="nav-number">3.6.6.</span> <span class="nav-text">尝试你的应用程序</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">_胡er</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

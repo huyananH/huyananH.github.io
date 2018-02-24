@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="IDEA,Maven,Spring Boot," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="一、前言在介绍创建Maven项目前，我还是特别想分享一下，今天遇到的一个特别懵*的事情…… 今天，我写了一个登录的API，然后前台进行调用，我们可爱的前台，获取用户信息的时候，居然用的是她从前台接收的用户信息……">
+<meta name="keywords" content="IDEA,Maven,Spring Boot">
+<meta property="og:type" content="article">
+<meta property="og:title" content="IDEA 新建一个基于Maven的Spring Boot项目">
+<meta property="og:url" content="http://huyanan.top/2017/09/20/create_maven_project_idea/index.html">
+<meta property="og:site_name" content="_胡er的博客">
+<meta property="og:description" content="一、前言在介绍创建Maven项目前，我还是特别想分享一下，今天遇到的一个特别懵*的事情…… 今天，我写了一个登录的API，然后前台进行调用，我们可爱的前台，获取用户信息的时候，居然用的是她从前台接收的用户信息……">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://huyanan.top/assets/ideaCreateMavenP/titlePic.png">
+<meta property="og:image" content="http://huyanan.top/assets/postImg/enterProjectIDEA.jpg">
+<meta property="og:image" content="http://huyanan.top/assets/postImg/deleteFileProjectIDEA.jpg">
+<meta property="og:updated_time" content="2018-01-31T11:25:32.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="IDEA 新建一个基于Maven的Spring Boot项目">
+<meta name="twitter:description" content="一、前言在介绍创建Maven项目前，我还是特别想分享一下，今天遇到的一个特别懵*的事情…… 今天，我写了一个登录的API，然后前台进行调用，我们可爱的前台，获取用户信息的时候，居然用的是她从前台接收的用户信息……">
+<meta name="twitter:image" content="http://huyanan.top/assets/ideaCreateMavenP/titlePic.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://huyanan.top/2017/09/20/create_maven_project_idea/"/>
+
+
+
+
+
+  <title>IDEA 新建一个基于Maven的Spring Boot项目 | _胡er的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">_胡er的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://huyanan.top/2017/09/20/create_maven_project_idea/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="_胡er">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="_胡er的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">IDEA 新建一个基于Maven的Spring Boot项目</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-20T09:32:53+08:00">
+                2017-09-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="/assets/ideaCreateMavenP/titlePic.png" width="350px" height="350px"></p>
+
+<h3 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h3><p>在介绍创建Maven项目前，我还是特别想分享一下，今天遇到的一个特别懵*的事情……</p>
+<p>今天，我写了一个登录的API，然后前台进行调用，我们可爱的前台，获取用户信息的时候，居然用的是她从前台接收的用户信息……</p>
+<a id="more"></a>
+<p>我和朋友是这么比喻前台的这种做法…..就好比吃饭能吃饱，那吃鞋也照样能吃饱……</p>
+<p>我认知的世界是不是有问题……</p>
+<p>给我一个擦汗的表情…..</p>
+<h3 id="二、新建一个项目"><a href="#二、新建一个项目" class="headerlink" title="二、新建一个项目"></a>二、新建一个项目</h3><p>File-&gt;New-&gt;File<br>&lt;img src=”/assets/ideaCreateMavenP/newFile.png” width=”600px”; height=”400px”&gt;</p>
+<h3 id="三、使用Spring-Initializer页面工具来创建Spring-boot项目"><a href="#三、使用Spring-Initializer页面工具来创建Spring-boot项目" class="headerlink" title="三、使用Spring Initializer页面工具来创建Spring boot项目"></a>三、使用Spring Initializer页面工具来创建Spring boot项目</h3><p>&lt;img src=”/assets/ideaCreateMavenP/useSprIniti.png” width=”600px”; height=”400px”&gt;</p>
+<h3 id="四、下图所示的工程信息窗口，在这里我们可以编辑我们想要的工程信息"><a href="#四、下图所示的工程信息窗口，在这里我们可以编辑我们想要的工程信息" class="headerlink" title="四、下图所示的工程信息窗口，在这里我们可以编辑我们想要的工程信息"></a>四、下图所示的工程信息窗口，在这里我们可以编辑我们想要的工程信息</h3><p>Group：Java包的结构<br>Artifact：项目的唯一标识符，实际对应项目的名称，就是项目根目录的名称<br>Type：项目类型<br>Language：语言<br>Packaging：编译后的文件类型<br>Java Version：Java版本<br>Description：项目描述<br>Package：包名<br>&lt;img src=”/assets/ideaCreateMavenP/projectInfo.png” width=”600px”; height=”400px”&gt;</p>
+<h3 id="五、Web-gt-Web-（如果使用MongoDB）Web-gt-Web-SQL-gt-JPA（如果使用MySQL）"><a href="#五、Web-gt-Web-（如果使用MongoDB）Web-gt-Web-SQL-gt-JPA（如果使用MySQL）" class="headerlink" title="五、Web-&gt;Web （如果使用MongoDB）Web-&gt;Web SQL-&gt;JPA（如果使用MySQL）"></a>五、Web-&gt;Web （如果使用MongoDB）Web-&gt;Web SQL-&gt;JPA（如果使用MySQL）</h3><p>&lt;img src=”/assets/ideaCreateMavenP/choiceWebSql.png” width=”600px”; height=”400px”&gt;</p>
+<h3 id="六、选择项目路径"><a href="#六、选择项目路径" class="headerlink" title="六、选择项目路径"></a>六、选择项目路径</h3><p>&lt;img src=”/assets/ideaCreateMavenP/choiceProjPath.png” width=”600px”; height=”400px”&gt;</p>
+<p>点击finish完成</p>
+<h3 id="七、进入工作空间"><a href="#七、进入工作空间" class="headerlink" title="七、进入工作空间"></a>七、进入工作空间</h3><p><img src="/assets/postImg/enterProjectIDEA.jpg" alt="生成之后的项目结构"></p>
+<p>删除.mvn mvnw mvnw.cmd<br><img src="/assets/postImg/deleteFileProjectIDEA.jpg" alt="删除后的目录文件"></p>
+<p>pom.xml添加tomcat依赖、设置jdk版本、设置Spring版本<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 添加tomcat依赖 --&gt;</span><br><span class="line"></span><br><span class="line">&lt;dependencies&gt;</span><br><span class="line">  &lt;dependency&gt;</span><br><span class="line">  	&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">  	&lt;artifactId&gt;spring-boot-starter-tomcat&lt;/artifactId&gt;</span><br><span class="line">  	&lt;version&gt;$&#123;spring.version&#125;&lt;/version&gt;</span><br><span class="line">  &lt;/dependency&gt;</span><br><span class="line">&lt;/dependencies&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 设置jdk版本 --&gt;</span><br><span class="line">&lt;!-- 设置spring版本 --&gt;</span><br><span class="line">&lt;properties&gt;</span><br><span class="line">  &lt;project.build.jdk&gt;1.8&lt;/project.build.jdk&gt;</span><br><span class="line">  &lt;spring.version&gt;1.5.9.RELEASE&lt;/spring.version&gt;</span><br><span class="line">&lt;/properties&gt;</span><br></pre></td></tr></table></figure></p>
+<p>pom.xml设置maven编译插件、测试插件surefire<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;build&gt;</span><br><span class="line">  &lt;plugins&gt;</span><br><span class="line">    &lt;!-- 设置maven编译插件 --&gt;</span><br><span class="line">    &lt;!-- mvn install 默认使用的是javac1.3版本，使用以下方法指定版本 --&gt;</span><br><span class="line">    &lt;plugin&gt;</span><br><span class="line">      &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;</span><br><span class="line">      &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;</span><br><span class="line">      &lt;configuration&gt;</span><br><span class="line">        &lt;source&gt;$&#123;project.build.jdk&#125;&lt;/source&gt;</span><br><span class="line">        &lt;target&gt;$&#123;project.build.jdk&#125;&lt;/target&gt;</span><br><span class="line">        &lt;encoding&gt;$&#123;project.build.sourceEncoding&#125;&lt;/encoding&gt;</span><br><span class="line">      &lt;/configuration&gt;</span><br><span class="line">    &lt;/plugin&gt;</span><br><span class="line">  &lt;/plugins&gt;</span><br><span class="line">&lt;/build&gt;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/IDEA/" rel="tag"># IDEA</a>
+          
+            <a href="/tags/Maven/" rel="tag"># Maven</a>
+          
+            <a href="/tags/Spring-Boot/" rel="tag"># Spring Boot</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/10/13/springboot_mul_env/" rel="prev" title="Spring Boot多环境配置">
+                Spring Boot多环境配置 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">_胡er</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、前言"><span class="nav-number">1.</span> <span class="nav-text">一、前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、新建一个项目"><span class="nav-number">2.</span> <span class="nav-text">二、新建一个项目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三、使用Spring-Initializer页面工具来创建Spring-boot项目"><span class="nav-number">3.</span> <span class="nav-text">三、使用Spring Initializer页面工具来创建Spring boot项目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#四、下图所示的工程信息窗口，在这里我们可以编辑我们想要的工程信息"><span class="nav-number">4.</span> <span class="nav-text">四、下图所示的工程信息窗口，在这里我们可以编辑我们想要的工程信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#五、Web-gt-Web-（如果使用MongoDB）Web-gt-Web-SQL-gt-JPA（如果使用MySQL）"><span class="nav-number">5.</span> <span class="nav-text">五、Web-&gt;Web （如果使用MongoDB）Web-&gt;Web SQL-&gt;JPA（如果使用MySQL）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#六、选择项目路径"><span class="nav-number">6.</span> <span class="nav-text">六、选择项目路径</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#七、进入工作空间"><span class="nav-number">7.</span> <span class="nav-text">七、进入工作空间</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">_胡er</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

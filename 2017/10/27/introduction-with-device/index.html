@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Holograms," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="1. 前言本教程将引导你创建一个构建于Unity的完整项目，演示核心Windows全息和HoloLens功能，包括gaze(凝视)、gestures(手势)、voice input(语音输入)、spatial sound(空间声音)、spatial mapping(空间映射)，本教程将需要大约一小时。">
+<meta name="keywords" content="Holograms">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Holograms 101:introduction With Device 介绍设备">
+<meta property="og:url" content="http://huyanan.top/2017/10/27/introduction-with-device/index.html">
+<meta property="og:site_name" content="_胡er的博客">
+<meta property="og:description" content="1. 前言本教程将引导你创建一个构建于Unity的完整项目，演示核心Windows全息和HoloLens功能，包括gaze(凝视)、gestures(手势)、voice input(语音输入)、spatial sound(空间声音)、spatial mapping(空间映射)，本教程将需要大约一小时。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://huyanan.top/assets/holoLens/Holograms101.jpg">
+<meta property="og:updated_time" content="2018-01-31T11:25:32.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Holograms 101:introduction With Device 介绍设备">
+<meta name="twitter:description" content="1. 前言本教程将引导你创建一个构建于Unity的完整项目，演示核心Windows全息和HoloLens功能，包括gaze(凝视)、gestures(手势)、voice input(语音输入)、spatial sound(空间声音)、spatial mapping(空间映射)，本教程将需要大约一小时。">
+<meta name="twitter:image" content="http://huyanan.top/assets/holoLens/Holograms101.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://huyanan.top/2017/10/27/introduction-with-device/"/>
+
+
+
+
+
+  <title>Holograms 101:introduction With Device 介绍设备 | _胡er的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">_胡er的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://huyanan.top/2017/10/27/introduction-with-device/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="_胡er">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="_胡er的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Holograms 101:introduction With Device 介绍设备</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-27T15:55:19+08:00">
+                2017-10-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="/assets/holoLens/Holograms101.jpg"></p>
+<h3 id="1-前言"><a href="#1-前言" class="headerlink" title="1. 前言"></a>1. 前言</h3><p>本教程将引导你创建一个构建于Unity的完整项目，演示核心Windows全息和HoloLens功能，包括gaze(凝视)、gestures(手势)、voice input(语音输入)、spatial sound(空间声音)、spatial mapping(空间映射)，本教程将需要大约一小时。</p>
+<a id="more"></a>
+<h3 id="2-准备"><a href="#2-准备" class="headerlink" title="2. 准备"></a>2. 准备</h3><p>安装了正确工具的Windows 10 的电脑。</p>
+<h3 id="3-项目文件"><a href="#3-项目文件" class="headerlink" title="3. 项目文件"></a>3. 项目文件</h3><p> <em>– 下载项目所需的<a href="https://github.com/Microsoft/HolographicAcademy/archive/Holograms-101.zip" target="_blank" rel="noopener">文件</a></em>，需要Unity2017.2或更高版本。</p>
+<ul>
+<li>如果你使用Unity5.6，<em>– 请使用<a href="https://github.com/Microsoft/HolographicAcademy/archive/v1.5.6-101.zip" target="_blank" rel="noopener">这个版本</a></em>。</li>
+<li>如果你使用Unity5.5，<em>– 请使用<a href="https://github.com/Microsoft/HolographicAcademy/archive/v1.5.5-101.zip" target="_blank" rel="noopener">这个版本</a></em>。</li>
+<li>如果你使用Untiy5.4，<em>– 请使用<a href="https://github.com/Microsoft/HolographicAcademy/archive/v1.5.4-101.zip" target="_blank" rel="noopener">这个版本</a></em>。</li>
+</ul>
+<p>把文件放到桌面，或者其他容易找到的位置，文件名改为Origami</p>
+<h3 id="4-内容"><a href="#4-内容" class="headerlink" title="4. 内容"></a>4. 内容</h3><h4 id="第一章-“Holo”-World"><a href="#第一章-“Holo”-World" class="headerlink" title="第一章-“Holo” World"></a>第一章-“Holo” World</h4><p>本章，我们将创建一个Unity项目，逐步完成构建和部署过程。</p>
+<h5 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h5><ul>
+<li>创建一个基于Unity的项目进行holographich开发。</li>
+<li>制作一个Hologram（全息图：一种三维图像）。</li>
+<li>看你做的Hologram。</li>
+</ul>
+<h5 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h5><ul>
+<li>启动Unity。</li>
+<li>选择Select。</li>
+<li>输入你刚才下载的Origami文件的本地目录。</li>
+<li>选择Origami并点击Select Folder。</li>
+<li>保存新的scene：File-&gt;Save Scene As。</li>
+<li>命名scene为Origami并点击Save按钮。</li>
+</ul>
+<h5 id="设置Main-Camera"><a href="#设置Main-Camera" class="headerlink" title="设置Main Camera"></a>设置Main Camera</h5><ul>
+<li>在Hierarchy面板，选择Main Camera。</li>
+<li>在Inspector设置它的Transform Position为0，0，0。</li>
+<li>找到Clear Flags属性，并且把Skybox改成Solid clolr。</li>
+<li>点击Background代开一个颜色选择器。</li>
+<li>设置R,G,B和A都为0。</li>
+</ul>
+<h5 id="设置scene"><a href="#设置scene" class="headerlink" title="设置scene"></a>设置scene</h5><ul>
+<li>在Hierarchy面板，点击Create和Create Empty。</li>
+<li>右击新的GameObject选中Rename，重命名为OrigamiCollection。</li>
+<li>在Project面板中从Holograms文件：<ul>
+<li>拖Stage到Hierarchy面板的OrigamiCollection下。</li>
+<li>拖Sphere1到Hierarchy面板的OrigamiCollection下。</li>
+<li>拖Sphere2到Hierarchy面板的OrigamiCollection下。</li>
+</ul>
+</li>
+<li>右击Hierarchy面板中的Directional Light，选择删除。</li>
+<li>从Holograms文件，拖Lights到Hierarchy面板的根目录下。</li>
+<li>在Hierarchy面板中，选中OrigamiCollection。</li>
+<li>在Inspector，设置Transform Position 为0，-0.5，2.0。</li>
+<li>点击Unity中的Play按钮，预览你的全息图。</li>
+<li>你应该在预览窗口看到Origami对象。</li>
+<li>再次按下Play按钮，停止预览窗口。</li>
+</ul>
+<h5 id="把项目从Unity导出到Visual-Studio"><a href="#把项目从Unity导出到Visual-Studio" class="headerlink" title="把项目从Unity导出到Visual Studio"></a>把项目从Unity导出到Visual Studio</h5><ul>
+<li>在Unity选择File-&gt;Build Settings。</li>
+<li>在Platform列表选中Windows Store并点击Switch Platform。</li>
+<li>设置SDK为Universal 10，Build Type为D3D。</li>
+<li>点击Unity C# Projects。</li>
+<li>点击Add Open Scenes添加scene。</li>
+<li>点击Player Settings。</li>
+<li>在Inspector面板中选择Windows Store logo。然后选择Publishing Settings。</li>
+<li>在Capabilities部分，选择Microphone和SpatialPerception功能。</li>
+<li>返回到Build Settings窗口，点击Build。</li>
+<li>创建一个文件夹，命名为“App”。</li>
+<li>单击App文件。</li>
+<li>点击Select Folder。</li>
+<li>当Unity完成之后，会出现一个资源管理器窗口。</li>
+<li>打开App文件。</li>
+<li>打开（双击）Origami.sln。</li>
+<li>在Visual Studio的顶部工具栏，把Debug改为Release，把ARM改为X86。</li>
+<li>点击Device按钮旁边的旁边的向下的箭头，选择Remote Machine(远程计算机)，通过Wi-Fi进行部署。<ul>
+<li>将Address（地址）设置为你的HoloLens的IP地址。如果你不知道你设备的IP地址，查看Settings-&gt;Network &amp; Internet-&gt; Advanced Options或者问Cortana,”你好，Cortana,我的IP地址是什么”。</li>
+<li>如果HoloLens通过USB链接，你可以选择Device通过USB部署。</li>
+<li>将Authentication Model(认证模式)设置为Universal(通用)。</li>
+<li>点击Select（选择）。</li>
+</ul>
+</li>
+<li>点击Debug-&gt;Start without debugging或者按Ctrl+F5，如果这是你的设备第一次进行部署，它将需要Visual Studio匹配。</li>
+<li>这个Origami项目将构建、部署到你的HoloLens，然后运行。</li>
+<li>戴上你的HoloLens四周看看，看看你的新全息图。</li>
+</ul>
+<h4 id="第二章-Gaze-凝视"><a href="#第二章-Gaze-凝视" class="headerlink" title="第二章 Gaze(凝视)"></a>第二章 Gaze(凝视)</h4><p>在这一章，我们将介绍与你的全息图交互的三种方法中的第一种-凝视</p>
+<h5 id="目标-1"><a href="#目标-1" class="headerlink" title="目标"></a>目标</h5><p>用world-locked的光标可视化你的凝视。</p>
+<h5 id="说明-1"><a href="#说明-1" class="headerlink" title="说明"></a>说明</h5><ul>
+<li>返回你的Unity项目，如果Build Settings一直开着，则把它关掉。</li>
+<li>在Porject面板中选中Holograms文件。</li>
+<li>拖Cursor（光标）对象到Hierarchy面板中的根目录。</li>
+<li>双击Cursor去仔细查看。</li>
+<li>在Project面板右击Scripts（脚本）文件。</li>
+<li>点击子菜单中的Create。</li>
+<li>选择C# Script。</li>
+<li>把script命名为WorldCursor。注意：名字是区分大小写的，你不需要添加.cs文件。</li>
+<li>在Hierarchy面板中选择Cursor。</li>
+<li>将WorldCursor拖到Inspector面板中。</li>
+<li>双击WorldCursor打开到Visual Studio。</li>
+<li>把下面的代码复制粘贴到WorldCursor.cs并保存。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">using UnityEngine;</span><br><span class="line"></span><br><span class="line">public class WorldCursor : MonoBehaviour</span><br><span class="line">&#123;</span><br><span class="line">    private MeshRenderer meshRenderer;</span><br><span class="line"></span><br><span class="line">    // Use this for initialization</span><br><span class="line">    void Start()</span><br><span class="line">    &#123;</span><br><span class="line">        // Grab the mesh renderer that&apos;s on the same object as this script.</span><br><span class="line">        meshRenderer = this.gameObject.GetComponentInChildren&lt;MeshRenderer&gt;();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // Update is called once per frame</span><br><span class="line">    void Update()</span><br><span class="line">    &#123;</span><br><span class="line">        // Do a raycast into the world based on the user&apos;s</span><br><span class="line">        // head position and orientation.</span><br><span class="line">        var headPosition = Camera.main.transform.position;</span><br><span class="line">        var gazeDirection = Camera.main.transform.forward;</span><br><span class="line"></span><br><span class="line">        RaycastHit hitInfo;</span><br><span class="line"></span><br><span class="line">        if (Physics.Raycast(headPosition, gazeDirection, out hitInfo))</span><br><span class="line">        &#123;</span><br><span class="line">            // If the raycast hit a hologram...</span><br><span class="line">            // Display the cursor mesh.</span><br><span class="line">            meshRenderer.enabled = true;</span><br><span class="line"></span><br><span class="line">            // Move the cursor to the point where the raycast hit.</span><br><span class="line">            this.transform.position = hitInfo.point;</span><br><span class="line"></span><br><span class="line">            // Rotate the cursor to hug the surface of the hologram.</span><br><span class="line">            this.transform.rotation = Quaternion.FromToRotation(Vector3.up, hitInfo.normal);</span><br><span class="line">        &#125;</span><br><span class="line">        else</span><br><span class="line">        &#123;</span><br><span class="line">            // If the raycast did not hit a hologram, hide the cursor mesh.</span><br><span class="line">            meshRenderer.enabled = false;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>重新运行App，File-&gt;Build Settings。</li>
+<li>返回以前用于部署到模拟器的Visual Studio解决方案。</li>
+<li>当提示“Reload All”，选中。</li>
+<li>点击Debug-&gt;Start without debugging或者是按Ctrl+F5。</li>
+<li>现在看看周围的场景，注意游标如何与对象的形状进行交互。</li>
+</ul>
+<h4 id="第三章-Gestures-手势"><a href="#第三章-Gestures-手势" class="headerlink" title="第三章-Gestures(手势)"></a>第三章-Gestures(手势)</h4><p>这一章，我们将添加对手势的支持。当用户选中一个纸球时，我们将使用Unity的物理引擎是球体落下。</p>
+<h5 id="目标-2"><a href="#目标-2" class="headerlink" title="目标"></a>目标</h5><p>用选择手势控制你的全息图。</p>
+<h5 id="说明-2"><a href="#说明-2" class="headerlink" title="说明"></a>说明</h5><p>我们将首先创建一个脚本，而不是检测选择的手势。</p>
+<ul>
+<li>在Script文件，创建一个脚本，命名为GazeGestureManager。</li>
+<li>把GazeGestureManager脚本拖到Hierarchy面板中的OrigamiCollection对象中。</li>
+<li><p>使用Visual Studio打开GazeGestureManager脚本，并添加一下代码。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line">using UnityEngine;</span><br><span class="line">using UnityEngine.XR.WSA.Input;</span><br><span class="line"></span><br><span class="line">public class GazeGestureManager : MonoBehaviour</span><br><span class="line">&#123;</span><br><span class="line">    public static GazeGestureManager Instance &#123; get; private set; &#125;</span><br><span class="line"></span><br><span class="line">    // Represents the hologram that is currently being gazed at.</span><br><span class="line">    public GameObject FocusedObject &#123; get; private set; &#125;</span><br><span class="line"></span><br><span class="line">    GestureRecognizer recognizer;</span><br><span class="line"></span><br><span class="line">    // Use this for initialization</span><br><span class="line">    void Awake()</span><br><span class="line">    &#123;</span><br><span class="line">        Instance = this;</span><br><span class="line"></span><br><span class="line">        // Set up a GestureRecognizer to detect Select gestures.</span><br><span class="line">        recognizer = new GestureRecognizer();</span><br><span class="line">        recognizer.Tapped += (args) =&gt;</span><br><span class="line">        &#123;</span><br><span class="line">            // Send an OnSelect message to the focused object and its ancestors.</span><br><span class="line">            if (FocusedObject != null)</span><br><span class="line">            &#123;</span><br><span class="line">                FocusedObject.SendMessageUpwards(&quot;OnSelect&quot;, SendMessageOptions.DontRequireReceiver);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">        recognizer.StartCapturingGestures();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // Update is called once per frame</span><br><span class="line">    void Update()</span><br><span class="line">    &#123;</span><br><span class="line">        // Figure out which hologram is focused this frame.</span><br><span class="line">        GameObject oldFocusObject = FocusedObject;</span><br><span class="line"></span><br><span class="line">        // Do a raycast into the world based on the user&apos;s</span><br><span class="line">        // head position and orientation.</span><br><span class="line">        var headPosition = Camera.main.transform.position;</span><br><span class="line">        var gazeDirection = Camera.main.transform.forward;</span><br><span class="line"></span><br><span class="line">        RaycastHit hitInfo;</span><br><span class="line">        if (Physics.Raycast(headPosition, gazeDirection, out hitInfo))</span><br><span class="line">        &#123;</span><br><span class="line">            // If the raycast hit a hologram, use that as the focused object.</span><br><span class="line">            FocusedObject = hitInfo.collider.gameObject;</span><br><span class="line">        &#125;</span><br><span class="line">        else</span><br><span class="line">        &#123;</span><br><span class="line">            // If the raycast did not hit a hologram, clear the focused object.</span><br><span class="line">            FocusedObject = null;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        // If the focused object changed this frame,</span><br><span class="line">        // start detecting fresh gestures again.</span><br><span class="line">        if (FocusedObject != oldFocusObject)</span><br><span class="line">        &#123;</span><br><span class="line">            recognizer.CancelGestures();</span><br><span class="line">            recognizer.StartCapturingGestures();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在Script文件创建另一个脚本，这次命名为SphereCommands。</p>
+</li>
+<li>在Hierarchy视图中展开OrigamiCollection对象。</li>
+<li>把SphereCommands脚本拖到Hierarchy面板中的Sphere1对象中。</li>
+<li>把SphereCommands脚本拖到Hierarchy面板中的Sphere2对象中。</li>
+<li><p>用Visual Studio打开脚本编辑，用下面 的代码替换默认的代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">using UnityEngine;</span><br><span class="line"></span><br><span class="line">public class SphereCommands : MonoBehaviour</span><br><span class="line">&#123;</span><br><span class="line">    // Called by GazeGestureManager when the user performs a Select gesture</span><br><span class="line">    void OnSelect()</span><br><span class="line">    &#123;</span><br><span class="line">        // If the sphere has no Rigidbody component, add one to enable physics.</span><br><span class="line">        if (!this.GetComponent&lt;Rigidbody&gt;())</span><br><span class="line">        &#123;</span><br><span class="line">            var rigidbody = this.gameObject.AddComponent&lt;Rigidbody&gt;();</span><br><span class="line">            rigidbody.collisionDetectionMode = CollisionDetectionMode.Continuous;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>导出，构建和部署App到HoloLens模拟器上。</p>
+</li>
+<li>环顾四周，并围绕其中的一个球体。</li>
+<li>按下Xbox控制器上的A按钮，或者按空格来模拟选择手势。</li>
+</ul>
+<h4 id="第四章-声音"><a href="#第四章-声音" class="headerlink" title="第四章-声音"></a>第四章-声音</h4><p>这一章，我们将会添加语音命令的支持：“Reset world”使掉落的球体回到原来的位置，“Drop sphere”使球体落下。</p>
+<h5 id="目标-3"><a href="#目标-3" class="headerlink" title="目标"></a>目标</h5><ul>
+<li>添加总是在后台监听的语音命令。</li>
+<li>创建一个响应语音命令的全息图。</li>
+</ul>
+<h5 id="说明-3"><a href="#说明-3" class="headerlink" title="说明"></a>说明</h5><ul>
+<li>在Script（脚本）文件，创建一个名为“SpeechManager”的脚本。</li>
+<li>拖“SpeechManager”脚本到Hierarchy下的OrigamiCollection下。</li>
+<li>用Visual Studio打开SpeechManager。</li>
+<li><p>复制粘贴以下代码带SpeechManager.cs并保存：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">using System.Collections.Generic;</span><br><span class="line">using System.Linq;</span><br><span class="line">using UnityEngine;</span><br><span class="line">using UnityEngine.Windows.Speech;</span><br><span class="line"></span><br><span class="line">public class SpeechManager : MonoBehaviour</span><br><span class="line">&#123;</span><br><span class="line">    KeywordRecognizer keywordRecognizer = null;</span><br><span class="line">    Dictionary&lt;string, System.Action&gt; keywords = new Dictionary&lt;string, System.Action&gt;();</span><br><span class="line"></span><br><span class="line">    // Use this for initialization</span><br><span class="line">    void Start()</span><br><span class="line">    &#123;</span><br><span class="line">        keywords.Add(&quot;Reset world&quot;, () =&gt;</span><br><span class="line">        &#123;</span><br><span class="line">            // Call the OnReset method on every descendant object.</span><br><span class="line">            this.BroadcastMessage(&quot;OnReset&quot;);</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        keywords.Add(&quot;Drop Sphere&quot;, () =&gt;</span><br><span class="line">        &#123;</span><br><span class="line">            var focusObject = GazeGestureManager.Instance.FocusedObject;</span><br><span class="line">            if (focusObject != null)</span><br><span class="line">            &#123;</span><br><span class="line">                // Call the OnDrop method on just the focused object.</span><br><span class="line">                focusObject.SendMessage(&quot;OnDrop&quot;, SendMessageOptions.DontRequireReceiver);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        // Tell the KeywordRecognizer about our keywords.</span><br><span class="line">        keywordRecognizer = new KeywordRecognizer(keywords.Keys.ToArray());</span><br><span class="line"></span><br><span class="line">        // Register a callback for the KeywordRecognizer and start recognizing!</span><br><span class="line">        keywordRecognizer.OnPhraseRecognized += KeywordRecognizer_OnPhraseRecognized;</span><br><span class="line">        keywordRecognizer.Start();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private void KeywordRecognizer_OnPhraseRecognized(PhraseRecognizedEventArgs args)</span><br><span class="line">    &#123;</span><br><span class="line">        System.Action keywordAction;</span><br><span class="line">        if (keywords.TryGetValue(args.text, out keywordAction))</span><br><span class="line">        &#123;</span><br><span class="line">            keywordAction.Invoke();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>用Visual Studio打开SphereCommands脚本。</p>
+</li>
+<li>更新脚本代码如下：</li>
+</ul>
+<h5 id="SphereCommands-cs"><a href="#SphereCommands-cs" class="headerlink" title="SphereCommands.cs"></a>SphereCommands.cs</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">using UnityEngine;</span><br><span class="line">public class SphereCommands : MonoBehaviour</span><br><span class="line">&#123;</span><br><span class="line">    Vector3 originalPosition;</span><br><span class="line">    // Use this for initialization</span><br><span class="line">    void Start()</span><br><span class="line">    &#123;</span><br><span class="line">        // Grab the original local position of the sphere when the app starts.</span><br><span class="line">        originalPosition = this.transform.localPosition;</span><br><span class="line">    &#125;</span><br><span class="line">    // Called by GazeGestureManager when the user performs a Select gesture</span><br><span class="line">    void OnSelect()</span><br><span class="line">    &#123;</span><br><span class="line">        // If the sphere has no Rigidbody component, add one to enable physics.</span><br><span class="line">        if (!this.GetComponent&lt;Rigidbody&gt;())</span><br><span class="line">        &#123;</span><br><span class="line">            var rigidbody = this.gameObject.AddComponent&lt;Rigidbody&gt;();</span><br><span class="line">            rigidbody.collisionDetectionMode = CollisionDetectionMode.Continuous;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    // Called by SpeechManager when the user says the &quot;Reset world&quot; command</span><br><span class="line">    void OnReset()</span><br><span class="line">    &#123;</span><br><span class="line">        // If the sphere has a Rigidbody component, remove it to disable physics.</span><br><span class="line">        var rigidbody = this.GetComponent&lt;Rigidbody&gt;();</span><br><span class="line">        if (rigidbody != null)</span><br><span class="line">        &#123;</span><br><span class="line">            rigidbody.isKinematic = true;</span><br><span class="line">            Destroy(rigidbody);</span><br><span class="line">        &#125;</span><br><span class="line">        // Put the sphere back into its original local position.</span><br><span class="line">        this.transform.localPosition = originalPosition;</span><br><span class="line">    &#125;</span><br><span class="line">    // Called by SpeechManager when the user says the &quot;Drop sphere&quot; command</span><br><span class="line">    void OnDrop()</span><br><span class="line">    &#123;</span><br><span class="line">        // Just do the same logic as a Select gesture.</span><br><span class="line">        OnSelect();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>导出，构建并部署App到HoloLens模拟器上。</li>
+<li>这个模拟器是支持你电脑的麦克风去响应你的声音：调整视图，使光标在一个球体上，并说“Drop Sphere”。</li>
+<li>说“Reset World”是他们回到原来的位置上。</li>
+</ul>
+<h4 id="第五章-空间立体声"><a href="#第五章-空间立体声" class="headerlink" title="第五章-空间立体声"></a>第五章-空间立体声</h4><p>这一章，我们将在应用里添加音乐，然后触发声音对某些动作起作用。我们将使用空间立体声在三维空间给声音一个特定的位置。</p>
+<h5 id="目标-4"><a href="#目标-4" class="headerlink" title="目标"></a>目标</h5><ul>
+<li>在你的世界听全息图。</li>
+</ul>
+<h5 id="说明-4"><a href="#说明-4" class="headerlink" title="说明"></a>说明</h5><ul>
+<li>在Unity顶部菜单选中 Edit-&gt;Project Settings（Project设置）-&gt;Audio（）</li>
+<li>找到Spatializer Plugin设置，并选中MS HRTF Spatializer。</li>
+<li>从Holograms文件，拖一个Ambience对象放到Hierarchy面板的OrigamiCollection对象中。</li>
+<li>选择OrigamiCollection并找到Audio Source部分，更改一些属性：<ul>
+<li>选中Spatialize（空间）属性。</li>
+<li>选中Play On Awake（点击唤醒）。</li>
+<li>把Spatial Blend一直拖到右边。</li>
+<li>选中Loop。</li>
+<li>展开3D Sound Settings，在Doppler Level输入0.1。</li>
+<li>把Volume Rolloff设置为Logarithmic Rolloff。</li>
+<li>设置Max Distance为20。</li>
+</ul>
+</li>
+<li>在Script文件，创建一个名为SphereSounds的脚本。</li>
+<li>拖SphereSound到Hierarchy面板的Sphere1和Sphere2中。</li>
+<li>在Visual Studio中打开SphereSounds，修改代码并保存。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line">using UnityEngine;</span><br><span class="line"></span><br><span class="line">public class SphereSounds : MonoBehaviour</span><br><span class="line">&#123;</span><br><span class="line">    AudioSource impactAudioSource = null;</span><br><span class="line">    AudioSource rollingAudioSource = null;</span><br><span class="line"></span><br><span class="line">    bool rolling = false;</span><br><span class="line"></span><br><span class="line">    void Start()</span><br><span class="line">    &#123;</span><br><span class="line">        // Add an AudioSource component and set up some defaults</span><br><span class="line">        impactAudioSource = gameObject.AddComponent&lt;AudioSource&gt;();</span><br><span class="line">        impactAudioSource.playOnAwake = false;</span><br><span class="line">        impactAudioSource.spatialize = true;</span><br><span class="line">        impactAudioSource.spatialBlend = 1.0f;</span><br><span class="line">        impactAudioSource.dopplerLevel = 0.0f;</span><br><span class="line">        impactAudioSource.rolloffMode = AudioRolloffMode.Logarithmic;</span><br><span class="line">        impactAudioSource.maxDistance = 20f;</span><br><span class="line"></span><br><span class="line">        rollingAudioSource = gameObject.AddComponent&lt;AudioSource&gt;();</span><br><span class="line">        rollingAudioSource.playOnAwake = false;</span><br><span class="line">        rollingAudioSource.spatialize = true;</span><br><span class="line">        rollingAudioSource.spatialBlend = 1.0f;</span><br><span class="line">        rollingAudioSource.dopplerLevel = 0.0f;</span><br><span class="line">        rollingAudioSource.rolloffMode = AudioRolloffMode.Logarithmic;</span><br><span class="line">        rollingAudioSource.maxDistance = 20f;</span><br><span class="line">        rollingAudioSource.loop = true;</span><br><span class="line"></span><br><span class="line">        // Load the Sphere sounds from the Resources folder</span><br><span class="line">        impactAudioSource.clip = Resources.Load&lt;AudioClip&gt;(&quot;Impact&quot;);</span><br><span class="line">        rollingAudioSource.clip = Resources.Load&lt;AudioClip&gt;(&quot;Rolling&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // Occurs when this object starts colliding with another object</span><br><span class="line">    void OnCollisionEnter(Collision collision)</span><br><span class="line">    &#123;</span><br><span class="line">        // Play an impact sound if the sphere impacts strongly enough.</span><br><span class="line">        if (collision.relativeVelocity.magnitude &gt;= 0.1f)</span><br><span class="line">        &#123;</span><br><span class="line">            impactAudioSource.Play();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // Occurs each frame that this object continues to collide with another object</span><br><span class="line">    void OnCollisionStay(Collision collision)</span><br><span class="line">    &#123;</span><br><span class="line">        Rigidbody rigid = gameObject.GetComponent&lt;Rigidbody&gt;();</span><br><span class="line"></span><br><span class="line">        // Play a rolling sound if the sphere is rolling fast enough.</span><br><span class="line">        if (!rolling &amp;&amp; rigid.velocity.magnitude &gt;= 0.01f)</span><br><span class="line">        &#123;</span><br><span class="line">            rolling = true;</span><br><span class="line">            rollingAudioSource.Play();</span><br><span class="line">        &#125;</span><br><span class="line">        // Stop the rolling sound if rolling slows down.</span><br><span class="line">        else if (rolling &amp;&amp; rigid.velocity.magnitude &lt; 0.01f)</span><br><span class="line">        &#123;</span><br><span class="line">            rolling = false;</span><br><span class="line">            rollingAudioSource.Stop();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // Occurs when this object stops colliding with another object</span><br><span class="line">    void OnCollisionExit(Collision collision)</span><br><span class="line">    &#123;</span><br><span class="line">        // Stop the rolling sound if the object falls off and stops colliding.</span><br><span class="line">        if (rolling)</span><br><span class="line">        &#123;</span><br><span class="line">            rolling = false;</span><br><span class="line">            impactAudioSource.Stop();</span><br><span class="line">            rollingAudioSource.Stop();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>保存脚本，返回Unity。</li>
+<li>导出，构建并且部署App到HoloLens模拟器上。</li>
+<li>戴上耳机才能得到充分的效果，离舞台越来越近，听到声音的变化。</li>
+</ul>
+<h4 id="第六章-空间映射"><a href="#第六章-空间映射" class="headerlink" title="第六章-空间映射"></a>第六章-空间映射</h4><p>现在，我们将使用空间映射来把游戏板放置在现实世界的真是物体上。</p>
+<h5 id="目标-5"><a href="#目标-5" class="headerlink" title="目标"></a>目标</h5><ul>
+<li>把你的真是世界带入到虚拟世界中。</li>
+<li>把你的全息图放在最重要的地方。</li>
+</ul>
+<h5 id="说明-5"><a href="#说明-5" class="headerlink" title="说明"></a>说明</h5><ul>
+<li>在Project面板中点击Holograms文件。</li>
+<li>拖Spatial Mapping(空间映射)到Hierarchy面板的根目录。</li>
+<li>在Hierarchy面板中点击Spatial Mapping。</li>
+<li>在Inspector 面板，改变以下属性：<ul>
+<li>选中Draw Visual Meshes（视觉化网格）.</li>
+<li>点位到Draw Material（绘制材料）并且点击右边的圆圈。在上边的搜索栏中查找“wireframe”类型。点击结果并关闭窗口。</li>
+</ul>
+</li>
+<li>导出，构建并部署App到HoloLens模拟器。</li>
+<li>当程序运行时，先前扫描的真实客厅的网格则会出现在线框中。</li>
+<li>看到一个滚动的球体从舞台上落下，落在地板上。</li>
+</ul>
+<p>现在，我们将为你展示将OrigamiCollection移动到新的位置。</p>
+<ul>
+<li>在Script文件，创建一个名为TapToPlaceParent的脚本。</li>
+<li>在Hierarchy面板中，展开OrigamiCollection并选中Stage对象。</li>
+<li>拖TapToPlaceParent脚本到Stage对象。</li>
+<li>用Visual Studiodakai TapToPlaceParent，并修改代码，如下：</li>
+</ul>
+<h6 id="TapToPlaceParent-cs"><a href="#TapToPlaceParent-cs" class="headerlink" title="TapToPlaceParent.cs"></a>TapToPlaceParent.cs</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">using UnityEngine;</span><br><span class="line">public class TapToPlaceParent : MonoBehaviour</span><br><span class="line">&#123;</span><br><span class="line">    bool placing = false;</span><br><span class="line">    // Called by GazeGestureManager when the user performs a Select gesture</span><br><span class="line">    void OnSelect()</span><br><span class="line">    &#123;</span><br><span class="line">        // On each Select gesture, toggle whether the user is in placing mode.</span><br><span class="line">        placing = !placing;</span><br><span class="line">        // If the user is in placing mode, display the spatial mapping mesh.</span><br><span class="line">        if (placing)</span><br><span class="line">        &#123;</span><br><span class="line">            SpatialMapping.Instance.DrawVisualMeshes = true;</span><br><span class="line">        &#125;</span><br><span class="line">        // If the user is not in placing mode, hide the spatial mapping mesh.</span><br><span class="line">        else</span><br><span class="line">        &#123;</span><br><span class="line">            SpatialMapping.Instance.DrawVisualMeshes = false;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    // Update is called once per frame</span><br><span class="line">    void Update()</span><br><span class="line">    &#123;</span><br><span class="line">        // If the user is in placing mode,</span><br><span class="line">        // update the placement to match the user&apos;s gaze.</span><br><span class="line">        if (placing)</span><br><span class="line">        &#123;</span><br><span class="line">            // Do a raycast into the world that will only hit the Spatial Mapping mesh.</span><br><span class="line">            var headPosition = Camera.main.transform.position;</span><br><span class="line">            var gazeDirection = Camera.main.transform.forward;</span><br><span class="line">            RaycastHit hitInfo;</span><br><span class="line">            if (Physics.Raycast(headPosition, gazeDirection, out hitInfo,</span><br><span class="line">                30.0f, SpatialMapping.PhysicsRaycastMask))</span><br><span class="line">            &#123;</span><br><span class="line">                // Move this object&apos;s parent object to</span><br><span class="line">                // where the raycast hit the Spatial Mapping mesh.</span><br><span class="line">                this.transform.parent.position = hitInfo.point;</span><br><span class="line">                // Rotate this object&apos;s parent object to face the user.</span><br><span class="line">                Quaternion toQuat = Camera.main.transform.localRotation;</span><br><span class="line">                toQuat.x = 0;</span><br><span class="line">                toQuat.z = 0;</span><br><span class="line">                this.transform.parent.rotation = toQuat;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>导出，构建并部署App。</li>
+<li>现在，你可以通过凝视，使用选择手势，然后移动到一个新的位置，再使用选择手势，将游戏放到一个特定的位置。</li>
+</ul>
+<h4 id="第七章-全息图乐趣"><a href="#第七章-全息图乐趣" class="headerlink" title="第七章-全息图乐趣"></a>第七章-全息图乐趣</h4><h5 id="目标-6"><a href="#目标-6" class="headerlink" title="目标"></a>目标</h5><p>显示全息图underWorld的入口。</p>
+<h5 id="说明-6"><a href="#说明-6" class="headerlink" title="说明"></a>说明</h5><p>现在，我们将展示如何实现全息图的underWorld。</p>
+<ul>
+<li>在Project面板的Holograms文件夹：<ul>
+<li>拖UnderWorld到Hierarchy面板的OrigamiCollection。</li>
+</ul>
+</li>
+<li>在Script文件夹，创建一个名为HitTarget的脚本。</li>
+<li>在Hierarchy面板，展开OrigamiCollection。</li>
+<li>展开Stage，并选择Target。</li>
+<li>拖HitTarget脚本到Target。</li>
+<li>用Visual Studio打开HitTarget，修改代码：</li>
+</ul>
+<h5 id="HitTarget-cs"><a href="#HitTarget-cs" class="headerlink" title="HitTarget.cs"></a>HitTarget.cs</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">using UnityEngine;</span><br><span class="line"></span><br><span class="line">public class HitTarget : MonoBehaviour</span><br><span class="line">&#123;</span><br><span class="line">    // These public fields become settable properties in the Unity editor.</span><br><span class="line">    public GameObject underworld;</span><br><span class="line">    public GameObject objectToHide;</span><br><span class="line"></span><br><span class="line">    // Occurs when this object starts colliding with another object</span><br><span class="line">    void OnCollisionEnter(Collision collision)</span><br><span class="line">    &#123;</span><br><span class="line">        // Hide the stage and show the underworld.</span><br><span class="line">        objectToHide.SetActive(false);</span><br><span class="line">        underworld.SetActive(true);</span><br><span class="line"></span><br><span class="line">        // Disable Spatial Mapping to let the spheres enter the underworld.</span><br><span class="line">        SpatialMapping.Instance.MappingEnabled = false;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>在Unity，选择Target。</li>
+<li>在Hit Target目标组件上可以看到两个公共属性，并需要在场景中引用对象。<ul>
+<li>从Hierarchy面板的UnderWorld拖到HitTarget组件的Underworld属性。</li>
+<li>拖Hierarchy面板的Stage收到Hit Target组件的Object to Hide。</li>
+</ul>
+</li>
+<li>导出，构建并部署应用。</li>
+<li>将折纸集合放在地板上，然后用选择手势使球体落下。</li>
+<li>当球体集中目标（蓝色风扇）时，会发生爆炸，集合会被隐藏，underWorld会出现一个洞。</li>
+</ul>
+<h4 id="结束"><a href="#结束" class="headerlink" title="结束"></a>结束</h4><p>这是本教程的尾声。</p>
+<p>你学了：</p>
+<ul>
+<li>如何在Unity中创建一个全息应用。</li>
+<li>如何使用凝视、手势、语音、声音、和空间映射。</li>
+<li>如何在Visual Studio构建部署程序。</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Holograms/" rel="tag"># Holograms</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/26/introduction-with-emulator/" rel="next" title="Holograms 101E：介绍Emulator（模拟器）">
+                <i class="fa fa-chevron-left"></i> Holograms 101E：介绍Emulator（模拟器）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/10/30/holograms-gaze/" rel="prev" title="Holograms 210：Gaze（凝视）">
+                Holograms 210：Gaze（凝视） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">_胡er</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-前言"><span class="nav-number">1.</span> <span class="nav-text">1. 前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-准备"><span class="nav-number">2.</span> <span class="nav-text">2. 准备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-项目文件"><span class="nav-number">3.</span> <span class="nav-text">3. 项目文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-内容"><span class="nav-number">4.</span> <span class="nav-text">4. 内容</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#第一章-“Holo”-World"><span class="nav-number">4.1.</span> <span class="nav-text">第一章-“Holo” World</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#目标"><span class="nav-number">4.1.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#说明"><span class="nav-number">4.1.2.</span> <span class="nav-text">说明</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#设置Main-Camera"><span class="nav-number">4.1.3.</span> <span class="nav-text">设置Main Camera</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#设置scene"><span class="nav-number">4.1.4.</span> <span class="nav-text">设置scene</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#把项目从Unity导出到Visual-Studio"><span class="nav-number">4.1.5.</span> <span class="nav-text">把项目从Unity导出到Visual Studio</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第二章-Gaze-凝视"><span class="nav-number">4.2.</span> <span class="nav-text">第二章 Gaze(凝视)</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#目标-1"><span class="nav-number">4.2.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#说明-1"><span class="nav-number">4.2.2.</span> <span class="nav-text">说明</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第三章-Gestures-手势"><span class="nav-number">4.3.</span> <span class="nav-text">第三章-Gestures(手势)</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#目标-2"><span class="nav-number">4.3.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#说明-2"><span class="nav-number">4.3.2.</span> <span class="nav-text">说明</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第四章-声音"><span class="nav-number">4.4.</span> <span class="nav-text">第四章-声音</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#目标-3"><span class="nav-number">4.4.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#说明-3"><span class="nav-number">4.4.2.</span> <span class="nav-text">说明</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#SphereCommands-cs"><span class="nav-number">4.4.3.</span> <span class="nav-text">SphereCommands.cs</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第五章-空间立体声"><span class="nav-number">4.5.</span> <span class="nav-text">第五章-空间立体声</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#目标-4"><span class="nav-number">4.5.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#说明-4"><span class="nav-number">4.5.2.</span> <span class="nav-text">说明</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第六章-空间映射"><span class="nav-number">4.6.</span> <span class="nav-text">第六章-空间映射</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#目标-5"><span class="nav-number">4.6.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#说明-5"><span class="nav-number">4.6.2.</span> <span class="nav-text">说明</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#TapToPlaceParent-cs"><span class="nav-number">4.6.2.1.</span> <span class="nav-text">TapToPlaceParent.cs</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第七章-全息图乐趣"><span class="nav-number">4.7.</span> <span class="nav-text">第七章-全息图乐趣</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#目标-6"><span class="nav-number">4.7.1.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#说明-6"><span class="nav-number">4.7.2.</span> <span class="nav-text">说明</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#HitTarget-cs"><span class="nav-number">4.7.3.</span> <span class="nav-text">HitTarget.cs</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#结束"><span class="nav-number">4.8.</span> <span class="nav-text">结束</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">_胡er</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

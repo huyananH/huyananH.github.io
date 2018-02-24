@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Redis," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="一、 前言在介绍今天主题之前，我先要分享一件比较有意思的事情…… 今天，和朋友聊天，朋友让我去看他今天发的朋友圈，朋友圈是这样写的……">
+<meta name="keywords" content="Redis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="安装Redis">
+<meta property="og:url" content="http://huyanan.top/2017/10/23/install-redis-mac/index.html">
+<meta property="og:site_name" content="_胡er的博客">
+<meta property="og:description" content="一、 前言在介绍今天主题之前，我先要分享一件比较有意思的事情…… 今天，和朋友聊天，朋友让我去看他今天发的朋友圈，朋友圈是这样写的……">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://huyanan.top/assets/postLog/installRedisMacLog.jpeg">
+<meta property="og:image" content="http://huyanan.top/assets/postImg/download_redis.jpg">
+<meta property="og:image" content="http://huyanan.top/assets/postImg/make_install_redis.jpg">
+<meta property="og:image" content="http://huyanan.top/assets/postImg/redis_server.jpg">
+<meta property="og:image" content="http://huyanan.top/assets/postImg/redis_log.jpg">
+<meta property="og:image" content="http://huyanan.top/assets/postImg/redis_cli.jpg">
+<meta property="og:updated_time" content="2018-01-31T11:25:32.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="安装Redis">
+<meta name="twitter:description" content="一、 前言在介绍今天主题之前，我先要分享一件比较有意思的事情…… 今天，和朋友聊天，朋友让我去看他今天发的朋友圈，朋友圈是这样写的……">
+<meta name="twitter:image" content="http://huyanan.top/assets/postLog/installRedisMacLog.jpeg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://huyanan.top/2017/10/23/install-redis-mac/"/>
+
+
+
+
+
+  <title>安装Redis | _胡er的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">_胡er的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://huyanan.top/2017/10/23/install-redis-mac/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="_胡er">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="_胡er的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">安装Redis</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-23T09:28:21+08:00">
+                2017-10-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="/assets/postLog/installRedisMacLog.jpeg" width="350px" height="350px"></p>
+<h3 id="一、-前言"><a href="#一、-前言" class="headerlink" title="一、 前言"></a>一、 前言</h3><p>在介绍今天主题之前，我先要分享一件比较有意思的事情……</p>
+<p>今天，和朋友聊天，朋友让我去看他今天发的朋友圈，朋友圈是这样写的……</p>
+<a id="more"></a>
+<blockquote>
+<p>今天出去吃饭，点了一碗粥和一碗馄饨，粥快、馄饨慢，我就先喝粥，等馄饨……</p>
+</blockquote>
+<blockquote>
+<p>粥喝一半，馄饨叫号了，去拿馄饨，回头粥没了，仿佛空气都凝固了……</p>
+</blockquote>
+<blockquote>
+<p>服务员大婶小小的动作和无辜的眼神伤害竟然这么大……</p>
+</blockquote>
+<p>我还是忍不住笑了……</p>
+<p>朋友说，没事笑吧，点个赞也没关系的……</p>
+<p>然后，我就点了个赞……</p>
+<p>在安装Redis之前，先对Redis进行一个简单的了解。</p>
+<p>Redis是一个完全免费开源的，遵守BSD协议，是一个高性能的key-value数据库。</p>
+<p>解释：BSD协议</p>
+<p>BSD开源协议是一个给于使用者很大自由的协议。可以自由的使用，修改源代码，也可以将修改后的代码作为开源或者专有软件再发布。当你发布使用了BSD协议的代码，或者以BSD协议代码为基础做二次开发自己的产品时，需要满足三个条件：</p>
+<ul>
+<li>如果再发布的产品中包含源代码，则在源代码中必须带有原来代码中的BSD协议。</li>
+<li>如果再发布的只是二进制类库/软件，则需要在类库/软件的文档和版权声明中包含原来代码中的BSD协议。</li>
+<li>不可以用开源代码的作者/机构名字和原来产品的名字做市场推广。</li>
+</ul>
+<p>BSD代码鼓励代码共享，但需要尊重代码作者的著作权。BSD由于允许使用者修改和重新发布代码，也允许使用或在BSD代码上开发商业软件发布和销 售，因此是对商业集成很友好的协议。很多的公司企业在选用开源产品的时候都首选BSD协议，因为可以完全控制这些第三方的代码，在必要的时候可以修改或者 二次开发。</p>
+<p>Redis 与其他 key - value 缓存产品有以下三个特点：</p>
+<ul>
+<li>Redis支持数据的持久化，可以将内存中的数据保存在磁盘中，重启的时候可以再次加载进行使用。</li>
+<li>Redis不仅仅支持简单的key-value类型的数据，同时还提供list，set，zset，hash等数据结构的存储。</li>
+<li>Redis支持数据的备份，即master-slave模式的数据备份。</li>
+</ul>
+<h3 id="二、在MAC下安装Redis"><a href="#二、在MAC下安装Redis" class="headerlink" title="二、在MAC下安装Redis"></a>二、在MAC下安装Redis</h3><h4 id="1-官网下载"><a href="#1-官网下载" class="headerlink" title="1. 官网下载"></a>1. 官网下载</h4><p><em>– 在Redis下载最新稳定版本<a href="https://redis.io/" target="_blank" rel="noopener">点击这里</a></em></p>
+<p>这里的稳定版本是4.0.2</p>
+<p><img src="/assets/postImg/download_redis.jpg" width="400px" height="350px"></p>
+<h4 id="2-把压缩包解压，放入-usr-local"><a href="#2-把压缩包解压，放入-usr-local" class="headerlink" title="2. 把压缩包解压，放入/usr/local"></a>2. 把压缩包解压，放入/usr/local</h4><h4 id="3-切换到相应的目录下面"><a href="#3-切换到相应的目录下面" class="headerlink" title="3. 切换到相应的目录下面"></a>3. 切换到相应的目录下面</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/redis-4.0.2</span><br></pre></td></tr></table></figure>
+<h4 id="4-编译测试"><a href="#4-编译测试" class="headerlink" title="4. 编译测试"></a>4. 编译测试</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo make test</span><br></pre></td></tr></table></figure>
+<h4 id="5-编译安装"><a href="#5-编译安装" class="headerlink" title="5. 编译安装"></a>5. 编译安装</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
+<p><img src="/assets/postImg/make_install_redis.jpg" alt="编译安装后的样子"></p>
+<h4 id="6-启动Redis"><a href="#6-启动Redis" class="headerlink" title="6. 启动Redis"></a>6. 启动Redis</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redis-server</span><br></pre></td></tr></table></figure>
+<p><img src="/assets/postImg/redis_server.jpg" alt="启动redis的样子"></p>
+<h4 id="7-配置"><a href="#7-配置" class="headerlink" title="7. 配置"></a>7. 配置</h4><ol>
+<li><p>在Redis目录下建立bin、etc、db三个文件夹</p>
+<ul>
+<li><p>进入Redis根目录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/redis-4.0.2</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建文件夹</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo mkdir bin</span><br><span class="line">sudo mkdir etc</span><br><span class="line">sudo mkdir db</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>把/usr/local/redis-4.0.2/src目录下的mkreleasehdr.sh，redis-benchmark， redis-check-rdb， redis-cli， redis-server拷贝到bin目录</p>
+</li>
+<li><p>拷贝redis.conf 到/usr/local/redis-4.0.2/etc下</p>
+</li>
+<li><p>修改redis.conf</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"># 修改为守护模式</span><br><span class="line">daemonize yes</span><br><span class="line"># 设置进程锁文件</span><br><span class="line">pidfile /var/run/redis_6379.pid</span><br><span class="line"># 端口</span><br><span class="line">port 6379</span><br><span class="line"># 客户端超时时间</span><br><span class="line">timeout 300</span><br><span class="line"># 日志级别</span><br><span class="line">loglevel debug</span><br><span class="line"># 日志文件位置</span><br><span class="line">logfile /usr/local/redis-4.0.2/log-redis.log</span><br><span class="line"># 设置数据库的数量，默认为0，可以使用SELECT &lt;dbid&gt;命令在连接上指定数据库id</span><br><span class="line">databases 16</span><br><span class="line">##指定在多长时间内，有多少次更新操作，就将数据同步到数据文件，可以多个条件配合</span><br><span class="line">#save &lt;seconds&gt; &lt;changes&gt;</span><br><span class="line">#Redis默认配置文件中提供了三个条件：</span><br><span class="line">save 900 1</span><br><span class="line">save 300 10</span><br><span class="line">save 60 10000</span><br><span class="line">#指定存储至本地数据库时是否压缩数据，默认为yes，Redis采用LZF压缩，如果为了节省CPU时间，</span><br><span class="line">#可以关闭该#选项，但会导致数据库文件变的巨大</span><br><span class="line">rdbcompression yes</span><br><span class="line">#指定本地数据库文件名</span><br><span class="line">dbfilename dump.rdb</span><br><span class="line">#指定本地数据库路径</span><br><span class="line">dir /usr/local/redis-4.0.2/db/</span><br><span class="line">#指定是否在每次更新操作后进行日志记录，Redis在默认情况下是异步的把数据写入磁盘，如果不开启，可能</span><br><span class="line">#会在断电时导致一段时间内的数据丢失。因为 redis本身同步数据文件是按上面save条件来同步的，所以有</span><br><span class="line">#的数据会在一段时间内只存在于内存中</span><br><span class="line">appendonly no</span><br><span class="line">#指定更新日志条件，共有3个可选值：</span><br><span class="line">#no：表示等操作系统进行数据缓存同步到磁盘（快）</span><br><span class="line">#always：表示每次更新操作后手动调用fsync()将数据写到磁盘（慢，安全）</span><br><span class="line">#everysec：表示每秒同步一次（折衷，默认值）</span><br><span class="line">appendfsync everysec</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h4 id="8-启动服务"><a href="#8-启动服务" class="headerlink" title="8. 启动服务"></a>8. 启动服务</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./bin/redis-server etc/redis.conf</span><br></pre></td></tr></table></figure>
+<h4 id="9-查看日志"><a href="#9-查看日志" class="headerlink" title="9. 查看日志"></a>9. 查看日志</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tail -f log-redis.log</span><br></pre></td></tr></table></figure>
+<p><img src="/assets/postImg/redis_log.jpg" alt="查看日志"></p>
+<h4 id="10-打开redis客户端"><a href="#10-打开redis客户端" class="headerlink" title="10. 打开redis客户端"></a>10. 打开redis客户端</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./bin/redis-cli</span><br></pre></td></tr></table></figure>
+<p><img src="/assets/postImg/redis_cli.jpg" alt="打开Redis客户端"><br>执行Redis命令</p>
+<h3 id="三、在Ubuntu安装Redis"><a href="#三、在Ubuntu安装Redis" class="headerlink" title="三、在Ubuntu安装Redis"></a>三、在Ubuntu安装Redis</h3><p>与MAC本安装的区别</p>
+<ul>
+<li><ol>
+<li>编译<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+</ul>
+<p>这一步报错，安装make、gcc<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">apt-get install make</span><br><span class="line">apt-get install gcc</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Redis/" rel="tag"># Redis</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/20/freemarker_to_word/" rel="next" title="FreeMarker转Word">
+                <i class="fa fa-chevron-left"></i> FreeMarker转Word
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/10/23/token-redis-springboot/" rel="prev" title="基于Spring Boot及Redis的Token令牌">
+                基于Spring Boot及Redis的Token令牌 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">_胡er</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、-前言"><span class="nav-number">1.</span> <span class="nav-text">一、 前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、在MAC下安装Redis"><span class="nav-number">2.</span> <span class="nav-text">二、在MAC下安装Redis</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-官网下载"><span class="nav-number">2.1.</span> <span class="nav-text">1. 官网下载</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-把压缩包解压，放入-usr-local"><span class="nav-number">2.2.</span> <span class="nav-text">2. 把压缩包解压，放入/usr/local</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-切换到相应的目录下面"><span class="nav-number">2.3.</span> <span class="nav-text">3. 切换到相应的目录下面</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-编译测试"><span class="nav-number">2.4.</span> <span class="nav-text">4. 编译测试</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-编译安装"><span class="nav-number">2.5.</span> <span class="nav-text">5. 编译安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-启动Redis"><span class="nav-number">2.6.</span> <span class="nav-text">6. 启动Redis</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-配置"><span class="nav-number">2.7.</span> <span class="nav-text">7. 配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-启动服务"><span class="nav-number">2.8.</span> <span class="nav-text">8. 启动服务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9-查看日志"><span class="nav-number">2.9.</span> <span class="nav-text">9. 查看日志</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#10-打开redis客户端"><span class="nav-number">2.10.</span> <span class="nav-text">10. 打开redis客户端</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三、在Ubuntu安装Redis"><span class="nav-number">3.</span> <span class="nav-text">三、在Ubuntu安装Redis</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">_胡er</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Spring Boot,Redis,Token," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="一、前言在之前，已经介绍了Redis的安装，接下来，介绍一下基于SpringBoot和Redis的Token认证。">
+<meta name="keywords" content="Spring Boot,Redis,Token">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于Spring Boot及Redis的Token令牌">
+<meta property="og:url" content="http://huyanan.top/2017/10/23/token-redis-springboot/index.html">
+<meta property="og:site_name" content="_胡er的博客">
+<meta property="og:description" content="一、前言在之前，已经介绍了Redis的安装，接下来，介绍一下基于SpringBoot和Redis的Token认证。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://huyanan.top/assets/postImg/testObj.jpg">
+<meta property="og:updated_time" content="2018-01-31T11:25:32.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="基于Spring Boot及Redis的Token令牌">
+<meta name="twitter:description" content="一、前言在之前，已经介绍了Redis的安装，接下来，介绍一下基于SpringBoot和Redis的Token认证。">
+<meta name="twitter:image" content="http://huyanan.top/assets/postImg/testObj.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://huyanan.top/2017/10/23/token-redis-springboot/"/>
+
+
+
+
+
+  <title>基于Spring Boot及Redis的Token令牌 | _胡er的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">_胡er的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://huyanan.top/2017/10/23/token-redis-springboot/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="_胡er">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="_胡er的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">基于Spring Boot及Redis的Token令牌</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-23T13:42:34+08:00">
+                2017-10-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h3><p>在之前，已经介绍了Redis的安装，接下来，介绍一下基于SpringBoot和Redis的Token认证。</p>
+<a id="more"></a>
+<p>交互流程：</p>
+<ul>
+<li>客户端通过登录请求提交用户名和密码，服务端验证成功之后，生成一个Token并和该用户建立连接，传给客户端。</li>
+<li>客户端在接下来的请求中，都会携带该Token，服务端通过解析Token，验证用户的登录状态。</li>
+<li>当用户退出登录、被顶号，或者长时间未进行操作，用户就需要重新登录。</li>
+</ul>
+<h3 id="二、SpringBoot整合Redis"><a href="#二、SpringBoot整合Redis" class="headerlink" title="二、SpringBoot整合Redis"></a>二、SpringBoot整合Redis</h3><ol>
+<li><p>在pom.xml文件中添加依赖</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- redis依赖 --&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">	&lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</span><br><span class="line">	&lt;artifactId&gt;spring-boot-starter-redis&lt;/artifactId&gt;</span><br><span class="line">	&lt;version&gt;1.4.1.RELEASE&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line"></span><br><span class="line">  &lt;dependency&gt;</span><br><span class="line">	&lt;groupId&gt;redis.clients&lt;/groupId&gt;</span><br><span class="line">	&lt;artifactId&gt;jedis&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>配置Redis，在application.properties文件中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"># redis 数据库索引，默认为0</span><br><span class="line">spring.redis.database=0</span><br><span class="line"># redis 服务器地址</span><br><span class="line">spring.redis.hsot=192.168.1.117</span><br><span class="line"># Redis 服务器端连接端口</span><br><span class="line">spring.redis.port=6379</span><br><span class="line"># redis 服务器连接密码</span><br><span class="line">spring.redis.password=</span><br><span class="line"># 连接池最大连接数</span><br><span class="line">spring.redis.pool.max-active=8</span><br><span class="line"># 连接池最大阻塞等待时间（使用负值表示没有）</span><br><span class="line">spring.redis.pool.max-wait=-1</span><br><span class="line"># 连接池中的最大空闲连接</span><br><span class="line">spring.redis.pool.max-idle=8</span><br><span class="line"># 连接池中的最小空闲连接</span><br><span class="line">spring.redis.pool..min-idle=0</span><br><span class="line"># 连接超时时间（毫秒）</span><br><span class="line">spring.redis.timeout=0</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Redis的配置文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line">package cn.dfusion.config;</span><br><span class="line">import java.lang.reflect.Method;</span><br><span class="line">import java.util.HashMap;</span><br><span class="line">import java.util.Map;</span><br><span class="line"></span><br><span class="line">import org.springframework.cache.CacheManager;</span><br><span class="line">import org.springframework.cache.annotation.CachingConfigurerSupport;</span><br><span class="line">import org.springframework.cache.annotation.EnableCaching;</span><br><span class="line">import org.springframework.cache.interceptor.KeyGenerator;</span><br><span class="line">import org.springframework.context.annotation.Bean;</span><br><span class="line">import org.springframework.context.annotation.Configuration;</span><br><span class="line">import org.springframework.data.redis.cache.RedisCacheManager;</span><br><span class="line">import org.springframework.data.redis.connection.RedisConnectionFactory;</span><br><span class="line">import org.springframework.data.redis.core.RedisTemplate;</span><br><span class="line">import org.springframework.data.redis.core.StringRedisTemplate;</span><br><span class="line">import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;</span><br><span class="line"></span><br><span class="line">import com.fasterxml.jackson.annotation.JsonAutoDetect;</span><br><span class="line">import com.fasterxml.jackson.annotation.PropertyAccessor;</span><br><span class="line">import com.fasterxml.jackson.databind.ObjectMapper;</span><br><span class="line"></span><br><span class="line">@Configuration</span><br><span class="line">@EnableCaching // 启用缓存，这个注解很重要；</span><br><span class="line">public class RedisConfig extends CachingConfigurerSupport &#123;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 生成key的策略</span><br><span class="line">     *</span><br><span class="line">     * @return</span><br><span class="line">     */</span><br><span class="line">    @Bean</span><br><span class="line">    public KeyGenerator keyGenerator() &#123;</span><br><span class="line">        return new KeyGenerator() &#123;</span><br><span class="line">            @Override</span><br><span class="line">            public Object generate(Object target, Method method, Object... params) &#123;</span><br><span class="line">                StringBuilder sb = new StringBuilder();</span><br><span class="line">                sb.append(target.getClass().getName());</span><br><span class="line">                sb.append(method.getName());</span><br><span class="line">                for (Object obj : params) &#123;</span><br><span class="line">                    sb.append(obj.toString());</span><br><span class="line">                &#125;</span><br><span class="line">                return sb.toString();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 管理缓存</span><br><span class="line">     *</span><br><span class="line">     * @param redisTemplate</span><br><span class="line">     * @return</span><br><span class="line">     */</span><br><span class="line">    @SuppressWarnings(&quot;rawtypes&quot;)</span><br><span class="line">    @Bean</span><br><span class="line">    public CacheManager cacheManager(RedisTemplate redisTemplate) &#123;</span><br><span class="line">        RedisCacheManager rcm = new RedisCacheManager(redisTemplate);</span><br><span class="line">        //设置缓存过期时间</span><br><span class="line">        // rcm.setDefaultExpiration(60);//秒</span><br><span class="line">        //设置value的过期时间</span><br><span class="line">        Map&lt;String,Long&gt; map=new HashMap&lt;String, Long&gt;();</span><br><span class="line">        map.put(&quot;test&quot;,60L);</span><br><span class="line">        rcm.setExpires(map);</span><br><span class="line">        return rcm;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * RedisTemplate配置</span><br><span class="line">     * @param factory</span><br><span class="line">     * @return</span><br><span class="line">     */</span><br><span class="line">    @Bean</span><br><span class="line">    public RedisTemplate&lt;String, String&gt; redisTemplate(RedisConnectionFactory factory) &#123;</span><br><span class="line">        StringRedisTemplate template = new StringRedisTemplate(factory);</span><br><span class="line">        Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer(Object.class);</span><br><span class="line">        ObjectMapper om = new ObjectMapper();</span><br><span class="line">        om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);</span><br><span class="line">        om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);</span><br><span class="line">        jackson2JsonRedisSerializer.setObjectMapper(om);</span><br><span class="line">        template.setValueSerializer(jackson2JsonRedisSerializer);</span><br><span class="line">        //如果key是String 需要配置一下StringSerializer,不然key会乱码 /XX/XX</span><br><span class="line">        template.afterPropertiesSet();</span><br><span class="line">        return template;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>测试springBoot整合Redis是否成功</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">package cn.dfusion.utils;</span><br><span class="line"></span><br><span class="line">import org.junit.Test;</span><br><span class="line">import org.junit.runner.RunWith;</span><br><span class="line">import org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line">import org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line">import org.springframework.data.redis.core.RedisTemplate;</span><br><span class="line">import org.springframework.data.redis.core.StringRedisTemplate;</span><br><span class="line">import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;</span><br><span class="line"></span><br><span class="line">@RunWith(SpringJUnit4ClassRunner.class)</span><br><span class="line">@SpringBootApplication</span><br><span class="line">public class RedisUtilsTest &#123;</span><br><span class="line"></span><br><span class="line">    @Autowired</span><br><span class="line">   private StringRedisTemplate stringRedisTemplate;</span><br><span class="line"></span><br><span class="line">    @Autowired</span><br><span class="line">    private RedisTemplate&lt;String, String&gt; template;</span><br><span class="line"></span><br><span class="line">    @Test</span><br><span class="line">    public void testObj() throws Exception &#123;</span><br><span class="line">        stringRedisTemplate.opsForValue().set(&quot;name&quot;,&quot;huyanan&quot;);</span><br><span class="line">        System.out.println(&quot;添加成功&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Test</span><br><span class="line">    public void delete() &#123;</span><br><span class="line">        template.delete(&quot;name&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ul>
+<li><p>执行完testObj()后，打开Redis客户端</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 进入redis文件夹</span><br><span class="line">cd /usr/local/redis-4.0.2</span><br><span class="line"># 打开客户端</span><br><span class="line">./bin/redis-cli</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>执行命令，查看是否有添加的这条数据</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">exists name</span><br></pre></td></tr></table></figure>
+<p><img src="/assets/postImg/testObj.jpg" alt="查看这条数据是否存在"></p>
+</li>
+<li><p>删除数据时,执行delete()方法<br>报错内容：<br>解决Redis之MISCONF Redis is configured to save RDB snapshots, but is currently not able to persist on disk. Commands that may modify the data set are disabled. Please check Redis logs for details about the error.</p>
+<p>解决方案在博客里也有写到</p>
+</li>
+</ul>
+<h3 id="三、RESTful登录设计代码"><a href="#三、RESTful登录设计代码" class="headerlink" title="三、RESTful登录设计代码"></a>三、RESTful登录设计代码</h3><ol>
+<li><p>服务端生成的Token一般是随机非重复字符串，根据应用不同的安全性，可以添加时间戳（或者其他信息），该例子是以userId,和Token以‘-’连接<br>TokenModel.java</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">package cn.dfusion.entity;</span><br><span class="line"></span><br><span class="line">public class TokenModel &#123;</span><br><span class="line"></span><br><span class="line">    private long userId;</span><br><span class="line"></span><br><span class="line">    private String token;</span><br><span class="line"></span><br><span class="line">    public TokenModel() &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public TokenModel(long userId, String token) &#123;</span><br><span class="line">        this.userId = userId;</span><br><span class="line">        this.token = token;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public long getUserId() &#123;</span><br><span class="line">        return userId;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setUserId(long userId) &#123;</span><br><span class="line">        this.userId = userId;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public String getToken() &#123;</span><br><span class="line">        return token;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void setToken(String token) &#123;</span><br><span class="line">        this.token = token;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>redis是key-value非关系型数据库，这里使用spring-data-redis封装TokenManager对Token的操作。<br>TokenManager.java</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">package cn.dfusion.utils;</span><br><span class="line"></span><br><span class="line">import cn.dfusion.entity.TokenModel;</span><br><span class="line"></span><br><span class="line">public interface TokenManager &#123;</span><br><span class="line"></span><br><span class="line">    public static  final String SERVER_NAME = &quot;cn.dfusion.utils.impl.TokenManagerImpl&quot;;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 创建一个Token，关联指定用户</span><br><span class="line">     * @param userId 用户ID</span><br><span class="line">     * @return token 生成的Token</span><br><span class="line">     */</span><br><span class="line">    TokenModel createToke(long userId);</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 检测Token是否有效</span><br><span class="line">     * @param model Token</span><br><span class="line">     * @return 是否有效</span><br><span class="line">     */</span><br><span class="line">    boolean checkToken(TokenModel model);</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 在字符串中解析Token</span><br><span class="line">     * @param authentication 加密后的Token字符串</span><br><span class="line">     * @return TokenModel</span><br><span class="line">     */</span><br><span class="line">    TokenModel getToken(String authentication);</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 清除指定Token</span><br><span class="line">     * @param userId 用户ID</span><br><span class="line">     */</span><br><span class="line">    void deleteToke(long userId);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>实现TokenManager</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line">package cn.dfusion.token.utils.impl;</span><br><span class="line"></span><br><span class="line">import cn.dfusion.config.Constant;</span><br><span class="line">import cn.dfusion.token.entity.TokenModel;</span><br><span class="line">import cn.dfusion.token.utils.TokenManager;</span><br><span class="line">import org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line">import org.springframework.beans.factory.annotation.Qualifier;</span><br><span class="line">import org.springframework.data.redis.core.RedisTemplate;</span><br><span class="line">import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;</span><br><span class="line">import org.springframework.stereotype.Component;</span><br><span class="line"></span><br><span class="line">import java.util.UUID;</span><br><span class="line">import java.util.concurrent.TimeUnit;</span><br><span class="line"></span><br><span class="line">@Component(TokenManager.SERVER_NAME)</span><br><span class="line">public class TokenManagerImpl implements TokenManager &#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    private RedisTemplate&lt;Long,String&gt; redis;</span><br><span class="line"></span><br><span class="line">    @Autowired</span><br><span class="line">    public void setRedis(@Qualifier(&quot;redisTemplate&quot;) RedisTemplate redis) &#123;</span><br><span class="line">        this.redis = redis;</span><br><span class="line">        redis.setValueSerializer(new JdkSerializationRedisSerializer());</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //创建Token</span><br><span class="line">    @Override</span><br><span class="line">    public TokenModel createToke(long userId) &#123;</span><br><span class="line">        String token = UUID.randomUUID().toString().replace(&quot;-&quot;,&quot;&quot;);</span><br><span class="line">        TokenModel model = new TokenModel(userId, token);</span><br><span class="line">        //存入数据库</span><br><span class="line">        redis.boundValueOps(userId).set(token, Constant.TOKEN_EXPIRES_HOURS, TimeUnit.HOURS);</span><br><span class="line">        return model;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //检测Token是否有效</span><br><span class="line">    @Override</span><br><span class="line">    public boolean checkToken(TokenModel model) &#123;</span><br><span class="line">        //如果model为空</span><br><span class="line">        if (null == model) &#123;</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line">        String token = redis.boundValueOps(model.getUserId()).get();</span><br><span class="line">        //如果Token为空，或者Token和传回来的不同</span><br><span class="line">        if (null == token || !token.equals(model.getToken())) &#123;</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line">        //如果有，则用户进行一次有效操作，延长时间</span><br><span class="line"></span><br><span class="line">        redis.boundValueOps(model.getUserId()).expire(Constant.TOKEN_EXPIRES_HOURS, TimeUnit.MINUTES);</span><br><span class="line">        return true;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //从字符串中解析Token</span><br><span class="line">    @Override</span><br><span class="line">    public TokenModel getToken(String authentication) &#123;</span><br><span class="line">        if (null == authentication || authentication.length() == 0) &#123;</span><br><span class="line">            return null;</span><br><span class="line">        &#125;</span><br><span class="line">        //解析authentication</span><br><span class="line">        String[] param = authentication.split(&quot;_&quot;);</span><br><span class="line">        if (param.length !=2) &#123;</span><br><span class="line">            return null;</span><br><span class="line">        &#125;</span><br><span class="line">        Long userId = Long.parseLong(param[0]);</span><br><span class="line">        String token = param[1];</span><br><span class="line">        return new TokenModel(userId,token);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void deleteToke(long userId) &#123;</span><br><span class="line">        redis.delete(userId);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>添加自定义拦截器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">package cn.dfusion.config;</span><br><span class="line"></span><br><span class="line">import cn.dfusion.token.authorization.AuthorizationInterceptor;</span><br><span class="line">import org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line">import org.springframework.context.annotation.Configuration;</span><br><span class="line">import org.springframework.web.servlet.config.annotation.InterceptorRegistry;</span><br><span class="line">import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;</span><br><span class="line"></span><br><span class="line">@Configuration</span><br><span class="line">public class MvcFilter extends WebMvcConfigurerAdapter&#123;</span><br><span class="line"></span><br><span class="line">    @Autowired</span><br><span class="line">    private AuthorizationInterceptor authorizationInterceptor;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void addInterceptors(InterceptorRegistry registry) &#123;</span><br><span class="line">        registry.addInterceptor(authorizationInterceptor);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">package cn.dfusion.token.authorization;</span><br><span class="line"></span><br><span class="line">import cn.dfusion.config.Constant;</span><br><span class="line">import cn.dfusion.token.entity.TokenModel;</span><br><span class="line">import cn.dfusion.token.utils.TokenManager;</span><br><span class="line">import org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line">import org.springframework.stereotype.Component;</span><br><span class="line">import org.springframework.web.method.HandlerMethod;</span><br><span class="line">import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;</span><br><span class="line"></span><br><span class="line">import javax.servlet.http.HttpServletRequest;</span><br><span class="line">import javax.servlet.http.HttpServletResponse;</span><br><span class="line">import java.lang.reflect.Method;</span><br><span class="line"></span><br><span class="line">@Component</span><br><span class="line">public class AuthorizationInterceptor extends HandlerInterceptorAdapter &#123;</span><br><span class="line"></span><br><span class="line">    @Autowired</span><br><span class="line">    private TokenManager tokenManager;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception &#123;</span><br><span class="line">        //如果不映射到方法就直接返回</span><br><span class="line">        if (!(handler instanceof HandlerMethod)) &#123;</span><br><span class="line">            return true;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        //转换为方法</span><br><span class="line">        HandlerMethod handlerMethod = (HandlerMethod) handler;</span><br><span class="line">        Method method = handlerMethod.getMethod();</span><br><span class="line"></span><br><span class="line">        String authorization = request.getHeader(Constant.AUTHORIZATION);</span><br><span class="line"></span><br><span class="line">        TokenModel tokenModel = tokenManager.getToken(authorization);</span><br><span class="line"></span><br><span class="line">        if (tokenManager.checkToken(tokenModel)) &#123;</span><br><span class="line">            request.setAttribute(Constant.CURRENT_USER_ID,tokenModel.getUserId());</span><br><span class="line">            return true;</span><br><span class="line">        &#125;</span><br><span class="line">        //如果Token验证失败</span><br><span class="line">        if (method.getAnnotation(Authorization.class) !=null ) &#123;</span><br><span class="line">            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line">        return true;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>定义注解</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">package cn.dfusion.demo.auth.token.authorization;</span><br><span class="line"></span><br><span class="line">import java.lang.annotation.ElementType;</span><br><span class="line">import java.lang.annotation.Retention;</span><br><span class="line">import java.lang.annotation.RetentionPolicy;</span><br><span class="line">import java.lang.annotation.Target;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 在Controller的方法上使用此注解，该方法在映射时会检查用户是否登录，未登录返回401错误</span><br><span class="line"> * @see com.scienjus.authorization.interceptor.AuthorizationInterceptor</span><br><span class="line"> * @author zwl</span><br><span class="line"> */</span><br><span class="line">@Target(ElementType.METHOD)</span><br><span class="line">@Retention(RetentionPolicy.RUNTIME)</span><br><span class="line">public @interface Authorization &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="四、代码位置"><a href="#四、代码位置" class="headerlink" title="四、代码位置"></a>四、代码位置</h3><p><em>– <a href=""></a></em></p>
+<h3 id="五、redis常用命令"><a href="#五、redis常用命令" class="headerlink" title="五、redis常用命令"></a>五、redis常用命令</h3><ul>
+<li><p>查看所有key值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">keys *</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>根据某个key查看value</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">get name</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>name为key</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Spring-Boot/" rel="tag"># Spring Boot</a>
+          
+            <a href="/tags/Redis/" rel="tag"># Redis</a>
+          
+            <a href="/tags/Token/" rel="tag"># Token</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/23/install-redis-mac/" rel="next" title="安装Redis">
+                <i class="fa fa-chevron-left"></i> 安装Redis
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/10/23/redis-is-currently-not-persist-on-disk/" rel="prev" title="解决Redis之MISCONF Redis is configured to save RDB snapshots, but is currently not able to persist on disk. Commands that may modify the data set are disabled. Please check Redis logs for details about the error.">
+                解决Redis之MISCONF Redis is configured to save RDB snapshots, but is currently not able to persist on disk. Commands that may modify the data set are disabled. Please check Redis logs for details about the error. <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">_胡er</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、前言"><span class="nav-number">1.</span> <span class="nav-text">一、前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、SpringBoot整合Redis"><span class="nav-number">2.</span> <span class="nav-text">二、SpringBoot整合Redis</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三、RESTful登录设计代码"><span class="nav-number">3.</span> <span class="nav-text">三、RESTful登录设计代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#四、代码位置"><span class="nav-number">4.</span> <span class="nav-text">四、代码位置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#五、redis常用命令"><span class="nav-number">5.</span> <span class="nav-text">五、redis常用命令</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">_胡er</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
