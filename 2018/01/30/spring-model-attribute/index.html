@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next muse use-motion" lang="zh-Hans">
+<html class="theme-next pisces use-motion" lang="zh-Hans">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -79,20 +79,21 @@
 
 
 
-<meta name="description" content="一、 前言今天写程序碰到了一个错误，如下图 ![错误](/assets/postImg/modelattributeLogo.jpg 二、 @ModelAttribute 的应用场景这个注解有两种用法，一种是直接标注在方法上，另一种呢，是标注在方法的参数中 三、 标注在方法上当同一个控制器中有任意一个方法被@ModelAttribute注解标记，页面请求只要进入这个控制器，不管请求那个方法，均会先">
+<meta name="description" content="一、 前言">
 <meta name="keywords" content="Spring">
 <meta property="og:type" content="article">
-<meta property="og:title" content="注解ModelAttribute spring_model_attribute">
+<meta property="og:title" content="注解ModelAttribute">
 <meta property="og:url" content="http://huyanan.top/2018/01/30/spring-model-attribute/index.html">
 <meta property="og:site_name" content="_胡er的博客">
-<meta property="og:description" content="一、 前言今天写程序碰到了一个错误，如下图 ![错误](/assets/postImg/modelattributeLogo.jpg 二、 @ModelAttribute 的应用场景这个注解有两种用法，一种是直接标注在方法上，另一种呢，是标注在方法的参数中 三、 标注在方法上当同一个控制器中有任意一个方法被@ModelAttribute注解标记，页面请求只要进入这个控制器，不管请求那个方法，均会先">
+<meta property="og:description" content="一、 前言">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://huyanan.top/assets/postImg/modelattributeLogo.jpg">
 <meta property="og:image" content="http://huyanan.top/assets/postImg/modelattributemethod.jpg">
-<meta property="og:updated_time" content="2018-02-24T16:06:41.560Z">
+<meta property="og:updated_time" content="2018-03-04T05:27:20.967Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="注解ModelAttribute spring_model_attribute">
-<meta name="twitter:description" content="一、 前言今天写程序碰到了一个错误，如下图 ![错误](/assets/postImg/modelattributeLogo.jpg 二、 @ModelAttribute 的应用场景这个注解有两种用法，一种是直接标注在方法上，另一种呢，是标注在方法的参数中 三、 标注在方法上当同一个控制器中有任意一个方法被@ModelAttribute注解标记，页面请求只要进入这个控制器，不管请求那个方法，均会先">
-<meta name="twitter:image" content="http://huyanan.top/assets/postImg/modelattributemethod.jpg">
+<meta name="twitter:title" content="注解ModelAttribute">
+<meta name="twitter:description" content="一、 前言">
+<meta name="twitter:image" content="http://huyanan.top/assets/postImg/modelattributeLogo.jpg">
 
 
 
@@ -100,7 +101,7 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Muse',
+    scheme: 'Pisces',
     version: '5.1.4',
     sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: true,
@@ -128,7 +129,7 @@
 
 
 
-  <title>注解ModelAttribute spring_model_attribute | _胡er的博客</title>
+  <title>注解ModelAttribute | _胡er的博客</title>
   
 
 
@@ -252,7 +253,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">注解ModelAttribute spring_model_attribute</h1>
+          <h1 class="post-title" itemprop="name headline">注解ModelAttribute</h1>
         
 
         <div class="post-meta">
@@ -302,8 +303,9 @@
       
 
       
-        <h3 id="一、-前言"><a href="#一、-前言" class="headerlink" title="一、 前言"></a>一、 前言</h3><p>今天写程序碰到了一个错误，如下图</p>
-<p>![错误](/assets/postImg/modelattributeLogo.jpg</p>
+        <h3 id="一、-前言"><a href="#一、-前言" class="headerlink" title="一、 前言"></a>一、 前言</h3><a id="more"></a>
+<p>今天写程序碰到了一个错误，如下图</p>
+<p><img src="/assets/postImg/modelattributeLogo.jpg" alt="封面图片"></p>
 <h3 id="二、-ModelAttribute-的应用场景"><a href="#二、-ModelAttribute-的应用场景" class="headerlink" title="二、 @ModelAttribute 的应用场景"></a>二、 @ModelAttribute 的应用场景</h3><p>这个注解有两种用法，一种是直接标注在方法上，另一种呢，是标注在方法的参数中</p>
 <h3 id="三、-标注在方法上"><a href="#三、-标注在方法上" class="headerlink" title="三、 标注在方法上"></a>三、 标注在方法上</h3><p>当同一个控制器中有任意一个方法被@ModelAttribute注解标记，页面请求只要进入这个控制器，不管请求那个方法，均会先执行被@ModelAttribute标记的方法，所以我们可以用@ModelAttribute注解的方法做一些初始化操作。当同一个控制器中有多个方法被@ModelAttribute注解标记，所有被@ModelAttribute标记的方法均会被执行，按先后顺序执行，然后再进入请求的方法。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">package cn.dfusion.mach.auth.controller;</span><br><span class="line"></span><br><span class="line">import io.swagger.annotations.Api;</span><br><span class="line">import io.swagger.annotations.ApiOperation;</span><br><span class="line">import org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line">import org.springframework.web.bind.annotation.*;</span><br><span class="line"></span><br><span class="line">import java.util.List;</span><br><span class="line"></span><br><span class="line">@RestController</span><br><span class="line">@Api( description = &quot;早期保健记录&quot;)</span><br><span class="line">public class ChdEarlyChildCheckController &#123;</span><br><span class="line"></span><br><span class="line">    @Autowired</span><br><span class="line">    private ChdEarlyChildCheckService checkService;</span><br><span class="line"></span><br><span class="line">    @ModelAttribute</span><br><span class="line">    public void init() &#123;</span><br><span class="line">        System.out.println(&quot;先执行这个&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @ModelAttribute</span><br><span class="line">    public void init2() &#123;</span><br><span class="line">        System.out.println(&quot;先执行这个02&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @ApiOperation(value = &quot;根据id删除保健记录&quot;)</span><br><span class="line">    @DeleteMapping(&quot;/deleteCheckById&quot;)</span><br><span class="line">    public @ResponseBody</span><br><span class="line">    Message deleteCheckById(@RequestParam String checkId) &#123;</span><br><span class="line">        boolean flag = checkService.deleteCheckById(Long.parseLong(checkId));</span><br><span class="line">        if (flag) &#123;</span><br><span class="line">            Message message = new Message(200,&quot;保健记录删除成功&quot;);</span><br><span class="line">            return message;</span><br><span class="line">        &#125;else &#123;</span><br><span class="line">            Message message = new Message(201, &quot;保健记录删除失败&quot;);</span><br><span class="line">            return message;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
@@ -347,10 +349,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/02/25/starting-2018/" rel="prev" title="2018年的开始">
-                2018年的开始 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -427,7 +425,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-count">39</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -511,7 +509,7 @@
 
 
 
-  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
 
 
 
@@ -558,6 +556,8 @@
   
 
 
+  
+
 
 
 
@@ -598,6 +598,11 @@
     <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
   
 
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
 
   
 
@@ -610,6 +615,13 @@
 
   
   
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
 
   
   <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
