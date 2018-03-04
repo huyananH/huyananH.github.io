@@ -9,11 +9,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[spring_boot_swagger]]></title>
-    <url>%2F2018%2F01%2F30%2Fspring-boot-swagger%2F</url>
-    <content type="text"></content>
-  </entry>
-  <entry>
     <title><![CDATA[Spring Boot 整合 EhCache]]></title>
     <url>%2F2018%2F01%2F29%2Fspring-boot-ehcache%2F</url>
     <content type="text"><![CDATA[一、 前言Spring boot默认使用的是SimpleCacheConfiguration，即使用ConcurrentMapCacheManager来实现缓存。但是要切换到其他缓存实现也很简单 二、 pom.xml添加依赖1234&lt;dependency&gt; &lt;groupId&gt;net.sf.ehcache&lt;/groupId&gt; &lt;artifactId&gt;ehcache&lt;/artifactId&gt;&lt;/dependency&gt; 三、 创建ehcache配置文件ehcache.xml1234&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&lt;ehcache&gt; &lt;cache name=&quot;tests&quot; maxElementsInMemory=&quot;1000&quot;/&gt;&lt;/ehcache&gt; 四、]]></content>
