@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title></title>
-    <url>%2F2018%2F03%2F12%2F400_bad_request%2F</url>
-    <content type="text"><![CDATA[title: 400 Bad Request 一、 前言二、 Http 400 介绍Http常见的错误由于语法格式有误，服务器无法理解此请求 三、可能的出现原因 前端提交的字段类型或者字段名称与后台的实体类不一致，导致无法封装。 前端提交到后台的数据应该是json类型，但前端没有把对象转为字符串类型。 四、 解决方法 对照字段名称，字段类型，保持一致性 参数类型容易出错 Date类型（前端传的是String类型，而后端用Date接收） int与Integer（前台可能为空，所以默认值是null，Integer的默认值为null，而int的默认值为0） 使用stringify把前端传递的对象转换为json类型， data: JSON.stringify(param);]]></content>
-  </entry>
-  <entry>
     <title><![CDATA[过年后的第一篇博客]]></title>
     <url>%2F2018%2F03%2F08%2F2018-first%2F</url>
     <content type="text"><![CDATA[一、 前言 如果你把这篇看完，那恭喜你，你很无聊。 如果你点进来看，那我只能说，好奇心……太重，赶紧洗洗睡吧。]]></content>
       <tags>
         <tag>随笔</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[400 Bad Request]]></title>
+    <url>%2F2018%2F03%2F08%2F400_bad_request%2F</url>
+    <content type="text"><![CDATA[一、 前言 二、 Http 400 介绍Http常见的错误由于语法格式有误，服务器无法理解此请求 三、可能的出现原因 前端提交的字段类型或者字段名称与后台的实体类不一致，导致无法封装。 前端提交到后台的数据应该是json类型，但前端没有把对象转为字符串类型。 四、 解决方法 对照字段名称，字段类型，保持一致性 参数类型容易出错 Date类型（前端传的是String类型，而后端用Date接收） int与Integer（前台可能为空，所以默认值是null，Integer的默认值为null，而int的默认值为0） 使用stringify把前端传递的对象转换为json类型， data: JSON.stringify(param);]]></content>
+      <tags>
+        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
@@ -183,8 +186,8 @@
     <url>%2F2017%2F11%2F24%2Fdocker-spring-boot-mysql%2F</url>
     <content type="text"><![CDATA[1. 前言接下来，总结我使用Docker部署项目的过程。 2. 创建一个Spring Boot项目– 前边 在idea新建一个Maven项目总结过 配置多环境切换，– 在Springboot多环境配置总结过 3. docker创建数据库 创建mysql容器 1docker run --name mysqldata -p 3310:3306 -e MYSQL_ROOT_PASSWORD=123456 mysql:latest 导入数据库 1source /Users/eh/video.sql 参数：/Users/eh/video.sql –.sql文件的路径 4. 项目连接数据库1spring.datasource.url=jdbc:mysql://192.168.1.111:3307/video_cjk?useUnicode=true&amp;characterEncoding=utf-8 参数：192.168.1.111 –服务器的ip 3307 –服务器中数据库对应的端口映射 video_cjk –数据库名称 characterEncoding –编码方式UTF-8 5. 编写Dockerfile文件 在 src/main 下边建 docker 文件夹。 在 src/main/docker 下创建Dockerfile 文件。 编写 Dockerfile 文件。123456FROM frolvlad/alpine-oraclejdk8:slimVOLUME /tmpADD target/video-0.0.1-SNAPSHOT.jar app.jarRUN sh -c &apos;touch /app.jar&apos;ENV JAVA_OPTS=&quot;&quot;ENTRYPOINT [ &quot;sh&quot;, &quot;-c&quot;, &quot;java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar /app.jar&quot; ] 详解： 1. FROM 1FROM &lt;image&gt; [AS &lt;name&gt;] Or 1FROM &lt;image&gt;[:&lt;tag&gt;] [AS &lt;name&gt;] Or 1FROM &lt;image&gt;[@&lt;digest&gt;] [AS &lt;name&gt;] &quot;FROM&quot;指令将初始化一个新的编译阶段，并未后续指令设置基础镜像。因此，有效的Dockerfile必须以&quot;FROM&quot;指令开始。该镜像可以是任何有效的镜像，从公共存储库中拉取镜像特别容易。 * “ARG”是在Dockerfile中唯一一条可以再“FROM”之前的指令。请参考 *-- [了解ARG和FROM如何交互](https://docs.docker.com/engine/reference/builder/#understand-how-arg-and-from-interact)*。 * &quot;FROM&quot;在单个Dockerfile中可以出现多次，去创建多个镜像或者用一个构建阶段作为另一个的依赖项。在每条“FROM”指令之前，只需记下提交输出的最后一个镜像ID。每条“FROM”指令都会清楚以前创建的任何状态。 * 可选地，通过添加“AS name”到FROM指令，可以给构建阶段起名字。名称可以在以后的使用FROM 和 COPY --from=&lt;name|index&gt;指令去指向镜像构建的这个阶段。 * “tag”或“digest”值是可选的。如果你忽略他们其中的一个，则把“latest”作为默认。如果找不到“tag”的值，构建则返回错误。 理解ARG和FROM是如何交互的 “FROM”指令支持任何在第一个“FROM”之前用“ARG”指令声明的变量。 123456ARG CODE_VERSION=latestFROM base:$&#123;CODE_VERSION&#125;CMD /code/run-appFROM extras:$&#123;CODE_VERSION&#125;CMD /code/run-extras &quot;ARG&quot;声明在&quot;FROM&quot;之前是在构建阶段的外边，所以他不能再“FROM”之后的任何指令中使用。在第一个“FROM”之前用“ARG”的默认值，在构建阶段里边都没有用这个值。 1234ARG VERSION=latestFROM busybox:$VERSIONARG VERSIONRUN echo $VERSION &gt; image_version 2. VOLUME “VOLUME”指令通过指定的名称设置挂载点，并将其标记为从本机主机或其他容器保存外部挂载的卷。这个值可以是一个JSON数组，如 VOLUME [&quot;/var/log/&quot;]，或者是带多个参数的字符串，例如：VOLUME /var/log 或 VOLUME /var/log /var/db 。 3. ADD ADD有两种形式： * ADD &lt;src&gt;... &lt;dest&gt; * ADD [&quot;&lt;src&gt;&quot;,... &quot;&lt;dest&gt;&quot;]（这种形式是包含空格的路径所必须的） 说明：复制本机的文件、目录、远程文件，添加到指定容器目录，支持GO的正则模糊匹配。路径是绝对路径，不会自动创建。如果源是一个目录，只会复制目录下的内容，目录本身不会复制。ADD命令会将复制的压缩文件夹自动解压，这也是与COPY命令最大的不同。 4. RUN RUN有两种形式： * RUN &lt;command&gt; （shell形式，在shell中运行，在Linux中默认/bin/sh -c 或者 在Windows默认为 cmd /S /C） * RUN [&quot;executable&quot;, &quot;param1&quot;, &quot;param2&quot;] （exec形式） &quot;RUN&quot;执行完成之后会成为一个新的镜像，这里也是指镜像的分层结构，一句RUN就是一层，相当于一个版本。就是之前说的缓存原理。Docker镜像层是只读的，所以你如果第一句安装了软件，用完在后边一句删除是不可能的。所以这种情况要用一句RUN命令中完成，可以通过&amp;符号连接多个RUN语句。RUN后边必须用双引号，不能用单引号（没引号貌似不要紧），command是不会调用shell的，所以也不会继承相应的变量，要查看输入RUN &quot;sh&quot; &quot;-c&quot; &quot;echo&quot; &quot;$HOME&quot;，而不是RUN &quot;echo&quot; &quot;$HOME&quot;。 5. ENV 用法： ENV &lt;key&gt; &lt;value&gt; ENV &lt;key&gt;=&lt;value&gt; ... 设置容器的环境变量，可以让其后边的RUN命令使用，容器运行的时候这个变量也会保留。 6. ENTRYPOINT “ENTRYPOINT”有两种形式 * ENTRYPOINT [&quot;executable&quot;, &quot;param1&quot;, &quot;param2&quot;] （exec形式，首选） * ENTRYPOINT command param1 param1 （shell形式） 这个命令和CMD命令一样，唯一的区别是不能被docker run命令的执行命令覆盖，如果要覆盖需要带上选项--entrypoint，如果有多个选项，只有最后一个会生效。 7. -Djava.security.egd=file:/dev/./urandom 这个系统属性egd表示熵收集守护进程(entropy gathering daemon)，但这里值为何要在dev和random之间加一个点呢？是因为一个jdk的bug，在这个bug的连接里有人反馈及时对 securerandom.source 设置为/dev/urandom它也仍然使用的/dev/random，有人提供了变通的解决方法，其中一个变通的做法是对securerandom.source设置为/dev/./urandom才行。也有人评论说这个不是bug，是有意为之。 6. 编写docker-compose.yml1234567891011121314151617# 版本version : &apos;2&apos;services: # springvideo自己定义的，就是服务名称 springvideo: # build指定Dockerfile的文件夹路径 build: context: . dockerfile: src/main/docker/Dockerfile # 重启 restart: always # 端口映射，前者是宿主机的，后者是容器的 ports: - &quot;8080:8080&quot; # 挂载路径：前者是宿主机的路径，后者是容器路径 volumes: - ./dataSummary/springboot:/home/springboot/ 7. 部署 先把程序打包 1mvn package 编译 1docker-compose build 部署 1docker-compose up]]></content>
       <tags>
-        <tag>Spring Boot</tag>
         <tag>Docker</tag>
+        <tag>Spring Boot</tag>
       </tags>
   </entry>
   <entry>
@@ -291,9 +294,9 @@
     <url>%2F2017%2F10%2F20%2Ffreemarker_to_word%2F</url>
     <content type="text"><![CDATA[1. 前言朋友今天说，和我聊天全靠猜…… 他说聊天不是做阅读理解、完型填空…… 2. 新建一个Word，调成你想要的格式，好比下边这张图 3. 把创建好的word文件，另存为XML文件 4. 新建一个index.ftl文件，把XML文件中的内容复制到index.ftl文件中5. 写代码，使用刚才的index.ftl文件生成word—— 详细代码点击这里123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566@Autowiredprivate PatientCheckPumchService patientCheckPumchService;@Qualifier(&quot;freeMarkerConfiguration&quot;)@Autowiredprivate Configuration configuration;//批量下载@ApiOperation(value = &quot;下载孩子病例文档&quot;)@RequestMapping(value = &quot;/batchDownload&quot;, method = RequestMethod.GET)public void batchDownload(@RequestParam List&lt;String&gt; informationIds, HttpServletRequest request, HttpServletResponse response) throws TemplateException, UnsupportedEncodingException &#123; request.setCharacterEncoding(&quot;UTF-8&quot;); DateFormat dateFormat = new SimpleDateFormat(&quot;yyyyMMddHHmmss&quot;); String sb = dateFormat.format(new Date()); StringBuilder docName = new StringBuilder(); for (String id : informationIds) &#123; docName.append(id); &#125; try &#123; File wordFile = new File(&quot;word/&quot;); if (!wordFile.exists()) &#123; wordFile.mkdir(); &#125; File file = new File(&quot;word/&quot;+sb); List&lt;File&gt; srcfile=new ArrayList&lt;File&gt;(); for (String id : informationIds) &#123; List&lt;PatientCheckPumchExtend&gt; extend = patientCheckPumchService.findByInforId(Long.parseLong(id)); Map&lt;String, Object&gt; map = new HashMap&lt;&gt;(); map.put(&quot;extend&quot;,extend); configuration = new Configuration(Configuration.getVersion()); configuration.setDefaultEncoding(&quot;UTF-8&quot;); configuration.setDirectoryForTemplateLoading( new File(&quot;src/main/resources/templates&quot;)); Template t = configuration.getTemplate(&quot;wordSwitch.ftl&quot;); if (!file.exists()) &#123; file.mkdir(); &#125; String outNewFileName = &quot;word/&quot;+sb + &quot;/&quot; + extend.get(0).getPatientInformationPumchExtend().getOid()+&quot;.doc&quot;; File outNewFile = new File(outNewFileName); if (!outNewFile.exists()) &#123; outNewFile.createNewFile(); &#125; PrintWriter out = new PrintWriter(new OutputStreamWriter(new FileOutputStream(outNewFile), &quot;UTF-8&quot;)); t.process(map, out); out.flush(); out.close(); &#125; if (informationIds.size()==1) &#123; FileUtils.downFile(response,&quot;word/&quot;+sb+&quot;/&quot;, docName+&quot;.doc&quot;); &#125;else &#123; File zipFile = new File(&quot;word/&quot;+sb+&quot;.zip&quot;); FileUtils.zipFiles(&quot;word/&quot;+sb,zipFile); FileUtils.downFile(response,&quot;word/&quot;, sb+&quot;.zip&quot;); &#125; &#125;catch (Exception e) &#123; e.printStackTrace(); &#125;&#125;]]></content>
       <tags>
+        <tag>Java</tag>
         <tag>FreeMarker</tag>
         <tag>Word</tag>
-        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
@@ -309,9 +312,9 @@
     <url>%2F2017%2F09%2F20%2Fcreate_maven_project_idea%2F</url>
     <content type="text"><![CDATA[一、前言在介绍创建Maven项目前，我还是特别想分享一下，今天遇到的一个特别懵*的事情…… 今天，我写了一个登录的API，然后前台进行调用，我们可爱的前台，获取用户信息的时候，居然用的是她从前台接收的用户信息…… 我和朋友是这么比喻前台的这种做法…..就好比吃饭能吃饱，那吃鞋也照样能吃饱…… 我认知的世界是不是有问题…… 给我一个擦汗的表情….. 二、新建一个项目File-&gt;New-&gt;File&lt;img src=”/assets/ideaCreateMavenP/newFile.png” width=”600px”; height=”400px”&gt; 三、使用Spring Initializer页面工具来创建Spring boot项目&lt;img src=”/assets/ideaCreateMavenP/useSprIniti.png” width=”600px”; height=”400px”&gt; 四、下图所示的工程信息窗口，在这里我们可以编辑我们想要的工程信息Group：Java包的结构Artifact：项目的唯一标识符，实际对应项目的名称，就是项目根目录的名称Type：项目类型Language：语言Packaging：编译后的文件类型Java Version：Java版本Description：项目描述Package：包名&lt;img src=”/assets/ideaCreateMavenP/projectInfo.png” width=”600px”; height=”400px”&gt; 五、Web-&gt;Web （如果使用MongoDB）Web-&gt;Web SQL-&gt;JPA（如果使用MySQL）&lt;img src=”/assets/ideaCreateMavenP/choiceWebSql.png” width=”600px”; height=”400px”&gt; 六、选择项目路径&lt;img src=”/assets/ideaCreateMavenP/choiceProjPath.png” width=”600px”; height=”400px”&gt; 点击finish完成 七、进入工作空间 删除.mvn mvnw mvnw.cmd pom.xml添加tomcat依赖、设置jdk版本、设置Spring版本12345678910111213141516&lt;!-- 添加tomcat依赖 --&gt;&lt;dependencies&gt; &lt;dependency&gt; &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt; &lt;artifactId&gt;spring-boot-starter-tomcat&lt;/artifactId&gt; &lt;version&gt;$&#123;spring.version&#125;&lt;/version&gt; &lt;/dependency&gt;&lt;/dependencies&gt;&lt;!-- 设置jdk版本 --&gt;&lt;!-- 设置spring版本 --&gt;&lt;properties&gt; &lt;project.build.jdk&gt;1.8&lt;/project.build.jdk&gt; &lt;spring.version&gt;1.5.9.RELEASE&lt;/spring.version&gt;&lt;/properties&gt; pom.xml设置maven编译插件、测试插件surefire123456789101112131415&lt;build&gt; &lt;plugins&gt; &lt;!-- 设置maven编译插件 --&gt; &lt;!-- mvn install 默认使用的是javac1.3版本，使用以下方法指定版本 --&gt; &lt;plugin&gt; &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt; &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt; &lt;configuration&gt; &lt;source&gt;$&#123;project.build.jdk&#125;&lt;/source&gt; &lt;target&gt;$&#123;project.build.jdk&#125;&lt;/target&gt; &lt;encoding&gt;$&#123;project.build.sourceEncoding&#125;&lt;/encoding&gt; &lt;/configuration&gt; &lt;/plugin&gt; &lt;/plugins&gt;&lt;/build&gt;]]></content>
       <tags>
+        <tag>Spring Boot</tag>
         <tag>IDEA</tag>
         <tag>Maven</tag>
-        <tag>Spring Boot</tag>
       </tags>
   </entry>
 </search>
