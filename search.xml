@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[400 Bad Request]]></title>
+    <url>%2F2018%2F03%2F13%2F400_bad_request%2F</url>
+    <content type="text"><![CDATA[一、 前言 二、 Http 400 介绍Http常见的错误由于语法格式有误，服务器无法理解此请求 三、可能的出现原因 前端提交的字段类型或者字段名称与后台的实体类不一致，导致无法封装。 前端提交到后台的数据应该是json类型，但前端没有把对象转为字符串类型。 四、 解决方法 对照字段名称，字段类型，保持一致性 参数类型容易出错 Date类型（前端传的是String类型，而后端用Date接收） int与Integer（前台可能为空，所以默认值是null，Integer的默认值为null，而int的默认值为0） 使用stringify把前端传递的对象转换为json类型， data: JSON.stringify(param);]]></content>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[过年后的第一篇博客]]></title>
     <url>%2F2018%2F03%2F08%2F2018-first%2F</url>
     <content type="text"><![CDATA[一、 前言 如果你把这篇看完，那恭喜你，你很无聊。 如果你点进来看，那我只能说，好奇心……太重，赶紧洗洗睡吧。]]></content>
       <tags>
         <tag>随笔</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[400 Bad Request]]></title>
-    <url>%2F2018%2F03%2F08%2F400_bad_request%2F</url>
-    <content type="text"><![CDATA[一、 前言 二、 Http 400 介绍Http常见的错误由于语法格式有误，服务器无法理解此请求 三、可能的出现原因 前端提交的字段类型或者字段名称与后台的实体类不一致，导致无法封装。 前端提交到后台的数据应该是json类型，但前端没有把对象转为字符串类型。 四、 解决方法 对照字段名称，字段类型，保持一致性 参数类型容易出错 Date类型（前端传的是String类型，而后端用Date接收） int与Integer（前台可能为空，所以默认值是null，Integer的默认值为null，而int的默认值为0） 使用stringify把前端传递的对象转换为json类型， data: JSON.stringify(param);]]></content>
-      <tags>
-        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
