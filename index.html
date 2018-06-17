@@ -364,8 +364,7 @@
 
       
         
-          
-            <blockquote>
+          <blockquote>
 <p>今天，是父亲节。<br>我的爸爸，一直都是一个严肃的人。<br>他，不苟言笑。<br>他，默默的关心的我们。</p>
 <p>从小，我们的交流就很少。<br>记得高中的时候，我和我妈说：“我和我爸的交流一周超不过10句话。”<br>我妈当时和我说：“你们交流虽少，但他很爱你们。”<br>我知道，从小虽然他什么都不问我们，但什么都知道，因为他每次都是透过我妈去了解我们。</p>
 <p>上了大学之后，回家的次数更少了。<br>每次回去，我妈都会和我说：“你爸和别人说起你，都是一脸的骄傲。”<br>他想我的时候，也会找借口给我打电话，但是每次打电话，又会莫名的尴尬。<br>我失恋了，他会开导我。<br>我压力大了，他给我讲一些人生道理。<br>我哭了，他也会无措。</p>
@@ -374,24 +373,13 @@
 <p>此生，有你们，足以……</p>
 </blockquote>
 <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src="//music.163.com/outchain/player?type=2&id=448445624&auto=1&height=66"></iframe>
-
-
-<h3 id="一、-TP50、TP90、TP99、TP999"><a href="#一、-TP50、TP90、TP99、TP999" class="headerlink" title="一、 TP50、TP90、TP99、TP999"></a>一、 TP50、TP90、TP99、TP999</h3><p>TP（Top Percentile）Top百分数，是一个统计学的术语，与平均数、中位数一样。<strong>是不是看着这句话很眼熟？对，没错，是我抄过来的。请脑补一个大笑的表情，以达到我这句话的效果，谢谢</strong></p>
-<p>在网上看了很多帖子，是这样解释这些指标的：<br>TP50：满足百分之五十的网络请求所需的最低耗时。<br>TP90：满足百分之九十的网络请求所需的最低耗时。<br>TP99：满足百分之九十九的网络请求所需的最低耗时。<br>TP999：满足千分之九百九十九的网络请求所需的最低耗时。</p>
-<p>看完这些解释，我只想说一句。。。。<br><strong>我看不懂！！！能不能举栗说明一下子！！！</strong></p>
-<p>当然，热心的网友朋友们，当然会满足你的要求。</p>
-<p>例子大概是这样写的：</p>
-<p>有四次请求耗时分别为：<br>10ms，1000ms，100ms，2ms<br>那么我们可以这样计算TP99：4次请求中，99%的请求数为4*0.99，进位取整也就是4次，满足这全部4次请求的的最低耗时为1000ms，也就是TP99的答案是1000ms。</p>
-<p>你没有猜错，这个栗子也是我偷过来的。<br>网友们给出的栗子，也是Google到别人的解释。</p>
-<p>不知道为什么，刚看这个，看了好多次都没看懂到底是为什么，当然不排除是我笨的原因。<br>直到，我看到了这个栗子的原版。<br>**tp90 is a minimum time under which 90% of requests have been served. Imagine you have times:<br>10s<br>1000s<br>100s<br>2s<br>Calculating TP is very simple:</p>
-<p>sort all times in ascending order: [2s, 10s, 100s, 1000s]<br>find latest item in portion you need to calculate. For TP50 it will ceil(4<em>.5)=2 requests. You need 2nd request. For TP90 it will be ceil(4</em>.9)=4. You need 4th request.<br>get time for the item found above. TP50=10s. TP90=1000s**</p>
-<p>仔细看上边的解释<br>TP90：先算出90%的请求是多少，4*0.9进位取整也就是4次<br>也是满足四次请求的最低耗时，也就是四次请求中，耗时最长的那个时间。<br>那个排序就是为了让大家更清楚的看到结果。</p>
-<h3 id="二、-造成这些指标过高的原因"><a href="#二、-造成这些指标过高的原因" class="headerlink" title="二、 造成这些指标过高的原因"></a>二、 造成这些指标过高的原因</h3><ol>
-<li>可能是数据库连接慢或者连接超时</li>
-<li>可能是服务器CPU负载、内存、IO读取</li>
-</ol>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/06/17/tp-info/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -659,7 +647,6 @@
           <blockquote>
 <p>今天，和我闺蜜聊天<br>我：“璐啊，今天，我发现了一个秘密，很神奇”<br>璐：“是吗？什么啊？”<br>我：“现在手机里的计算器用47000除以188都是手机机主的名字，真神奇”、<br>然后，我闺蜜一下子弹起来<br>璐：“是吗？我试试”<br>我:”是呢，特别神奇，现在科技真是厉害了。”<br>然后……<br>恩……<br>我只想说，我没有手机。再见。</p>
 </blockquote>
-<h3 id="一、-前言"><a href="#一、-前言" class="headerlink" title="一、 前言"></a>一、 前言</h3><iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src="//music.163.com/outchain/player?type=2&id=26090093&auto=1&height=66"></iframe>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2018/05/12/java_final/#more" rel="contents">
