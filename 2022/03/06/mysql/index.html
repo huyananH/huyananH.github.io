@@ -16,16 +16,16 @@
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
   
-    <meta name="description" content="一、Mysql架构  MySQL向外提供的交互接口（Connectors）Connectors组件，是MySQL向外提供的交互组件，如java,.net,php等语言可以通过该组件来操作SQL语句，实现与SQL的交互 管理服务组件和工具组件(Management Service &amp; Utilities)提供对MySQL的集成管理，如备份(Backup),恢复(Recovery),安全管理(">
+    <meta name="description" content="一、Mysql架构  MySQL向外提供的交互接口（Connectors）Connectors组件，是MySQL向外提供的交互组件，如java,.net,php等语言可以通过该组件来操作SQL语句，实现与SQL的交互 管理服务和工具(Management Service &amp; Utilities)提供对MySQL的集成管理，如备份(Backup),恢复(Recovery),安全管理(Secu">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Mysql">
 <meta property="og:url" content="http://example.com/2022/03/06/mysql/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="一、Mysql架构  MySQL向外提供的交互接口（Connectors）Connectors组件，是MySQL向外提供的交互组件，如java,.net,php等语言可以通过该组件来操作SQL语句，实现与SQL的交互 管理服务组件和工具组件(Management Service &amp; Utilities)提供对MySQL的集成管理，如备份(Backup),恢复(Recovery),安全管理(">
+<meta property="og:description" content="一、Mysql架构  MySQL向外提供的交互接口（Connectors）Connectors组件，是MySQL向外提供的交互组件，如java,.net,php等语言可以通过该组件来操作SQL语句，实现与SQL的交互 管理服务和工具(Management Service &amp; Utilities)提供对MySQL的集成管理，如备份(Backup),恢复(Recovery),安全管理(Secu">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/2022/03/06/pic/mysql/mysql.png">
 <meta property="article:published_time" content="2022-03-06T02:00:03.000Z">
-<meta property="article:modified_time" content="2022-03-07T09:22:02.566Z">
+<meta property="article:modified_time" content="2022-03-07T09:26:00.743Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="mysql">
 <meta name="twitter:card" content="summary_large_image">
@@ -243,7 +243,7 @@
               <h2 id="一、Mysql架构"><a href="#一、Mysql架构" class="headerlink" title="一、Mysql架构"></a>一、Mysql架构</h2><p><img src="../pic/mysql/mysql.png" srcset="/img/loading.gif" lazyload alt="Mysql架构图"></p>
 <ol>
 <li>MySQL向外提供的交互接口（Connectors）<br>Connectors组件，是MySQL向外提供的交互组件，如java,.net,php等语言可以通过该组件来操作SQL语句，实现与SQL的交互</li>
-<li>管理服务组件和工具组件(Management Service &amp; Utilities)<br>提供对MySQL的集成管理，如备份(Backup),恢复(Recovery),安全管理(Security)等</li>
+<li>管理服务和工具(Management Service &amp; Utilities)<br>提供对MySQL的集成管理，如备份(Backup),恢复(Recovery),安全管理(Security)等</li>
 <li>连接池组件(Connection Pool)<br>负责监听对客户端向MySQL Server端的各种请求，接收请求，转发请求到目标模块。每个成功连接MySQL Server的客户请求都会被创建或分配一个线程，该线程负责客户端与MySQL Server端的通信，接收客户端发送的命令，传递服务端的结果信息等。</li>
 <li>Sql接口(SQL Interface)<br>接收用户SQL命令，如DML,DDL和存储过程等，并将最终结果返回给用户。</li>
 <li>分析器(Parser)<br>首先分析SQL命令语法的合法性，并尝试将SQL命令分解成数据结构，若分解失败，则提示SQL语句不合理。</li>
@@ -317,7 +317,7 @@
 </table>
 不可重复读：如果检索条件有索引（包括主键索引）的时候，默认加锁方式是next-key 锁；如果检索条件没有索引，更新数据时会锁住整张表。一个间隙被事务加了锁，其他事务是不能在这个间隙插入记录的，这样可以防止幻读。</li>
 </ol>
-<h2 id="二、"><a href="#二、" class="headerlink" title="二、"></a>二、</h2>
+<h2 id="三、存储引擎"><a href="#三、存储引擎" class="headerlink" title="三、存储引擎"></a>三、存储引擎</h2>
             </div>
             <hr>
             <div>
