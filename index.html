@@ -113,6 +113,62 @@
 
 
   
+    <article id="post-mysql" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2022/03/06/mysql/" class="article-date">
+  <time datetime="2022-03-06T02:00:03.000Z" itemprop="datePublished">2022-03-06</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2022/03/06/mysql/">Mysql</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="一、事务"><a href="#一、事务" class="headerlink" title="一、事务"></a>一、事务</h2><ol>
+<li>事务的基本要素（ACID）</li>
+</ol>
+<ul>
+<li>原子性：事务开始后所有操作，要不全部做完，要么全部不做，不可能停滞在中间环节。事务执行过程中出错，事务会回滚到事务开始之前的状态，所有操作就像没有发生一样。也就是说事务是一个不可分割的整体，就像化学中的原子，是物质构成的基本单元。</li>
+<li>一致性：事务开始前和结束后，数据库的完整性约束没有被破坏。比如A向B转账，不可能A扣了钱，B却没收到。</li>
+<li>隔离性：同一时间内，只允许一个事务请求同一数据。不同事务之间彼此没有任何干扰。比如A正在从一张银行卡中取钱，在A取钱结束前，B不能向这张卡转账</li>
+<li>持久性：事务完成后，事务对数据库所有的更新都将保存到数据库中，不能回滚</li>
+</ul>
+<ol start="2">
+<li>事务的并发问题</li>
+</ol>
+<ul>
+<li>脏读：事务A读取了事务B更新的数据，然后事务B回滚，那么事务A读取到的数据就是脏数据</li>
+<li>不可重复读、虚读（侧重修改）：事务A多次读取同一数据时，事务B在事务A多次读取的过程中，对数据做了更新操作并提交，导致事务A多次读取同一数据时，结果不一致。</li>
+<li>幻读（侧重新增/删除）：事务A多次读取数据时，事务B对数据做了新增/删除，导致事务A多次读取结果不一致，好像出现了幻觉，这就是幻读</li>
+</ul>
+<ol start="3">
+<li>Mysql事务隔离级别<br>读未提交：<br>读已提交：<br>不可重复读：<br>串行化：</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2022/03/06/mysql/" data-id="cl0gc5wwf00009ws606k451mf" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
 
 
 </section>
@@ -145,6 +201,10 @@
         
           <li>
             <a href="/2022/03/07/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2022/03/06/mysql/">Mysql</a>
           </li>
         
       </ul>
