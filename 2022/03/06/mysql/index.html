@@ -16,16 +16,16 @@
   <meta name="author" content="John Doe">
   <meta name="keywords" content="">
   
-    <meta name="description" content="一、Mysql架构 二、Mysql事务 事务的基本要素（ACID）   原子性：事务开始后所有操作，要不全部做完，要么全部不做，不可能停滞在中间环节。事务执行过程中出错，事务会回滚到事务开始之前的状态，所有操作就像没有发生一样。也就是说事务是一个不可分割的整体，就像化学中的原子，是物质构成的基本单元。 一致性：事务开始前和结束后，数据库的完整性约束没有被破坏。比如A向B转账，不可能A扣了钱，B却没">
+    <meta name="description" content="一、Mysql架构  MySQL向外提供的交互接口（Connectors）Connectors组件，是MySQL向外提供的交互组件，如java,.net,php等语言可以通过该组件来操作SQL语句，实现与SQL的交互 管理服务组件和工具组件(Management Service &amp; Utilities)提供对MySQL的集成管理，如备份(Backup),恢复(Recovery),安全管理(">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Mysql">
 <meta property="og:url" content="http://example.com/2022/03/06/mysql/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="一、Mysql架构 二、Mysql事务 事务的基本要素（ACID）   原子性：事务开始后所有操作，要不全部做完，要么全部不做，不可能停滞在中间环节。事务执行过程中出错，事务会回滚到事务开始之前的状态，所有操作就像没有发生一样。也就是说事务是一个不可分割的整体，就像化学中的原子，是物质构成的基本单元。 一致性：事务开始前和结束后，数据库的完整性约束没有被破坏。比如A向B转账，不可能A扣了钱，B却没">
+<meta property="og:description" content="一、Mysql架构  MySQL向外提供的交互接口（Connectors）Connectors组件，是MySQL向外提供的交互组件，如java,.net,php等语言可以通过该组件来操作SQL语句，实现与SQL的交互 管理服务组件和工具组件(Management Service &amp; Utilities)提供对MySQL的集成管理，如备份(Backup),恢复(Recovery),安全管理(">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/2022/03/06/pic/mysql/mysql.png">
 <meta property="article:published_time" content="2022-03-06T02:00:03.000Z">
-<meta property="article:modified_time" content="2022-03-07T09:12:17.808Z">
+<meta property="article:modified_time" content="2022-03-07T09:22:02.566Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="mysql">
 <meta name="twitter:card" content="summary_large_image">
@@ -199,7 +199,7 @@
   
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      679 字
+      1.3k 字
     </span>
   
 
@@ -208,7 +208,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      6 分钟
+      11 分钟
     </span>
   
 
@@ -241,6 +241,17 @@
             
             <div class="markdown-body">
               <h2 id="一、Mysql架构"><a href="#一、Mysql架构" class="headerlink" title="一、Mysql架构"></a>一、Mysql架构</h2><p><img src="../pic/mysql/mysql.png" srcset="/img/loading.gif" lazyload alt="Mysql架构图"></p>
+<ol>
+<li>MySQL向外提供的交互接口（Connectors）<br>Connectors组件，是MySQL向外提供的交互组件，如java,.net,php等语言可以通过该组件来操作SQL语句，实现与SQL的交互</li>
+<li>管理服务组件和工具组件(Management Service &amp; Utilities)<br>提供对MySQL的集成管理，如备份(Backup),恢复(Recovery),安全管理(Security)等</li>
+<li>连接池组件(Connection Pool)<br>负责监听对客户端向MySQL Server端的各种请求，接收请求，转发请求到目标模块。每个成功连接MySQL Server的客户请求都会被创建或分配一个线程，该线程负责客户端与MySQL Server端的通信，接收客户端发送的命令，传递服务端的结果信息等。</li>
+<li>Sql接口(SQL Interface)<br>接收用户SQL命令，如DML,DDL和存储过程等，并将最终结果返回给用户。</li>
+<li>分析器(Parser)<br>首先分析SQL命令语法的合法性，并尝试将SQL命令分解成数据结构，若分解失败，则提示SQL语句不合理。</li>
+<li>优化器（Optimizer）<br>对SQL命令按照标准流程进行优化分析。</li>
+<li>缓存（Caches &amp; Buffers）<br>缓存和缓冲组件</li>
+<li>插件式存储引擎（Pluggable Storage Engines）</li>
+<li>物理文件（File System）<br>实际存储MySQL 数据库文件和一些日志文件等的系统，如Linux，Unix,Windows等。</li>
+</ol>
 <h2 id="二、Mysql事务"><a href="#二、Mysql事务" class="headerlink" title="二、Mysql事务"></a>二、Mysql事务</h2><ol>
 <li>事务的基本要素（ACID）</li>
 </ol>
