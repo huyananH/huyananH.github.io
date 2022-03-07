@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  
+  
+  
+  <entry>
+    <title>Hello World</title>
+    <link href="/2022/03/07/hello-world/"/>
+    <url>/2022/03/07/hello-world/</url>
+    
+    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>Mysql</title>
+    <link href="/2022/03/06/mysql/"/>
+    <url>/2022/03/06/mysql/</url>
+    
+    <content type="html"><![CDATA[<h2 id="一、事务"><a href="#一、事务" class="headerlink" title="一、事务"></a>一、事务</h2><ol><li>事务的基本要素（ACID）</li></ol><ul><li>原子性：事务开始后所有操作，要不全部做完，要么全部不做，不可能停滞在中间环节。事务执行过程中出错，事务会回滚到事务开始之前的状态，所有操作就像没有发生一样。也就是说事务是一个不可分割的整体，就像化学中的原子，是物质构成的基本单元。</li><li>一致性：事务开始前和结束后，数据库的完整性约束没有被破坏。比如A向B转账，不可能A扣了钱，B却没收到。</li><li>隔离性：同一时间内，只允许一个事务请求同一数据。不同事务之间彼此没有任何干扰。比如A正在从一张银行卡中取钱，在A取钱结束前，B不能向这张卡转账</li><li>持久性：事务完成后，事务对数据库所有的更新都将保存到数据库中，不能回滚</li></ul><ol start="2"><li>事务的并发问题</li></ol><ul><li>脏读：事务A读取了事务B更新的数据，然后事务B回滚，那么事务A读取到的数据就是脏数据</li><li>不可重复读、虚读（侧重修改）：事务A多次读取同一数据时，事务B在事务A多次读取的过程中，对数据做了更新操作并提交，导致事务A多次读取同一数据时，结果不一致。</li><li>幻读（侧重新增/删除）：事务A多次读取数据时，事务B对数据做了新增/删除，导致事务A多次读取结果不一致，好像出现了幻觉，这就是幻读</li></ul><ol start="3"><li>Mysql事务隔离级别<br>读未提交：<br>读已提交：<br>不可重复读：<br>串行化：</li></ol>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  
+</search>
