@@ -23,13 +23,13 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="一、Mysql架构  MySQL向外提供的交互接口（Connectors）Connectors组件，是MySQL向外提供的交互组件，如java,.net,php等语言可以通过该组件来操作SQL语句，实现与SQL的交互 管理服务和工具(Management Service &amp; Utilities)提供对MySQL的集成管理，如备份(Backup),恢复(Recovery),安全管理(Secu">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/2022/03/06/pic/mysql/mysql.png">
+<meta property="og:image" content="http://example.com/assets/mysql/mysql.png">
 <meta property="article:published_time" content="2022-03-06T02:00:03.000Z">
-<meta property="article:modified_time" content="2022-03-07T09:26:00.743Z">
+<meta property="article:modified_time" content="2022-03-07T09:29:59.675Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="mysql">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://example.com/2022/03/06/pic/mysql/mysql.png">
+<meta name="twitter:image" content="http://example.com/assets/mysql/mysql.png">
   
   
   <title>Mysql - Hexo</title>
@@ -208,7 +208,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      11 分钟
+      12 分钟
     </span>
   
 
@@ -240,7 +240,7 @@
             <h1 style="display: none">Mysql</h1>
             
             <div class="markdown-body">
-              <h2 id="一、Mysql架构"><a href="#一、Mysql架构" class="headerlink" title="一、Mysql架构"></a>一、Mysql架构</h2><p><img src="../pic/mysql/mysql.png" srcset="/img/loading.gif" lazyload alt="Mysql架构图"></p>
+              <h2 id="一、Mysql架构"><a href="#一、Mysql架构" class="headerlink" title="一、Mysql架构"></a>一、Mysql架构</h2><p><img src="/assets/mysql/mysql.png" srcset="/img/loading.gif" lazyload alt="Mysql架构图"></p>
 <ol>
 <li>MySQL向外提供的交互接口（Connectors）<br>Connectors组件，是MySQL向外提供的交互组件，如java,.net,php等语言可以通过该组件来操作SQL语句，实现与SQL的交互</li>
 <li>管理服务和工具(Management Service &amp; Utilities)<br>提供对MySQL的集成管理，如备份(Backup),恢复(Recovery),安全管理(Security)等</li>
@@ -317,7 +317,10 @@
 </table>
 不可重复读：如果检索条件有索引（包括主键索引）的时候，默认加锁方式是next-key 锁；如果检索条件没有索引，更新数据时会锁住整张表。一个间隙被事务加了锁，其他事务是不能在这个间隙插入记录的，这样可以防止幻读。</li>
 </ol>
-<h2 id="三、存储引擎"><a href="#三、存储引擎" class="headerlink" title="三、存储引擎"></a>三、存储引擎</h2>
+<h2 id="三、存储引擎"><a href="#三、存储引擎" class="headerlink" title="三、存储引擎"></a>三、存储引擎</h2><ol>
+<li>Mysql常用的三种引擎（InnoDB、MyISAM、Memory）</li>
+</ol>
+
             </div>
             <hr>
             <div>
