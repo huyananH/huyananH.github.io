@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/assets/mysql/mysql.png">
 <meta property="article:published_time" content="2022-03-06T02:00:03.000Z">
-<meta property="article:modified_time" content="2022-03-07T09:29:59.675Z">
+<meta property="article:modified_time" content="2022-03-07T09:31:55.861Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="mysql">
 <meta name="twitter:card" content="summary_large_image">
@@ -252,71 +252,64 @@
 <li>插件式存储引擎（Pluggable Storage Engines）</li>
 <li>物理文件（File System）<br>实际存储MySQL 数据库文件和一些日志文件等的系统，如Linux，Unix,Windows等。</li>
 </ol>
-<h2 id="二、Mysql事务"><a href="#二、Mysql事务" class="headerlink" title="二、Mysql事务"></a>二、Mysql事务</h2><ol>
-<li>事务的基本要素（ACID）</li>
-</ol>
-<ul>
+<h2 id="二、Mysql事务"><a href="#二、Mysql事务" class="headerlink" title="二、Mysql事务"></a>二、Mysql事务</h2><h3 id="事务的基本要素（ACID）"><a href="#事务的基本要素（ACID）" class="headerlink" title="事务的基本要素（ACID）"></a>事务的基本要素（ACID）</h3><ol>
 <li>原子性：事务开始后所有操作，要不全部做完，要么全部不做，不可能停滞在中间环节。事务执行过程中出错，事务会回滚到事务开始之前的状态，所有操作就像没有发生一样。也就是说事务是一个不可分割的整体，就像化学中的原子，是物质构成的基本单元。</li>
 <li>一致性：事务开始前和结束后，数据库的完整性约束没有被破坏。比如A向B转账，不可能A扣了钱，B却没收到。</li>
-<li>隔离性：同一时间内，只允许一个事务请求同一数据。不同事务之间彼此没有任何干扰。比如A正在从一张银行卡中取钱，在A取钱结束前，B不能向这张卡转账</li>
+<li>隔离性：同一时间内，只允许一个事务请求同一数据。不同事务之间彼此没有任何干扰。比如A正在从一张银行卡中取钱，在A取钱结束前，B不能向这张卡转账 </li>
 <li>持久性：事务完成后，事务对数据库所有的更新都将保存到数据库中，不能回滚</li>
-</ul>
-<ol start="2">
-<li>事务的并发问题</li>
 </ol>
-<ul>
-<li>脏读：事务A读取了事务B更新的数据，然后事务B回滚，那么事务A读取到的数据就是脏数据</li>
-<li>不可重复读、虚读（侧重修改）：事务A多次读取同一数据时，事务B在事务A多次读取的过程中，对数据做了更新操作并提交，导致事务A多次读取同一数据时，结果不一致。</li>
+<h3 id="事务的并发问题"><a href="#事务的并发问题" class="headerlink" title="事务的并发问题"></a>事务的并发问题</h3><ol>
+<li>脏读：事务A读取了事务B更新的数据，然后事务B回滚，那么事务A读取到的数据就是脏数据 </li>
+<li>不可重复读、虚读（侧重修改）：事务A多次读取同一数据时，事务B在事务A多次读取的过程中，对数据做了更新操作并提交，导致事务A多次读取同一数据时，结果不一致。 </li>
 <li>幻读（侧重新增/删除）：事务A多次读取数据时，事务B对数据做了新增/删除，导致事务A多次读取结果不一致，好像出现了幻觉，这就是幻读</li>
-</ul>
-<ol start="3">
-<li>Mysql事务隔离级别<table>
-   <tr>
-      <td rowspan="2">事务隔离级别</td>
-      <td colspan="3">并发问题</td>
-      <td colspan="2">操作</td>
-   </tr>
-   <tr>
-      <td>脏读</td>
-      <td>不可重复读</td>
-      <td>幻读</td>
-      <td>读</td>
-      <td>写</td>
-   </tr>
-   <tr>
-      <td>读未提交</td>
-      <td>是</td>
-      <td>是</td>
-      <td>是</td>
-      <td></td>
-      <td>锁行</td>
-   </tr>
-   <tr>
-      <td>读已提交</td>
-      <td>否</td>
-      <td>是</td>
-      <td>是</td>
-      <td></td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>不可重复读（mysql默认级别）</td>
-      <td>否</td>
-      <td>否</td>
-      <td>是</td>
-      <td></td>
-      <td></td>
-   </tr>
-   <tr>
-      <td>串行化</td>
-      <td>否</td>
-      <td>否</td>
-      <td>是</td>
-      <td colspan="2">锁表</td>
-   </tr>
-</table>
-不可重复读：如果检索条件有索引（包括主键索引）的时候，默认加锁方式是next-key 锁；如果检索条件没有索引，更新数据时会锁住整张表。一个间隙被事务加了锁，其他事务是不能在这个间隙插入记录的，这样可以防止幻读。</li>
 </ol>
+<h3 id="Mysql事务隔离级别"><a href="#Mysql事务隔离级别" class="headerlink" title="Mysql事务隔离级别"></a>Mysql事务隔离级别</h3>   <table>
+      <tr>
+         <td rowspan="2">事务隔离级别</td>
+         <td colspan="3">并发问题</td>
+         <td colspan="2">操作</td>
+      </tr>
+      <tr>
+         <td>脏读</td>
+         <td>不可重复读</td>
+         <td>幻读</td>
+         <td>读</td>
+         <td>写</td>
+      </tr>
+      <tr>
+         <td>读未提交</td>
+         <td>是</td>
+         <td>是</td>
+         <td>是</td>
+         <td></td>
+         <td>锁行</td>
+      </tr>
+      <tr>
+         <td>读已提交</td>
+         <td>否</td>
+         <td>是</td>
+         <td>是</td>
+         <td></td>
+         <td></td>
+      </tr>
+      <tr>
+         <td>不可重复读（mysql默认级别）</td>
+         <td>否</td>
+         <td>否</td>
+         <td>是</td>
+         <td></td>
+         <td></td>
+      </tr>
+      <tr>
+         <td>串行化</td>
+         <td>否</td>
+         <td>否</td>
+         <td>是</td>
+         <td colspan="2">锁表</td>
+      </tr>
+   </table>
+   不可重复读：如果检索条件有索引（包括主键索引）的时候，默认加锁方式是next-key 锁；如果检索条件没有索引，更新数据时会锁住整张表。一个间隙被事务加了锁，其他事务是不能在这个间隙插入记录的，这样可以防止幻读。
+
 <h2 id="三、存储引擎"><a href="#三、存储引擎" class="headerlink" title="三、存储引擎"></a>三、存储引擎</h2><ol>
 <li>Mysql常用的三种引擎（InnoDB、MyISAM、Memory）</li>
 </ol>
